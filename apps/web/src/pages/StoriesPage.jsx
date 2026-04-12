@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,20 +7,24 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import TagFilter from '@/components/TagFilter.jsx';
 import ArticlePreview from '@/components/ArticlePreview.jsx';
+import SEOHelmet from '@/components/SEOHelmet.jsx';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext.jsx';
+import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 import { useStoryData } from '@/hooks/useStoryData.js';
 
 const StoriesPage = () => {
   const [selectedTag, setSelectedTag] = useState('All');
-  
+
+  const { currentLanguage } = useLanguage();
   const { t } = useTranslation();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const pageUrl = buildLocalizedPath(currentLanguage, 'stories');
 
   const { stories: articles, loading, error: rawError, refetch: fetchArticles } = useStoryData();
   const error = rawError ? t('common.error') : null;
@@ -44,10 +47,11 @@ const StoriesPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('stories.title')}</title>
-        <meta name="description" content={t('stories.desc')} />
-      </Helmet>
+      <SEOHelmet
+        title={t('stories.title')}
+        description={t('stories.desc')}
+        url={pageUrl}
+      />
 
       <div className="min-h-screen flex flex-col">
         <Header />

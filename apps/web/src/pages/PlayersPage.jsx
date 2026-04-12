@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.jsx';
@@ -8,14 +7,18 @@ import Footer from '@/components/Footer.jsx';
 import PlayerCard from '@/components/PlayerCard.jsx';
 import SearchBar from '@/components/SearchBar.jsx';
 import FilterBar from '@/components/FilterBar.jsx';
+import SEOHelmet from '@/components/SEOHelmet.jsx';
 import { usePlayerData } from '@/hooks/usePlayerData.js';
+import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const PlayersPage = () => {
   const { players, loading } = usePlayerData();
+  const { currentLanguage } = useLanguage();
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
+  const pageUrl = buildLocalizedPath(currentLanguage, 'players');
 
   const filterOptions = [
     { value: 'all', label: t('players.filters.all') },
@@ -36,10 +39,11 @@ const PlayersPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('players.title')}</title>
-        <meta name="description" content={t('players.desc')} />
-      </Helmet>
+      <SEOHelmet
+        title={t('players.title')}
+        description={t('players.desc')}
+        url={pageUrl}
+      />
 
       <div className="min-h-screen flex flex-col">
         <Header />

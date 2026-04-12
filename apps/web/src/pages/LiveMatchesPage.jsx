@@ -1,19 +1,22 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import MatchCard from '@/components/MatchCard.jsx';
 import FilterBar from '@/components/FilterBar.jsx';
+import SEOHelmet from '@/components/SEOHelmet.jsx';
 import { useMatchData } from '@/hooks/useMatchData.js';
+import { useLanguage } from '@/contexts/LanguageContext.jsx';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const LiveMatchesPage = () => {
   const { matches, loading } = useMatchData();
+  const { currentLanguage } = useLanguage();
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('all');
+  const pageUrl = `/${currentLanguage}/live-matches`;
 
   const filterOptions = [
     { value: 'all', label: t('liveMatches.filters.all') },
@@ -29,10 +32,11 @@ const LiveMatchesPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('liveMatches.title')}</title>
-        <meta name="description" content={t('liveMatches.desc')} />
-      </Helmet>
+      <SEOHelmet
+        title={t('liveMatches.title')}
+        description={t('liveMatches.desc')}
+        url={pageUrl}
+      />
 
       <div className="min-h-screen flex flex-col">
         <Header />

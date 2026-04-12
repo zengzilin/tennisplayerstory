@@ -1,4 +1,3 @@
-
 /*
  * LANGUAGE SWITCHING TEST CHECKLIST
  *
@@ -40,6 +39,7 @@ import GoogleSearchConsole from '@/components/GoogleSearchConsole.jsx';
 import HomePage from '@/pages/HomePage.jsx';
 import LiveMatchesPage from '@/pages/LiveMatchesPage.jsx';
 import PlayersPage from '@/pages/PlayersPage.jsx';
+import PlayerDetailPage from '@/pages/PlayerDetailPage.jsx';
 import RankingsPage from '@/pages/RankingsPage.jsx';
 import StoriesPage from '@/pages/StoriesPage.jsx';
 import LoginPage from '@/pages/LoginPage.jsx';
@@ -60,12 +60,11 @@ import SitemapPage from '@/pages/SitemapPage.jsx';
 const LanguageWrapper = () => {
   const { lang } = useParams();
   const { currentLanguage, changeLanguage } = useLanguage();
-  
+
   const isValidLang = ['en', 'zh', 'ja', 'es', 'fr'].includes(lang);
 
   useEffect(() => {
     if (isValidLang && lang !== currentLanguage) {
-      // Sync context with URL without navigating
       changeLanguage(lang, false);
     }
   }, [lang, isValidLang, currentLanguage, changeLanguage]);
@@ -94,52 +93,51 @@ function App() {
             <Routes>
               <Route path="/" element={<RootRedirect />} />
               <Route path="/sitemap.xml" element={<SitemapPage />} />
-              
+
               <Route path="/:lang" element={<LanguageWrapper />}>
-                {/* Public Routes */}
                 <Route index element={<HomePage />} />
                 <Route path="live-matches" element={<LiveMatchesPage />} />
-                
-                {/* EN / ZH / JA / ES / FR variations for Players */}
+
                 <Route path="players" element={<PlayersPage />} />
+                <Route path="players/:playerId" element={<PlayerDetailPage />} />
                 <Route path="球员" element={<PlayersPage />} />
+                <Route path="球员/:playerId" element={<PlayerDetailPage />} />
                 <Route path="プレイヤー" element={<PlayersPage />} />
+                <Route path="プレイヤー/:playerId" element={<PlayerDetailPage />} />
                 <Route path="jugadores" element={<PlayersPage />} />
+                <Route path="jugadores/:playerId" element={<PlayerDetailPage />} />
                 <Route path="joueurs" element={<PlayersPage />} />
-                
-                {/* EN / ZH / JA / ES / FR variations for Rankings */}
+                <Route path="joueurs/:playerId" element={<PlayerDetailPage />} />
+
                 <Route path="rankings" element={<RankingsPage />} />
                 <Route path="排名" element={<RankingsPage />} />
                 <Route path="ランキング" element={<RankingsPage />} />
                 <Route path="clasificaciones" element={<RankingsPage />} />
                 <Route path="classements" element={<RankingsPage />} />
-                
-                {/* EN / ZH / JA / ES / FR variations for Stories */}
+
                 <Route path="stories" element={<StoriesPage />} />
                 <Route path="故事" element={<StoriesPage />} />
                 <Route path="ストーリー" element={<StoriesPage />} />
                 <Route path="historias" element={<StoriesPage />} />
                 <Route path="histoires" element={<StoriesPage />} />
-                
+
                 <Route path="login" element={<LoginPage />} />
                 <Route path="signup" element={<SignupPage />} />
                 <Route path="forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
                 <Route path="terms-of-service" element={<TermsOfServicePage />} />
-                
-                {/* Protected Routes */}
+
                 <Route path="profile" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
                 <Route path="write-article" element={<ProtectedRoute><WriteArticlePage /></ProtectedRoute>} />
                 <Route path="my-articles" element={<ProtectedRoute><MyArticlesPage /></ProtectedRoute>} />
-                
-                {/* Admin Routes */}
+
                 <Route path="admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
                 <Route path="admin/scraping" element={<ProtectedAdminRoute><AdminScrapingDashboard /></ProtectedAdminRoute>} />
                 <Route path="admin/players" element={<ProtectedAdminRoute><PlayerManagementPage /></ProtectedAdminRoute>} />
                 <Route path="admin/articles" element={<ProtectedAdminRoute><AdminArticlesPage /></ProtectedAdminRoute>} />
               </Route>
-              
+
               <Route path="*" element={<RootRedirect />} />
             </Routes>
             <Toaster position="top-center" richColors />

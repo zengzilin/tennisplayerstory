@@ -14,12 +14,15 @@ import MatchCard from '@/components/MatchCard.jsx';
 import ArticlePreview from '@/components/ArticlePreview.jsx';
 import ImageWithAlt from '@/components/ImageWithAlt.jsx';
 import { ArrowRight, Trophy, Users, TrendingUp } from 'lucide-react';
+import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 import { generateWebSiteSchema, generateOrganizationSchema } from '@/lib/structuredData.js';
 
 const HomePage = () => {
   const { matches } = useMatchData();
   const { stories } = useStoryData();
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
+  const pageUrl = buildLocalizedPath(currentLanguage, 'home');
 
   useEffect(() => {
     console.log('[HomePage] t function test:', t('home.title'));
@@ -50,10 +53,10 @@ const HomePage = () => {
 
   return (
     <>
-      <SEOHelmet 
+      <SEOHelmet
         title={t('home.title')}
         description={t('home.metaDesc')}
-        url="/"
+        url={pageUrl}
         structuredData={structuredData}
       />
 

@@ -1,4 +1,3 @@
-
 import { seoConfig } from './seoConfig.js';
 
 export const generateOrganizationSchema = () => ({
@@ -50,14 +49,23 @@ export const generateArticleSchema = (article) => ({
   publisher: generateOrganizationSchema()
 });
 
-export const generatePersonSchema = (player) => ({
+export const generatePersonSchema = (player, path = '') => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: player.name,
-  image: player.image,
-  description: `Professional tennis player from ${player.country}.`,
+  description: `${player.sourceLabel} tennis player from ${player.country}.`,
   nationality: {
     '@type': 'Country',
     name: player.country
+  },
+  homeLocation: {
+    '@type': 'Country',
+    name: player.country
+  },
+  url: path ? `${seoConfig.siteUrl}${path}` : undefined,
+  sameAs: player.profileUrl ? [player.profileUrl] : undefined,
+  memberOf: {
+    '@type': 'SportsOrganization',
+    name: player.sourceLabel
   }
 });

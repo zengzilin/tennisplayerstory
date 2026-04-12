@@ -1,30 +1,31 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Trophy, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { currentLanguage } = useLanguage();
   const { t } = useTranslation();
 
   const footerLinks = [
-    { path: '/', label: t('nav.home') },
-    { path: '/live-matches', label: t('nav.liveMatches') },
-    { path: '/players', label: t('nav.players') },
-    { path: '/rankings', label: t('nav.rankings') },
-    { path: '/stories', label: t('nav.stories') }
+    { path: buildLocalizedPath(currentLanguage, 'home'), label: t('nav.home') },
+    { path: `/${currentLanguage}/live-matches`, label: t('nav.liveMatches') },
+    { path: buildLocalizedPath(currentLanguage, 'players'), label: t('nav.players') },
+    { path: buildLocalizedPath(currentLanguage, 'rankings'), label: t('nav.rankings') },
+    { path: buildLocalizedPath(currentLanguage, 'stories'), label: t('nav.stories') },
   ];
 
   const legalLinks = [
-    { path: '/privacy-policy', label: t('footer.privacy') },
-    { path: '/terms-of-service', label: t('footer.terms') }
+    { path: `/${currentLanguage}/privacy-policy`, label: t('footer.privacy') },
+    { path: `/${currentLanguage}/terms-of-service`, label: t('footer.terms') },
   ];
 
   const socialLinks = [
     { icon: Twitter, label: 'Twitter', href: '#' },
     { icon: Instagram, label: 'Instagram', href: '#' },
-    { icon: Youtube, label: 'YouTube', href: '#' }
+    { icon: Youtube, label: 'YouTube', href: '#' },
   ];
 
   return (
@@ -96,12 +97,15 @@ const Footer = () => {
             © {currentYear} {t('footer.rights')}
           </p>
           <div className="flex gap-6 text-sm">
-            <Link to="/privacy-policy" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
-              {t('footer.privacy')}
-            </Link>
-            <Link to="/terms-of-service" className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">
-              {t('footer.terms')}
-            </Link>
+            {legalLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

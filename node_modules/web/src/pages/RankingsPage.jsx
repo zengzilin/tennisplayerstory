@@ -1,27 +1,31 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import RankingRow from '@/components/RankingRow.jsx';
+import SEOHelmet from '@/components/SEOHelmet.jsx';
 import { useRankingData } from '@/hooks/useRankingData.js';
+import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const RankingsPage = () => {
   const { rankings, loading } = useRankingData();
+  const { currentLanguage } = useLanguage();
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('atp');
+  const pageUrl = buildLocalizedPath(currentLanguage, 'rankings');
 
   return (
     <>
-      <Helmet>
-        <title>{t('rankings.title')}</title>
-        <meta name="description" content={t('rankings.desc')} />
-      </Helmet>
+      <SEOHelmet
+        title={t('rankings.title')}
+        description={t('rankings.desc')}
+        url={pageUrl}
+      />
 
       <div className="min-h-screen flex flex-col">
         <Header />
