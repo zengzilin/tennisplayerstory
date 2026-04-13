@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/%5Blang%5D/page.tsx"],"sourcesContent":["export default function HomePage() {\n  return (\n    <main className=\"min-h-screen\">\n      <h1 className=\"text-4xl font-bold\">TennisHub</h1>\n      <p>Welcome to TennisHub — live tennis scores, rankings, and stories.</p>\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAK,WAAU;;0BACd,8OAAC;gBAAG,WAAU;0BAAqB;;;;;;0BACnC,8OAAC;0BAAE;;;;;;;;;;;;AAGT","debugId":null}}]
+}

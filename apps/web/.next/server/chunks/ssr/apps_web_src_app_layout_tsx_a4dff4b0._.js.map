@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/layout.tsx"],"sourcesContent":["import type { Metadata } from \"next\";\nimport \"@/app/globals.css\";\n\nexport const metadata: Metadata = {\n  title: \"TennisHub\",\n  description: \"Tennis player rankings, live scores, and stories\",\n};\n\nexport default function RootLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return children;\n}\n"],"names":[],"mappings":";;;;;;;AAGO,MAAM,WAAqB;IAChC,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EACjC,QAAQ,EAGT;IACC,OAAO;AACT","debugId":null}}]
+}

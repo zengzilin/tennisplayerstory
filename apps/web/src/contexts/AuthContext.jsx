@@ -99,8 +99,23 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  // During SSR/SSG (static generation), context may be undefined.
+  // Return a safe default to prevent build failures — the component
+  // will still get proper auth via AuthProvider at runtime.
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    return {
+      currentUser: null,
+      isAuthenticated: false,
+      isAdmin: false,
+      loading: true,
+      login: async () => { throw new Error('useAuth not ready'); },
+      loginWithOAuth: async () => { throw new Error('useAuth not ready'); },
+      signup: async () => { throw new Error('useAuth not ready'); },
+      logout: () => {},
+      updateUser: async () => { throw new Error('useAuth not ready'); },
+      requestPasswordReset: async () => { throw new Error('useAuth not ready'); },
+      confirmPasswordReset: async () => { throw new Error('useAuth not ready'); },
+    };
   }
   return context;
 };

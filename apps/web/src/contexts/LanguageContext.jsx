@@ -135,8 +135,15 @@ export const LanguageProvider = ({ children }) => {
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
+  // During SSR/SSG (static generation), context may be undefined.
+  // Return a safe default to prevent build failures.
   if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    return {
+      language: 'en',
+      currentLanguage: 'en',
+      changeLanguage: () => {},
+      availableLanguages,
+    };
   }
   return context;
 };
