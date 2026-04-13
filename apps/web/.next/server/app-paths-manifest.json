@@ -1,3 +1,7 @@
 {
-  "/[lang]/page": "app/[lang]/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/[lang]/page": "app/[lang]/page.js",
+  "/[lang]/privacy-policy/page": "app/[lang]/privacy-policy/page.js",
+  "/[lang]/terms-of-service/page": "app/[lang]/terms-of-service/page.js"
 }
