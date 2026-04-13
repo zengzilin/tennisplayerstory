@@ -3,15 +3,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-interface PrivacyPolicyPageProps {
-  params: Promise<{ lang: string }>;
-}
+type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 
-const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = async ({ params }) => {
-  const { lang } = await params;
+const PrivacyPolicyPage: React.FC = () => {
+  const params = useParams();
+  const lang = params.lang as LangCode;
   const t = useTranslations();
 
   const defaultSections = [
@@ -28,7 +28,7 @@ const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = async ({ params }) =
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header lang={lang as 'en' | 'zh' | 'ja' | 'es' | 'fr'} />
+      <Header lang={lang} />
 
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div

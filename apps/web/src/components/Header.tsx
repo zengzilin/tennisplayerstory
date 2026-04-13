@@ -27,9 +27,8 @@ const localizedRouteSegments: Record<string, Record<LangCode, string>> = {
   liveMatches: { en: 'live-matches', zh: 'live-matches', ja: 'live-matches', es: 'live-matches', fr: 'live-matches' },
 };
 
-const getLocalizedRouteSegment = (language: LangCode, routeKey: string) => {
-  return localizedRouteSegments[routeKey]?.[language] || routeKey;
-};
+
+
 
 const Header = ({ lang }: { lang?: LangCode }) => {
   const pathname = usePathname();
@@ -118,11 +117,9 @@ const Header = ({ lang }: { lang?: LangCode }) => {
 
           <div className="hidden md:flex items-center gap-4">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
-                  <Globe className="h-4 w-4" />
-                  <span className="font-medium">{currentLanguageName}</span>
-                </Button>
+              <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary data-[state=open]:text-primary">
+                <Globe className="h-4 w-4" />
+                <span className="font-medium">{currentLanguageName}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {availableLanguages.map((lang) => (

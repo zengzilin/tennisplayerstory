@@ -6,7 +6,8 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/en)",
       "Bash(pkill -f \"next dev\")",
       "Read(//Users/zengzelin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/**)",
-      "Bash(ls apps/web/src/app/[lang]/)"
+      "Bash(ls apps/web/src/app/[lang]/)",
+      "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/ui/*.jsx)"
     ],
     "additionalDirectories": [
       "/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]"

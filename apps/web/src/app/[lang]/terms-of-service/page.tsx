@@ -3,15 +3,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-interface TermsOfServicePageProps {
-  params: Promise<{ lang: string }>;
-}
+type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 
-const TermsOfServicePage: React.FC<TermsOfServicePageProps> = async ({ params }) => {
-  const { lang } = await params;
+const TermsOfServicePage: React.FC = () => {
+  const params = useParams();
+  const lang = params.lang as LangCode;
   const t = useTranslations();
 
   const defaultSections = [
