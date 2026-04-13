@@ -1,6 +1,6 @@
 # 忽略依赖包文件夹
 node_modules/
-
+apps/api/node_modules/
 # 忽略构建产物文件夹
 dist/
 build/
