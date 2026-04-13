@@ -44,7 +44,7 @@ const RankingRow = ({ ranking, lang }: RankingRowProps) => {
     <TableRow className="hover:bg-muted/50 transition-colors">
       <TableCell className="font-bold">{ranking.position}</TableCell>
       <TableCell>
-        <Link to={playerDetailPath} href={playerDetailPath} className="flex items-center gap-2 hover:text-primary transition-colors">
+        <Link href={playerDetailPath} className="flex items-center gap-2 hover:text-primary transition-colors">
           <span className="font-semibold">{ranking.name}</span>
           <span className="text-sm text-muted-foreground">· {ranking.country}</span>
         </Link>

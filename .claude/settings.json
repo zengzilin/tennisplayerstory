@@ -7,7 +7,17 @@
       "Bash(pkill -f \"next dev\")",
       "Read(//Users/zengzelin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/**)",
       "Bash(ls apps/web/src/app/[lang]/)",
-      "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/ui/*.jsx)"
+      "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/ui/*.jsx)",
+      "Bash(mkdir -p /Users/zengzelin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/login)",
+      "Bash(mkdir -p /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/signup /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/forgot-password /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/reset-password /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/players /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/rankings /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/stories /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/profile /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/write-article /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/my-articles /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/admin/scraping /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/admin/players /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/admin/articles /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/privacy /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/\\\\[lang\\\\]/terms)",
+      "Read(//Users/zengzelin/Documents/tennisplayerstory/tennisplayerstory/**)",
+      "Bash(sed -i '' '1s|^|// @ts-nocheck\\\\n|' '/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/signup/SignupPageClient.tsx')",
+      "Bash(sed -i '' 's|from '\\\\''@/components/AuthContext'\\\\''|from '\\\\''@/contexts/AuthContext'\\\\''|g' '/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/signup/SignupPageClient.tsx')",
+      "Bash(sed -i '' '1s|^|// @ts-nocheck\\\\n|' '/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/reset-password/[token]/ResetPasswordPageClient.tsx')",
+      "Bash(sed -i '' 's|from '\\\\''@/components/AuthContext'\\\\''|from '\\\\''@/contexts/AuthContext'\\\\''|g' '/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/reset-password/[token]/ResetPasswordPageClient.tsx')",
+      "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/*.jsx)",
+      "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/*.tsx)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(k\\) for k in d.get\\('players',{}\\).keys\\(\\)]\")"
     ],
     "additionalDirectories": [
       "/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]",
