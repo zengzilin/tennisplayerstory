@@ -1,7 +1,7 @@
 {
   "/_not-found/page": "/_not-found",
   "/page": "/",
+  "/[lang]/terms-of-service/page": "/[lang]/terms-of-service",
   "/[lang]/page": "/[lang]",
-  "/[lang]/privacy-policy/page": "/[lang]/privacy-policy",
-  "/[lang]/terms-of-service/page": "/[lang]/terms-of-service"
+  "/[lang]/privacy-policy/page": "/[lang]/privacy-policy"
 }

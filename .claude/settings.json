@@ -10,7 +10,8 @@
       "Bash(ls /Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/components/ui/*.jsx)"
     ],
     "additionalDirectories": [
-      "/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]"
+      "/Users/zengzilin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]",
+      "/Users/zengzlin/Documents/tennisplayerstory/tennisplayerstory/apps/web/src/app/[lang]/live-matches"
     ]
   }
 }

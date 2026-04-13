@@ -1,11 +1,13 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import pb from '@/lib/pocketbaseClient';
 
+/**
+ * @returns {{ stories: any[], loading: boolean, error: string | null, refetch: () => void }}
+ */
 export const useStoryData = () => {
-  const [stories, setStories] = useState([]);
+  const [stories, setStories] = /** @type {any[]} */ ([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = /** @type {string | null} */ (null);
 
   const fetchStories = useCallback(async () => {
     setLoading(true);
