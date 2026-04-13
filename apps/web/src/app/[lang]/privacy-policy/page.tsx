@@ -10,7 +10,8 @@ interface PrivacyPolicyPageProps {
   params: Promise<{ lang: string }>;
 }
 
-const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = () => {
+const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = async ({ params }) => {
+  const { lang } = await params;
   const t = useTranslations();
 
   const defaultSections = [
@@ -27,7 +28,7 @@ const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+      <Header lang={lang as 'en' | 'zh' | 'ja' | 'es' | 'fr'} />
 
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
@@ -68,7 +69,7 @@ const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = () => {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer lang={lang as 'en' | 'zh' | 'ja' | 'es' | 'fr'} />
     </div>
   );
 };

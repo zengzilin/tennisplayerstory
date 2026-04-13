@@ -6,7 +6,12 @@ import { useTranslations } from 'next-intl';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const TermsOfServicePage: React.FC = () => {
+interface TermsOfServicePageProps {
+  params: Promise<{ lang: string }>;
+}
+
+const TermsOfServicePage: React.FC<TermsOfServicePageProps> = async ({ params }) => {
+  const { lang } = await params;
   const t = useTranslations();
 
   const defaultSections = [
@@ -23,7 +28,7 @@ const TermsOfServicePage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+      <Header lang={lang as 'en' | 'zh' | 'ja' | 'es' | 'fr'} />
 
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <motion.div
@@ -64,7 +69,7 @@ const TermsOfServicePage: React.FC = () => {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer lang={lang as 'en' | 'zh' | 'ja' | 'es' | 'fr'} />
     </div>
   );
 };

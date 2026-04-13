@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Trophy, Twitter, Instagram, Youtube } from 'lucide-react';
 
+type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
+
 const localizedRouteSegments = {
   players: { en: 'players', zh: '球员', ja: 'プレイヤー', es: 'jugadores', fr: 'joueurs' },
   rankings: { en: 'rankings', zh: '排名', ja: 'ランキング', es: 'clasificaciones', fr: 'classements' },
@@ -12,12 +14,12 @@ const localizedRouteSegments = {
   liveMatches: { en: 'live-matches', zh: 'live-matches', ja: 'live-matches', es: 'live-matches', fr: 'live-matches' },
 };
 
-const Footer = ({ lang }) => {
+const Footer = ({ lang }: { lang?: LangCode }) => {
   const currentYear = new Date().getFullYear();
-  const currentLanguage = lang || 'en';
+  const currentLanguage: LangCode = (lang || 'en') as LangCode;
   const t = useTranslations();
 
-  const getLocalizedPath = (enPath) => {
+  const getLocalizedPath = (enPath: keyof typeof localizedRouteSegments) => {
     return localizedRouteSegments[enPath]?.[currentLanguage] || enPath;
   };
 

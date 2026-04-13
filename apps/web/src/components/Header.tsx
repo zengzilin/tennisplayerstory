@@ -18,33 +18,35 @@ const availableLanguages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' }
 ];
 
-const localizedRouteSegments = {
+type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
+
+const localizedRouteSegments: Record<string, Record<LangCode, string>> = {
   players: { en: 'players', zh: '球员', ja: 'プレイヤー', es: 'jugadores', fr: 'joueurs' },
   rankings: { en: 'rankings', zh: '排名', ja: 'ランキング', es: 'clasificaciones', fr: 'classements' },
   stories: { en: 'stories', zh: '故事', ja: 'ストーリー', es: 'historias', fr: 'histoires' },
   liveMatches: { en: 'live-matches', zh: 'live-matches', ja: 'live-matches', es: 'live-matches', fr: 'live-matches' },
 };
 
-const getLocalizedRouteSegment = (language, routeKey) => {
+const getLocalizedRouteSegment = (language: LangCode, routeKey: string) => {
   return localizedRouteSegments[routeKey]?.[language] || routeKey;
 };
 
-const Header = ({ lang }) => {
+const Header = ({ lang }: { lang?: LangCode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, currentUser, logout } = useAuth();
   const t = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
 
-  const currentLanguage = lang || 'en';
+  const currentLanguage: LangCode = (lang || 'en') as LangCode;
 
   const isAdmin = currentUser?.role === 'admin';
 
-  const getLocalizedPath = (enPath) => {
+  const getLocalizedPath = (enPath: string) => {
     return localizedRouteSegments[enPath]?.[currentLanguage] || enPath;
   };
 
-  const getLanguageName = (langCode) => {
+  const getLanguageName = (langCode: string) => {
     switch (langCode) {
       case 'en': return t('language.english', { defaultValue: 'English' });
       case 'zh': return t('language.chinese', { defaultValue: '中文' });
@@ -55,7 +57,7 @@ const Header = ({ lang }) => {
     }
   };
 
-  const changeLanguage = (newLang) => {
+  const changeLanguage = (newLang: string) => {
     // Replace current language segment in pathname with new language
     const segments = pathname.split('/').filter(Boolean);
     if (segments.length > 0 && availableLanguages.some(l => l.code === segments[0])) {
@@ -72,7 +74,7 @@ const Header = ({ lang }) => {
     { path: `/${currentLanguage}/${getLocalizedPath('stories')}`, label: t('nav.stories', { defaultValue: 'Stories' }) },
   ];
 
-  const isActive = (path) => {
+  const isActive = (path: string) => {
     if (path === `/${currentLanguage}`) {
       return pathname === `/${currentLanguage}` || pathname === `/${currentLanguage}/`;
     }
