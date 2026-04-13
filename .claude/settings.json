@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/zengzelin/Documents/tennisplayerstory/tennisplayerstory/node_modules/@eslint/**)"
+    ]
+  }
+}

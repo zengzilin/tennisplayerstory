@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';

@@ -1,0 +1,182 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/[lang]",
+      "regex": "^/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPlang": "nxtPlang"
+      },
+      "namedRegex": "^/(?<nxtPlang>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/AdminArticlesPage",
+      "regex": "^/AdminArticlesPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/AdminArticlesPage(?:/)?$"
+    },
+    {
+      "page": "/AdminDashboard",
+      "regex": "^/AdminDashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/AdminDashboard(?:/)?$"
+    },
+    {
+      "page": "/AdminScrapingDashboard",
+      "regex": "^/AdminScrapingDashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/AdminScrapingDashboard(?:/)?$"
+    },
+    {
+      "page": "/ForgotPasswordPage",
+      "regex": "^/ForgotPasswordPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ForgotPasswordPage(?:/)?$"
+    },
+    {
+      "page": "/HomePage",
+      "regex": "^/HomePage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/HomePage(?:/)?$"
+    },
+    {
+      "page": "/LiveMatchesPage",
+      "regex": "^/LiveMatchesPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/LiveMatchesPage(?:/)?$"
+    },
+    {
+      "page": "/LoginPage",
+      "regex": "^/LoginPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/LoginPage(?:/)?$"
+    },
+    {
+      "page": "/MyArticlesPage",
+      "regex": "^/MyArticlesPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/MyArticlesPage(?:/)?$"
+    },
+    {
+      "page": "/PlayerDetailPage",
+      "regex": "^/PlayerDetailPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/PlayerDetailPage(?:/)?$"
+    },
+    {
+      "page": "/PlayerManagementPage",
+      "regex": "^/PlayerManagementPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/PlayerManagementPage(?:/)?$"
+    },
+    {
+      "page": "/PlayersPage",
+      "regex": "^/PlayersPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/PlayersPage(?:/)?$"
+    },
+    {
+      "page": "/PrivacyPolicyPage",
+      "regex": "^/PrivacyPolicyPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/PrivacyPolicyPage(?:/)?$"
+    },
+    {
+      "page": "/RankingsPage",
+      "regex": "^/RankingsPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/RankingsPage(?:/)?$"
+    },
+    {
+      "page": "/ResetPasswordPage",
+      "regex": "^/ResetPasswordPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ResetPasswordPage(?:/)?$"
+    },
+    {
+      "page": "/SignupPage",
+      "regex": "^/SignupPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/SignupPage(?:/)?$"
+    },
+    {
+      "page": "/SitemapPage",
+      "regex": "^/SitemapPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/SitemapPage(?:/)?$"
+    },
+    {
+      "page": "/StoriesPage",
+      "regex": "^/StoriesPage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/StoriesPage(?:/)?$"
+    },
+    {
+      "page": "/TermsOfServicePage",
+      "regex": "^/TermsOfServicePage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/TermsOfServicePage(?:/)?$"
+    },
+    {
+      "page": "/UserProfilePage",
+      "regex": "^/UserProfilePage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/UserProfilePage(?:/)?$"
+    },
+    {
+      "page": "/WriteArticlePage",
+      "regex": "^/WriteArticlePage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/WriteArticlePage(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

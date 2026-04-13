@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
