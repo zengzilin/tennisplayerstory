@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import pb from '@/lib/pocketbaseClient';
+import { apiFetch } from '@/lib/api';
 
 const formatDate = (value) => {
   if (!value) return null;
@@ -85,10 +85,8 @@ export const usePlayerData = () => {
     const fetchPlayers = async () => {
       try {
         console.log('usePlayerData: Fetching all players from PocketBase...');
-        const result = await pb.collection('players').getFullList({
-          sort: 'ranking',
-          $autoCancel: false,
-        });
+        const data = await apiFetch('/api/players?sort=ranking');
+        const result = data.items;
 
         const normalizedPlayers = result
           .map(normalizePlayerRecord)
@@ -142,9 +140,7 @@ export const usePlayerDetail = (playerId) => {
         setLoading(true);
         setError(null);
 
-        const record = await pb.collection('players').getOne(playerId, {
-          $autoCancel: false,
-        });
+        const record = await apiFetch(`/api/players/${playerId}`);
 
         if (!cancelled) {
           setPlayer(normalizePlayerRecord(record));

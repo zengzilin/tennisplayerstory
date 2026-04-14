@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import pb from '@/lib/pocketbaseClient';
+import { apiFetch } from '@/lib/api';
 import { normalizePlayerRecord } from '@/hooks/usePlayerData.js';
 
 export const useRankingData = () => {
@@ -14,16 +14,8 @@ export const useRankingData = () => {
         console.log('useRankingData: Fetching ATP and WTA rankings...');
 
         const [atpResult, wtaResult] = await Promise.all([
-          pb.collection('players').getFullList({
-            filter: 'source = "atp"',
-            sort: 'ranking',
-            $autoCancel: false,
-          }),
-          pb.collection('players').getFullList({
-            filter: 'source = "wta"',
-            sort: 'ranking',
-            $autoCancel: false,
-          }),
+          apiFetch('/api/players?source=atp&sort=ranking'),
+          apiFetch('/api/players?source=wta&sort=ranking'),
         ]);
 
         console.log('useRankingData: Fetched ranking data:', {
@@ -44,8 +36,8 @@ export const useRankingData = () => {
           };
 
           setRankings({
-            atp: atpResult.map(toRankingRow),
-            wta: wtaResult.map(toRankingRow),
+            atp: atpResult.items.map(toRankingRow),
+            wta: wtaResult.items.map(toRankingRow),
           });
         }
       } catch (err) {
