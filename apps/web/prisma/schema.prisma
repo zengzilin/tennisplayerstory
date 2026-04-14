@@ -92,6 +92,7 @@ model Article {
   cover     String?
   status    String   @default("pending")  // "pending" | "approved" | "rejected"
   tags      Json     @default("[]")
+  playerName String?
   authorId  String
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

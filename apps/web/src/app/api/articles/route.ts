@@ -24,7 +24,9 @@ export async function GET(request: Request) {
             select: { id: true, name: true, avatar: true },
           },
         },
-        orderBy: sort.replace('-', '') as 'created' | 'updated',
+        orderBy: sort.replace('-', '') === 'updated'
+          ? [{ updatedAt: 'desc' }]
+          : [{ createdAt: 'desc' }],
         skip,
         take: pageSize,
       }),
