@@ -28,7 +28,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, BrowserRouter as Router, Navigate, useParams, Outlet } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'sonner';
-import { AuthProvider } from '@/contexts/AuthContext.jsx';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext.jsx';
 import ProtectedRoute from '@/components/ProtectedRoute.jsx';
 import ProtectedAdminRoute from '@/components/ProtectedAdminRoute.jsx';

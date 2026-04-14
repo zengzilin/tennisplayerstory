@@ -14,7 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext.jsx';
+import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
 import { useStoryData } from '@/hooks/useStoryData.js';
 

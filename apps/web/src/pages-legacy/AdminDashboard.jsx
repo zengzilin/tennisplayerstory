@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import pb from '@/lib/pocketbaseClient';
-import { useAuth } from '@/contexts/AuthContext.jsx';
+import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage, availableLanguages } from '@/contexts/LanguageContext.jsx';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.jsx';

@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Heart, UserRound, CalendarDays } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext.jsx';
+import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { useLanguage, buildLocalizedPath } from '@/contexts/LanguageContext.jsx';
