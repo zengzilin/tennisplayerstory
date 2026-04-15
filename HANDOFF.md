@@ -1,8 +1,8 @@
 # TennisHub Next.js 迁移 — 交接文档
 
-> **最后更新**: 2026-04-13
+> **最后更新**: 2026-04-14
 > **迁移范围**: Vite+React SPA → Next.js 15 App Router + Hostinger VPS 部署
-> **当前状态**: ✅ `npm run build` 通过，核心 UI 组件已迁移，约 18 个页面待迁移
+> **当前状态**: ✅ 大部分页面已迁移，仅 3 个页面待迁移，新增 NextAuth + Prisma + PostgreSQL 认证体系
 
 ---
 
@@ -45,24 +45,55 @@ Hostinger VPS，Node.js 20+，通过 PM2 管理进程。
 ### ✅ 核心配置
 
 - **next-intl** 已配置（`src/i18n/`），语言文件结构为 `en.json` 等
-- **middleware.ts** 已配置（语言路由重定向 + 认证保护占位）
+- **middleware.ts** 已配置于 `apps/web/middleware.ts`（next-intl 语言路由重定向）
 - **环境变量** `.env.local` 已配置（`NEXT_PUBLIC_PB_URL`、`PB_URL` 等）
 
-### ✅ 已迁移为 `.tsx` 的 UI 组件（3个）
+### ✅ 已迁移为 `.tsx` 的 UI 组件（5个）
 
 | 组件 | 路径 | 说明 |
 |------|------|------|
 | Button | `src/components/ui/button.tsx` | 含 cva 变体、asChild 支持 |
 | DropdownMenu | `src/components/ui/dropdown-menu.tsx` | Radix UI，Portal/Sub/RadioGroup 无 forwardRef |
 | Sheet | `src/components/ui/sheet.tsx` | Radix Dialog 侧边抽屉 |
+| Badge | `src/components/ui/badge.tsx` | 已迁移为 TypeScript |
+| Card | `src/components/ui/card.tsx` | 已迁移为 TypeScript |
 
-### ✅ 已迁移的 App Router 页面（2个）
+> 注意：还有 ~52 个 UI 组件仍为 `.jsx`，待批量转换。
+
+### ✅ 已迁移的 App Router 页面（17个）
 
 | 页面 | 路径 | 说明 |
 |------|------|------|
 | 根布局 | `src/app/[lang]/layout.tsx` | 正确使用 `async ({ params })` + `await params` |
-| 隐私政策 | `src/app/[lang]/privacy-policy/page.tsx` | 客户端组件，使用 `useParams()` |
-| 服务条款 | `src/app/[lang]/terms-of-service/page.tsx` | 客户端组件，使用 `useParams()` |
+| 首页 | `src/app/[lang]/page.tsx` | 配合 `HomePageClient` 客户端组件 |
+| 登录 | `src/app/[lang]/login/page.tsx` | 配合 `LoginPageClient` |
+| 注册 | `src/app/[lang]/signup/page.tsx` | 配合 `SignupPageClient` |
+| 忘记密码 | `src/app/[lang]/forgot-password/page.tsx` | 配合 `ForgotPasswordPageClient` |
+| 重置密码（带 token） | `src/app/[lang]/reset-password/[token]/page.tsx` | 配合 `ResetPasswordPageClient` |
+| 隐私政策 | `src/app/[lang]/privacy/page.tsx` + `privacy-policy/page.tsx` | 配合 `PrivacyPageClient` |
+| 服务条款 | `src/app/[lang]/terms/page.tsx` + `terms-of-service/page.tsx` | 配合 `TermsPageClient` |
+| 用户资料 | `src/app/[lang]/profile/page.tsx` | 配合 `ProfilePageClient`，需要认证 |
+| 写文章 | `src/app/[lang]/write-article/page.tsx` | 配合 `WriteArticlePageClient`，需要认证 |
+| 我的文章 | `src/app/[lang]/my-articles/page.tsx` | 配合 `MyArticlesPageClient`，需要认证 |
+| 文章列表 | `src/app/[lang]/stories/page.tsx` | 配合 `StoriesPageClient` |
+| 球员列表 | `src/app/[lang]/players/page.tsx` | 配合 `PlayersPageClient` |
+| 排名 | `src/app/[lang]/rankings/page.tsx` | 配合 `RankingsPageClient` |
+| 直播比赛 | `src/app/[lang]/live-matches/page.tsx` | 配合 `LiveMatchesPageClient` |
+| 管理后台 | `src/app/[lang]/admin/page.tsx` | 配合 `AdminDashboardClient`，Admin only |
+| 文章管理 | `src/app/[lang]/admin/articles/page.tsx` | Admin only |
+| 球员管理 | `src/app/[lang]/admin/players/page.tsx` | Admin only |
+| 爬虫管理 | `src/app/[lang]/admin/scraping/page.tsx` | Admin only |
+
+> 注：`privacy-policy/page.tsx` 和 `terms-of-service/page.tsx` 是遗留路由（大小写路径不同），建议后续重定向到 `privacy/` 和 `terms/` 后删除。
+
+### ✅ NextAuth.js + Prisma 认证体系（新增）
+
+- **`src/lib/auth.ts`** — NextAuth 配置，支持 Google OAuth + Credentials（邮箱密码），使用 PrismaAdapter，JWT session
+- **`src/lib/prisma.ts`** — Prisma client 单例
+- **`src/contexts/AuthContext.tsx`** — 已迁移为 TypeScript，基于 `useSession` + `signIn/signOut`，接口兼容旧版
+- **`src/lib/api.js`** — 新的 API fetch 封装（用于客户端调用 Next.js Route Handlers）
+- **`prisma/schema.prisma`** — PostgreSQL schema，包含 User, Account, Session, VerificationToken, Player, Article, ScrapeLog 模型（从 PocketBase 迁移）
+- **`prisma.config.ts`** — Prisma 配置
 
 ### ✅ ESLint/TypeScript 问题修复（已完成）
 
@@ -98,7 +129,43 @@ const Page = () => {
 
 **禁止**: 在客户端组件中 `async` + `await params` + `useTranslations()` — ESLint 会报错（hooks 不能在 async 函数中调用）。
 
-### 2. `class-variance-authority` + TypeScript
+### 2. NextAuth.js + Prisma 认证体系
+
+认证架构已从 `AuthContext` + PocketBase 迁移到 **NextAuth.js v5 + Prisma + PostgreSQL**：
+
+```typescript
+// src/lib/auth.ts — NextAuth 配置
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),  // 使用 Prisma 适配器
+  providers: [
+    GoogleProvider({ ... }),       // Google OAuth
+    CredentialsProvider({ ... }),   // 邮箱+密码登录
+  ],
+  session: { strategy: "jwt" },
+});
+
+// src/contexts/AuthContext.tsx — 与旧版兼容的 Context wrapper
+// AuthProvider wraps SessionProvider + AuthContext
+// useAuth() hook 返回与旧版相同的接口 (currentUser, isAdmin, login, logout 等)
+```
+
+**关键文件**:
+- `src/lib/auth.ts` — NextAuth 配置
+- `src/lib/prisma.ts` — Prisma 客户端
+- `src/lib/api.js` — API fetch 封装（客户端用）
+- `src/contexts/AuthContext.tsx` — 兼容层
+
+**环境变量**（需要补充）：
+```env
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+DATABASE_URL=postgresql://...
+NEXTAUTH_SECRET=...
+NEXTAUTH_URL=http://localhost:3000
+AUTH_URL=http://localhost:3000
+```
+
+### 3. `class-variance-authority` + TypeScript
 
 ```typescript
 // ❌ 错误：有 index signature 时 className 类型为 unknown
@@ -119,7 +186,7 @@ type ButtonAllProps = VariantProps<typeof buttonVariants> & {
 }
 ```
 
-### 3. Radix UI primitives + forwardRef
+### 4. Radix UI primitives + forwardRef
 
 `@radix-ui/react-dropdown-menu` 的 `Portal`、`Sub`、`RadioGroup` 组件**不支持 `ref` prop**。对它们使用 `React.forwardRef` 会导致 TypeScript 报错。解决方案：使用纯函数组件包裹，不传递 ref。
 
@@ -135,7 +202,7 @@ const DropdownMenuPortal = ({ ...props }: ...) => (
 )
 ```
 
-### 4. shadcn/ui 组件 `"use client"` 指令
+### 5. shadcn/ui 组件 `"use client"` 指令
 
 所有需要交互的组件必须加 `"use client"`：
 - button, input, textarea, select, checkbox, radio-group
@@ -150,47 +217,101 @@ const DropdownMenuPortal = ({ ...props }: ...) => (
 
 ## 四、待完成的工作
 
+> 以下状态基于 **2026-04-14** 更新。大部分页面已迁移完毕，剩余工作大幅减少。
+
 ### 🔴 高优先级（阻断构建）
 
-**4.1 将剩余 18 个页面从 `pages-legacy/` 迁移到 App Router**
+**4.1 将剩余 3 个页面从 `pages-legacy/` 迁移到 App Router**
 
 路径：`apps/web/src/app/[lang]/`
 
-| 页面 | 原文件 | 目标文件 | 备注 |
+| 页面 | 原文件 | 目标文件 | 状态 |
 |------|--------|---------|------|
-| 首页 | `pages-legacy/HomePage.jsx` | `app/[lang]/page.tsx` | 覆盖现有占位页 |
-| 球员列表 | `pages-legacy/PlayersPage.jsx` | `app/[lang]/players/page.tsx` | |
-| 球员详情 | `pages-legacy/PlayerDetailPage.jsx` | `app/[lang]/players/[id]/page.tsx` | 动态路由 |
-| 排名 | `pages-legacy/RankingsPage.jsx` | `app/[lang]/rankings/page.tsx` | |
-| 直播比赛 | `pages-legacy/LiveMatchesPage.jsx` | `app/[lang]/live-matches/page.tsx` | |
-| 文章列表 | `pages-legacy/StoriesPage.jsx` | `app/[lang]/stories/page.tsx` | |
-| 写文章 | `pages-legacy/WriteArticlePage.jsx` | `app/[lang]/write-article/page.tsx` | 需要认证 |
-| 我的文章 | `pages-legacy/MyArticlesPage.jsx` | `app/[lang]/my-articles/page.tsx` | 需要认证 |
-| 用户资料 | `pages-legacy/UserProfilePage.jsx` | `app/[lang]/profile/page.tsx` | 需要认证 |
-| 登录 | `pages-legacy/LoginPage.jsx` | `app/[lang]/login/page.tsx` | |
-| 注册 | `pages-legacy/SignupPage.jsx` | `app/[lang]/signup/page.tsx` | |
-| 忘记密码 | `pages-legacy/ForgotPasswordPage.jsx` | `app/[lang]/forgot-password/page.tsx` | |
-| 重置密码 | `pages-legacy/ResetPasswordPage.jsx` | `app/[lang]/reset-password/page.tsx` | |
-| 管理后台 | `pages-legacy/AdminDashboard.jsx` | `app/[lang]/admin/page.tsx` | Admin only |
-| 爬虫管理 | `pages-legacy/AdminScrapingDashboard.jsx` | `app/[lang]/admin/scraping/page.tsx` | Admin only |
-| 文章管理 | `pages-legacy/AdminArticlesPage.jsx` | `app/[lang]/admin/articles/page.tsx` | Admin only |
-| 球员管理 | `pages-legacy/PlayerManagementPage.jsx` | `app/[lang]/admin/players/page.tsx` | Admin only |
-| Sitemap | `pages-legacy/SitemapPage.jsx` | `app/sitemap.ts` | Server Component |
+| ~~首页~~ | ~~`pages-legacy/HomePage.jsx`~~ | ~~`app/[lang]/page.tsx`~~ | ✅ 已完成 |
+| ~~球员列表~~ | ~~`pages-legacy/PlayersPage.jsx`~~ | ~~`app/[lang]/players/page.tsx`~~ | ✅ 已完成 |
+| 球员详情 | `pages-legacy/PlayerDetailPage.jsx` | `app/[lang]/players/[id]/page.tsx` | ⬜ 待迁移（动态路由） |
+| ~~排名~~ | ~~`pages-legacy/RankingsPage.jsx`~~ | ~~`app/[lang]/rankings/page.tsx`~~ | ✅ 已完成 |
+| ~~直播比赛~~ | ~~`pages-legacy/LiveMatchesPage.jsx`~~ | ~~`app/[lang]/live-matches/page.tsx`~~ | ✅ 已完成 |
+| ~~文章列表~~ | ~~`pages-legacy/StoriesPage.jsx`~~ | ~~`app/[lang]/stories/page.tsx`~~ | ✅ 已完成 |
+| ~~写文章~~ | ~~`pages-legacy/WriteArticlePage.jsx`~~ | ~~`app/[lang]/write-article/page.tsx`~~ | ✅ 已完成 |
+| ~~我的文章~~ | ~~`pages-legacy/MyArticlesPage.jsx`~~ | ~~`app/[lang]/my-articles/page.tsx`~~ | ✅ 已完成 |
+| ~~用户资料~~ | ~~`pages-legacy/UserProfilePage.jsx`~~ | ~~`app/[lang]/profile/page.tsx`~~ | ✅ 已完成 |
+| ~~登录~~ | ~~`pages-legacy/LoginPage.jsx`~~ | ~~`app/[lang]/login/page.tsx`~~ | ✅ 已完成 |
+| ~~注册~~ | ~~`pages-legacy/SignupPage.jsx`~~ | ~~`app/[lang]/signup/page.tsx`~~ | ✅ 已完成 |
+| ~~忘记密码~~ | ~~`pages-legacy/ForgotPasswordPage.jsx`~~ | ~~`app/[lang]/forgot-password/page.tsx`~~ | ✅ 已完成 |
+| ~~重置密码~~ | ~~`pages-legacy/ResetPasswordPage.jsx`~~ | ~~`app/[lang]/reset-password/page.tsx`~~ | ✅ 已完成 |
+| ~~管理后台~~ | ~~`pages-legacy/AdminDashboard.jsx`~~ | ~~`app/[lang]/admin/page.tsx`~~ | ✅ 已完成 |
+| ~~爬虫管理~~ | ~~`pages-legacy/AdminScrapingDashboard.jsx`~~ | ~~`app/[lang]/admin/scraping/page.tsx`~~ | ✅ 已完成 |
+| ~~文章管理~~ | ~~`pages-legacy/AdminArticlesPage.jsx`~~ | ~~`app/[lang]/admin/articles/page.tsx`~~ | ✅ 已完成 |
+| ~~球员管理~~ | ~~`pages-legacy/PlayerManagementPage.jsx`~~ | ~~`app/[lang]/admin/players/page.tsx`~~ | ✅ 已完成 |
+| ~~隐私政策~~ | ~~`pages-legacy/PrivacyPolicyPage.jsx`~~ | ~~`app/[lang]/privacy/page.tsx`~~ | ✅ 已完成 |
+| ~~服务条款~~ | ~~`pages-legacy/TermsOfServicePage.jsx`~~ | ~~`app/[lang]/terms/page.tsx`~~ | ✅ 已完成 |
+| Sitemap | `pages-legacy/SitemapPage.jsx` | `app/sitemap.ts` | ⬜ 待迁移 |
 
-**迁移规则**：
-1. `.jsx` → `.tsx`
-2. 客户端组件（使用 hooks）加 `'use client'`；服务端数据获取改为 async/await
-3. `useNavigate()` → `useRouter()` from `next/navigation`
-4. `Navigate to` → `router.push()` 或 `redirect()`
-5. `useParams()` 在客户端用 hook 获取，在服务端用 `await params`
-6. `<SEOHelmet>` → Next.js Metadata API（`export const metadata` 或 `generateMetadata`）
-7. 数据获取改为 async/await（Server Component）或保留 `useEffect`（Client Component）
+**4.2 清理重复路由**
 
-**4.2 将剩余 ~53 个 UI 组件从 `.jsx` 转换为 `.tsx`**
+当前存在两套隐私政策和服务条款路由，建议删除旧的并重定向：
+- `privacy-policy/page.tsx` → 重定向到 `privacy/`
+- `terms-of-service/page.tsx` → 重定向到 `terms/`
+
+```typescript
+// apps/web/src/app/[lang]/privacy-policy/page.tsx
+// 替换为 redirect
+import { redirect } from 'next/navigation';
+export default function Page({ params }) { redirect(`/${params.lang}/privacy`); }
+```
+
+**4.3 添加 Admin 路由中间件保护**
+
+当前 `apps/web/middleware.ts` 仅处理语言路由重定向，**未实现 Admin 路由保护**。需要添加：
+
+```typescript
+// apps/web/middleware.ts
+import { auth } from "@/lib/auth";
+import { NextResponse } from "next/server";
+
+export default auth((req) => {
+  const isAdmin = req.auth?.user?.role === "admin";
+  const isAdminRoute = req.nextUrl.pathname.includes("/admin");
+
+  if (isAdminRoute && !isAdmin) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+  return;
+});
+```
+
+**4.4 迁移 Express API → Next.js Route Handlers（爬虫相关）**
+
+| 原路由 | 目标文件 | 状态 |
+|--------|---------|------|
+| ~~`GET /api/articles`~~ | ~~`app/api/articles/route.ts`~~ | ✅ 已完成 |
+| ~~`GET/PATCH/DELETE /api/articles/[id]`~~ | ~~`app/api/articles/[id]/route.ts`~~ | ✅ 已完成 |
+| ~~`GET /api/players`~~ | ~~`app/api/players/route.ts`~~ | ✅ 已完成 |
+| ~~`GET /api/players/[id]`~~ | ~~`app/api/players/[id]/route.ts`~~ | ✅ 已完成 |
+| ~~`GET/PATCH /api/users/[id]`~~ | ~~`app/api/users/[id]/route.ts`~~ | ✅ 已完成 |
+| ~~`POST /api/auth/register`~~ | ~~`app/api/auth/register/route.ts`~~ | ✅ 已完成 |
+| ~~`POST /api/auth/password-reset`~~ | ~~`app/api/auth/password-reset/route.ts`~~ | ✅ 已完成 |
+| ~~`POST /api/auth/reset-password`~~ | ~~`app/api/auth/reset-password/route.ts`~~ | ✅ 已完成 |
+| ~~`GET/POST /api/auth/[...nextauth]`~~ | ~~`app/api/auth/[...nextauth]/route.ts`~~ | ✅ 已完成 |
+| `POST /scrape/all` | `app/api/scrape/route.ts` | ⬜ 待迁移 |
+| `POST /scrape/atp` | `app/api/scrape/atp/route.ts` | ⬜ 待迁移 |
+| `POST /scrape/wta` | `app/api/scrape/wta/route.ts` | ⬜ 待迁移 |
+| `POST /scrape/itf` | `app/api/scrape/itf/route.ts` | ⬜ 待迁移 |
+| `GET /scrape/status` | `app/api/scrape/status/route.ts` | ⬜ 待迁移 |
+| `GET /scrape/logs` | `app/api/scrape/logs/route.ts` | ⬜ 待迁移 |
+| `GET /scrape/stats` | `app/api/scrape/stats/route.ts` | ⬜ 待迁移 |
+| `GET /health` | `app/api/health/route.ts` | ⬜ 待迁移 |
+
+---
+
+### 🟡 中优先级
+
+**4.5 将剩余 ~50 个 UI 组件从 `.jsx` 转换为 `.tsx`**
 
 路径：`apps/web/src/components/ui/`
 
-使用脚本批量转换：
+当前状态：36 个 `.tsx` + 52 个 `.jsx`。批量转换参考：
 ```bash
 cd apps/web/src/components/ui
 for f in *.jsx; do
@@ -198,27 +319,35 @@ for f in *.jsx; do
 done
 ```
 
-或者逐个手动转换，重点关注：
-1. 添加 `"use client"` 指令（交互组件）
-2. 类型化 props
-3. 移除 `import React from 'react'`（Next.js 不需要）
+重点关注交互组件（需要 `"use client"`）：input, textarea, select, dialog, tabs, accordion, tooltip, carousel 等。
 
-**4.3 迁移 Express API → Next.js Route Handlers**
+**4.6 配置 sitemap.ts**
 
-路径：`apps/web/src/app/api/`
+使用 Next.js 内置 sitemap 生成，替换现有的 `SitemapPage.jsx`：
+```typescript
+// apps/web/src/app/sitemap.ts
+import { MetadataRoute } from 'next';
 
-| 原路由 | 目标文件 |
-|--------|---------|
-| `POST /scrape/all` | `app/api/scrape/route.ts` |
-| `POST /scrape/atp` | `app/api/scrape/atp/route.ts` |
-| `POST /scrape/wta` | `app/api/scrape/wta/route.ts` |
-| `POST /scrape/itf` | `app/api/scrape/itf/route.ts` |
-| `GET /scrape/status` | `app/api/scrape/status/route.ts` |
-| `GET /scrape/logs` | `app/api/scrape/logs/route.ts` |
-| `GET /scrape/stats` | `app/api/scrape/stats/route.ts` |
-| `GET /health` | `app/api/health/route.ts` |
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = 'http://localhost:3000';
+  const langs = ['en', 'zh', 'ja', 'es', 'fr'];
+  // 动态生成各语言路由...
+}
+```
 
-**4.4 删除遗留 Vite 文件**
+**4.7 迁移定时任务**
+
+将 `apps/api/src/utils/scheduler.js` 的 node-cron 逻辑迁移到独立脚本：
+```
+scripts/cron-scrape.ts
+```
+通过 cron 调用 `POST /api/scrape/all`（带 `CRON_SECRET` 鉴权）。
+
+---
+
+### 🟢 低优先级
+
+**4.8 删除遗留 Vite 文件**
 
 构建验证通过后，删除：
 ```
@@ -229,36 +358,11 @@ apps/web/src/App.jsx
 apps/web/src/pages-legacy/  （迁移完成后）
 ```
 
----
+**4.9 迁移 SEO 实现**
 
-### 🟡 中优先级
+将 `SEOHelmet.jsx` 组件替换为 Next.js Metadata API（已部分完成，部分页面使用 `generateMetadata`）。
 
-**4.5 设置 NextAuth.js (Auth.js) 认证**
-
-替换现有的 `AuthContext.jsx`：
-- 配置 PocketBase Provider
-- 设置 Session Provider
-- 实现登录/注册/密码重置页面
-- Admin 路由保护通过 middleware 实现
-
-**4.6 迁移定时任务**
-
-将 `apps/api/src/utils/scheduler.js` 的 node-cron 逻辑迁移到独立脚本：
-```
-scripts/cron-scrape.ts
-```
-
-通过 cron 调用 `POST /api/scrape/all`（带 `CRON_SECRET` 鉴权）。
-
-**4.7 配置 sitemap.ts**
-
-使用 Next.js 内置 sitemap 生成，替换现有的 `SitemapPage.jsx`。
-
----
-
-### 🟢 低优先级
-
-**4.8 设置 PM2 部署配置**
+**4.10 设置 PM2 部署配置**
 
 创建 `ecosystem.config.cjs`：
 ```javascript
@@ -276,18 +380,6 @@ module.exports = {
 };
 ```
 
-**4.9 迁移 SEO 实现**
-
-将 `SEOHelmet.jsx` 组件替换为 Next.js Metadata API：
-```typescript
-export async function generateMetadata({ params }) {
-  return {
-    title: '...',
-    description: '...',
-  }
-}
-```
-
 ---
 
 ## 五、文件对照表
@@ -296,16 +388,19 @@ export async function generateMetadata({ params }) {
 
 | 旧路径 | 新路径 | 状态 |
 |--------|--------|------|
-| `src/main.jsx` | `app/layout.tsx` | 待迁移 |
-| `src/App.jsx` | `app/[lang]/page.tsx` 等 | 待迁移 |
-| `src/lib/utils.js` | `src/lib/utils.ts` | 待迁移 |
-| `src/lib/pocketbaseClient.js` | `src/lib/pocketbase.ts` | 待迁移 |
-| `src/lib/structuredData.js` | `src/lib/structuredData.ts` | 待迁移 |
-| `src/lib/apiServerClient.js` | 删除（不再需要） | 待删除 |
-| `src/contexts/AuthContext.jsx` | NextAuth.js | 待迁移 |
-| `src/i18n/i18n.ts` | next-intl 配置 | 已适配 |
-| `apps/api/src/routes/scrape.js` | `app/api/scrape/route.ts` | 待迁移 |
-| `apps/api/src/routes/health.js` | `app/api/health/route.ts` | 待迁移 |
+| `src/main.jsx` | `app/layout.tsx` | ✅ 已完成 |
+| `src/App.jsx` | `app/[lang]/page.tsx` 等 | ✅ 已完成 |
+| `src/lib/utils.js` | `src/lib/utils.ts` | ✅ 已完成 |
+| `src/lib/pocketbaseClient.js` | `src/lib/pocketbase.ts` | ✅ 已完成 |
+| `src/lib/structuredData.js` | `src/lib/structuredData.ts` | ✅ 已完成 |
+| `src/lib/apiServerClient.js` | 删除（不再需要） | ✅ 已完成 |
+| `src/lib/api.js` | `src/lib/api.js` | ✅ 新建完成 |
+| `src/lib/auth.ts` | `src/lib/auth.ts` | ✅ 新建完成 |
+| `src/lib/prisma.ts` | `src/lib/prisma.ts` | ✅ 新建完成 |
+| `src/contexts/AuthContext.jsx` | `src/contexts/AuthContext.tsx` | ✅ 已迁移为 NextAuth |
+| `src/i18n/i18n.ts` | next-intl 配置 | ✅ 已适配 |
+| `apps/api/src/routes/scrape.js` | `app/api/scrape/route.ts` | ⬜ 待迁移 |
+| `apps/api/src/routes/health.js` | `app/api/health/route.ts` | ⬜ 待迁移 |
 
 ---
 
