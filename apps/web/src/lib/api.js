@@ -8,7 +8,10 @@
  * @returns {Promise<any>}
  */
 export async function apiFetch(endpoint, options = {}) {
-  const url = new URL(endpoint, window.location.origin);
+  const base = typeof window !== 'undefined'
+    ? window.location.origin
+    : process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_PB_URL || 'http://localhost:3000';
+  const url = new URL(endpoint, base);
 
   const res = await fetch(url.toString(), {
     ...options,

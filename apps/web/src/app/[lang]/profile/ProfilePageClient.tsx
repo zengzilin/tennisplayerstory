@@ -6,8 +6,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
-import { usePlayerData } from '@/hooks/usePlayerData.js';
-import pb from '@/lib/pocketbaseClient';
+import { usePlayerData } from '@/hooks/usePlayerData';
 import PlayerCard from '@/components/PlayerCard.tsx';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -68,21 +67,17 @@ const ProfilePageClient = ({ lang }: { lang: LangCode }) => {
   const favoritePlayerIds = currentUser?.favorite_players || [];
   const favoritePlayers = players.filter(p => favoritePlayerIds.includes(p.id));
 
-  const avatarUrl = currentUser?.avatar
-    ? pb.files.getUrl(currentUser, currentUser.avatar)
-    : null;
+  const avatarUrl = currentUser?.avatar || null;
 
   const fetchMyArticles = async () => {
     if (!currentUser) return;
     setArticlesLoading(true);
     setArticlesError(null);
     try {
-      const result = await pb.collection('articles').getList(1, 50, {
-        filter: `author = "${currentUser.id}"`,
-        sort: '-created_at',
-        $autoCancel: false
-      });
-      setArticles(result.items);
+      const res = await fetch(`/api/articles?authorId=${currentUser.id}`);
+      if (!res.ok) throw new Error('Failed to fetch articles');
+      const data = await res.json();
+      setArticles(data.data || []);
     } catch (err) {
       console.error('Error fetching user articles:', err);
       setArticlesError(t('common.error'));
@@ -139,7 +134,12 @@ const ProfilePageClient = ({ lang }: { lang: LangCode }) => {
         tags: tagsArray
       };
 
-      await pb.collection('articles').update(editingArticle.id, updateData, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${editingArticle.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData),
+      });
+      if (!res.ok) throw new Error('Failed to update article');
       toast.success(t('common.success'));
       setEditingArticle(null);
       fetchMyArticles();
@@ -155,7 +155,10 @@ const ProfilePageClient = ({ lang }: { lang: LangCode }) => {
     if (!deletingArticle) return;
     setIsProcessingArticle(true);
     try {
-      await pb.collection('articles').delete(deletingArticle.id, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${deletingArticle.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete article');
       toast.success(t('common.success'));
       setDeletingArticle(null);
       fetchMyArticles();

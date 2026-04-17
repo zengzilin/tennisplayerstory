@@ -71,15 +71,22 @@ model User {
 }
 
 model Player {
-  id         String   @id @default(cuid())
-  name       String
-  country    String
-  ranking    Int?
-  points     Int?
-  source     String   // "atp" | "wta" | "itf"
-  image      String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id               String   @id @default(cuid())
+  name             String
+  country          String   @default("")
+  ranking          Int?
+  points           Int?     @default(0)
+  source           String   // "atp" | "wta" | "itf"
+  image            String?
+  nationalityCode  String?  @default("")
+  age              Int?     @default(0)
+  profileUrl       String?  @db.Text
+  rankingDisplay   String?  @default("")
+  pointsDisplay    String?  @default("")
+  sourceLabel      String?  @default("")
+  lastUpdated      DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([source])
   @@index([ranking])
@@ -103,13 +110,20 @@ model Article {
 }
 
 model ScrapeLog {
-  id        String   @id @default(cuid())
-  source    String   // "atp" | "wta" | "itf"
-  status    String   // "success" | "error"
-  players   Int      @default(0)
-  errors    String?  @db.Text
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  source      String   // "atp" | "wta" | "itf"
+  status      String   // "success" | "error" | "partial"
+  players     Int      @default(0)
+  created     Int      @default(0)
+  updated     Int      @default(0)
+  failed      Int      @default(0)
+  errors      String?  @db.Text
+  duration    Int?     @default(0)  // in milliseconds
+  syncResult  String?  @db.Text    // JSON string of sync result
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([source])
   @@index([createdAt])
+  @@index([status])
 }

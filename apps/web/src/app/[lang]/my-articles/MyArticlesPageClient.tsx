@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
-import pb from '@/lib/pocketbaseClient';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -54,12 +53,10 @@ const MyArticlesPageClient = ({ lang }: { lang: LangCode }) => {
   const fetchArticles = async () => {
     if (!currentUser?.id) return;
     try {
-      const records = await pb.collection('articles').getFullList({
-        filter: `author = "${currentUser.id}"`,
-        sort: '-created',
-        $autoCancel: false
-      });
-      setArticles(records);
+      const res = await fetch(`/api/articles?authorId=${currentUser.id}`);
+      if (!res.ok) throw new Error('Failed to fetch articles');
+      const data = await res.json();
+      setArticles(data.data || []);
     } catch (error) {
       console.error('Error fetching articles:', error);
       toast.error(t('common.error'));
@@ -81,7 +78,12 @@ const MyArticlesPageClient = ({ lang }: { lang: LangCode }) => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      await pb.collection('articles').update(editingArticle.id, editFormData, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${editingArticle.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editFormData),
+      });
+      if (!res.ok) throw new Error('Failed to update article');
       toast.success(t('common.success'));
       setEditingArticle(null);
       fetchArticles();
@@ -96,7 +98,10 @@ const MyArticlesPageClient = ({ lang }: { lang: LangCode }) => {
   const handleDeleteConfirm = async () => {
     setIsDeleting(true);
     try {
-      await pb.collection('articles').delete(deletingArticle.id, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${deletingArticle.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete article');
       toast.success(t('common.success'));
       setDeletingArticle(null);
       fetchArticles();

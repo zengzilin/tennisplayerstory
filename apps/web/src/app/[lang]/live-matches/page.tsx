@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import LiveMatchesPageClient from '../LiveMatchesPageClient';
+import LiveMatchesPageClient from './LiveMatchesPageClient';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 

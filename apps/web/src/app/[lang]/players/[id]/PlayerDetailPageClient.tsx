@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, ArrowLeft, CalendarDays, Trophy, UserRound, BarChart3 } from 'lucide-react';
-import { usePlayerDetail } from '@/hooks/usePlayerData.js';
+import { usePlayerDetail } from '@/hooks/usePlayerData';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 

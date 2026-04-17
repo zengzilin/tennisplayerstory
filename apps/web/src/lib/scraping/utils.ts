@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import prisma from '@/lib/prisma';
 
 const DEFAULT_USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
@@ -271,15 +272,51 @@ export async function updateScrapeLog(
   });
 }
 
-// --- Batch Sync ---
+// --- Prisma-based Sync Function ---
 
-export async function syncPlayerData(
-  pb: import('pocketbase').default,
-  players: PlayerRankData[],
+export async function scrapeAndSyncPlayers(
   source: 'atp' | 'wta' | 'itf'
 ): Promise<SyncResult> {
   const result: SyncResult = { created: 0, updated: 0, failed: 0, errors: [] };
 
+  let players: PlayerRankData[] = [];
+
+  try {
+    if (source === 'atp') {
+      // Scrape ATP from ESPN
+      const response = await fetchWithRetry('https://www.espn.com/tennis/rankings', {
+        referer: 'https://www.espn.com/tennis/',
+      });
+      const html = await response.text();
+      players = parseEspnRankings(html, 'atp');
+    } else if (source === 'wta') {
+      // Scrape WTA from wtatennis.com
+      const response = await fetchWithRetry('https://www.wtatennis.com/rankings/singles', {
+        referer: 'https://www.wtatennis.com/',
+      });
+      const html = await response.text();
+      players = parseWtaRankings(html);
+    } else if (source === 'itf') {
+      // ITF uses ESPN WTA rankings (itftennis.com blocks server requests)
+      const response = await fetchWithRetry('https://www.espn.com/tennis/rankings/_/type/wta', {
+        referer: 'https://www.espn.com/tennis/',
+      });
+      const html = await response.text();
+      players = parseEspnRankings(html, 'atp').map(p => ({ ...p, source: 'itf' }));
+    }
+  } catch (err) {
+    result.failed = 1;
+    result.errors.push(`Failed to fetch ${source} rankings: ${err}`);
+    return result;
+  }
+
+  if (players.length === 0) {
+    result.failed = 1;
+    result.errors.push(`No players scraped from ${source}`);
+    return result;
+  }
+
+  // Sync each player to database using Prisma
   for (const player of players) {
     const validation = validatePlayerData(player);
     if (!validation.valid) {
@@ -292,31 +329,58 @@ export async function syncPlayerData(
       const normalized = normalizePlayerForDb(player);
 
       // Find existing player by name + source
-      const existing = await pb.collection('players').getFirstListItem(
-        `name="${player.name}" && source="${source}"`,
-        { $autoCancel: false }
-      );
+      const existing = await prisma.player.findFirst({
+        where: {
+          name: player.name,
+          source: player.source,
+        },
+      });
 
-      // Update existing
-      await pb.collection('players').update(existing.id, normalized);
-      result.updated++;
-    } catch (err) {
-      // Not found — create new
-      if ((err as { status?: number }).status === 404) {
-        try {
-          const normalized = normalizePlayerForDb(player);
-          await pb.collection('players').create(normalized);
-          result.created++;
-        } catch (createErr) {
-          result.failed++;
-          result.errors.push(`${player.name}: create failed — ${createErr}`);
-        }
+      if (existing) {
+        // Update existing
+        await prisma.player.update({
+          where: { id: existing.id },
+          data: {
+            ranking: normalized.ranking,
+            points: normalized.points,
+            country: normalized.country,
+            nationalityCode: normalized.nationalityCode,
+            age: normalized.age,
+            profileUrl: normalized.profileUrl,
+            rankingDisplay: normalized.rankingDisplay,
+            pointsDisplay: normalized.pointsDisplay,
+            sourceLabel: normalized.sourceLabel,
+            lastUpdated: new Date(),
+          },
+        });
+        result.updated++;
       } else {
-        result.failed++;
-        result.errors.push(`${player.name}: ${err}`);
+        // Create new
+        await prisma.player.create({
+          data: {
+            name: normalized.name,
+            ranking: normalized.ranking,
+            points: normalized.points,
+            country: normalized.country,
+            nationalityCode: normalized.nationalityCode,
+            age: normalized.age,
+            source: normalized.source,
+            profileUrl: normalized.profileUrl,
+            rankingDisplay: normalized.rankingDisplay,
+            pointsDisplay: normalized.pointsDisplay,
+            sourceLabel: normalized.sourceLabel,
+          },
+        });
+        result.created++;
       }
+    } catch (err) {
+      result.failed++;
+      result.errors.push(`${player.name}: ${err}`);
     }
   }
+
+  // Store total for logging
+  (result as { total: number }).total = players.length;
 
   return result;
 }

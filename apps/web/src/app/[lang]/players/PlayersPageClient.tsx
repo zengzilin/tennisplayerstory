@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import PlayerCard from '@/components/PlayerCard.tsx';
 import SearchBar from '@/components/SearchBar.jsx';
 import FilterBar from '@/components/FilterBar.jsx';
-import { usePlayerData } from '@/hooks/usePlayerData.js';
+import { usePlayerData } from '@/hooks/usePlayerData';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';

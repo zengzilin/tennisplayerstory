@@ -1,27 +1,29 @@
 import { useState, useEffect } from 'react';
 
-/**
- * @typedef {Object} Player
- * @property {string} name
- * @property {string} country
- */
+interface Player {
+  name: string;
+  country: string;
+}
 
-/**
- * @typedef {Object} Match
- * @property {number} id
- * @property {{ player1: Player, player2: Player, score: { player1: number[], player2: number[] } }} score
- * @property {string} status
- * @property {string} tournament
- * @property {string} court
- * @property {string} round
- * @property {string} [startTime]
- */
+interface Score {
+  player1: number[];
+  player2: number[];
+}
 
-/**
- * @returns {{ matches: Match[], loading: boolean }}
- */
+export interface Match {
+  id: number;
+  player1: Player;
+  player2: Player;
+  score: Score;
+  status: string;
+  tournament: string;
+  court: string;
+  round: string;
+  startTime?: string;
+}
+
 export const useMatchData = () => {
-  const [matches, setMatches] = /** @type {Match[]} */ ([]);
+  const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -10,8 +10,8 @@ import MatchCard from '@/components/MatchCard.jsx';
 import ArticlePreview from '@/components/ArticlePreview';
 import ImageWithAlt from '@/components/ImageWithAlt';
 import { ArrowRight, Trophy, Users, TrendingUp } from 'lucide-react';
-import { useMatchData } from '@/hooks/useMatchData.js';
-import { useStoryData } from '@/hooks/useStoryData.js';
+import { useMatchData } from '@/hooks/useMatchData';
+import { useStoryData } from '@/hooks/useStoryData';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 

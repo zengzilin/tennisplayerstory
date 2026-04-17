@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useStoryData } from '@/hooks/useStoryData.js';
+import { useStoryData } from '@/hooks/useStoryData';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 

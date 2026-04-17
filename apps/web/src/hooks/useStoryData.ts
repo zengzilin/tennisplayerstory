@@ -1,23 +1,37 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiFetch } from '@/lib/api';
 
-/**
- * @returns {{ stories: any[], loading: boolean, error: string | null, refetch: () => void }}
- */
+interface ArticleItem {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  author: string;
+  authorId: string;
+  status: string;
+  tags: string[];
+  coverImage: string;
+  viewCount: number;
+  created: string;
+  updated: string;
+  publishedAt: string | null;
+}
+
 export const useStoryData = () => {
-  const [stories, setStories] = /** @type {any[]} */ ([]);
+  const [stories, setStories] = useState<ArticleItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = /** @type {string | null} */ (null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchStories = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await apiFetch('/api/articles?status=approved&sort=-created');
-      setStories(data.items);
+      setStories(data.items || []);
     } catch (err) {
       console.error('Error fetching stories:', err);
-      setError(err.message || 'Error fetching stories');
+      setError(err instanceof Error ? err.message : 'Error fetching stories');
     } finally {
       setLoading(false);
     }

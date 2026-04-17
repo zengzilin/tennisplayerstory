@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
-import pb from '@/lib/pocketbaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -73,24 +72,27 @@ const AdminDashboardClient = ({ lang }: { lang: LangCode }) => {
     setLoading(true);
     setError(null);
     try {
-      const articlesResult = await pb.collection('articles').getList(1, 50, {
-        sort: '-created',
-        expand: 'author',
-        $autoCancel: false
-      });
-      setArticles(articlesResult.items);
+      const [articlesRes, playersRes, totalArticlesRes, pendingArticlesRes] = await Promise.all([
+        fetch('/api/articles?perPage=50'),
+        fetch('/api/players?perPage=1'),
+        fetch('/api/articles?perPage=1'),
+        fetch('/api/articles?perPage=1&status=pending')
+      ]);
 
-      const playersResult = await pb.collection('players').getList(1, 1, { $autoCancel: false });
-      const allArticlesResult = await pb.collection('articles').getList(1, 1, { $autoCancel: false });
-      const pendingArticlesResult = await pb.collection('articles').getList(1, 1, {
-        filter: "status='pending'",
-        $autoCancel: false
-      });
+      if (!articlesRes.ok || !playersRes.ok || !totalArticlesRes.ok || !pendingArticlesRes.ok) {
+        throw new Error('Failed to fetch dashboard data');
+      }
 
+      const articlesData = await articlesRes.json();
+      const playersData = await playersRes.json();
+      const totalArticlesData = await totalArticlesRes.json();
+      const pendingArticlesData = await pendingArticlesRes.json();
+
+      setArticles(articlesData.data || []);
       setStats({
-        totalPlayers: playersResult.totalItems,
-        totalArticles: allArticlesResult.totalItems,
-        pendingArticles: pendingArticlesResult.totalItems
+        totalPlayers: playersData.total || 0,
+        totalArticles: totalArticlesData.total || 0,
+        pendingArticles: pendingArticlesData.total || 0
       });
 
     } catch (err) {
@@ -137,7 +139,12 @@ const AdminDashboardClient = ({ lang }: { lang: LangCode }) => {
         status: editForm.status
       };
 
-      await pb.collection('articles').update(editingArticle.id, updateData, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${editingArticle.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData),
+      });
+      if (!res.ok) throw new Error('Failed to update article');
 
       toast.success(t('common.success'));
       setEditingArticle(null);
@@ -155,7 +162,10 @@ const AdminDashboardClient = ({ lang }: { lang: LangCode }) => {
     setIsProcessing(true);
 
     try {
-      await pb.collection('articles').delete(deletingArticle.id, { $autoCancel: false });
+      const res = await fetch(`/api/articles/${deletingArticle.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete article');
       toast.success(t('common.success'));
       setDeletingArticle(null);
       fetchDashboardData();
@@ -369,7 +379,7 @@ const AdminDashboardClient = ({ lang }: { lang: LangCode }) => {
                             </TableCell>
                             <TableCell>{article.player_name}</TableCell>
                             <TableCell>
-                              {article.expand?.author?.name || article.expand?.author?.email || 'Unknown'}
+                              {article.authorName || article.authorEmail || article.author || 'Unknown'}
                             </TableCell>
                             <TableCell className="text-muted-foreground text-sm">
                               {formatDate(article.created)}

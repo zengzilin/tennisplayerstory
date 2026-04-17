@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import MatchCard from '@/components/MatchCard.jsx';
-import { useMatchData } from '@/hooks/useMatchData.js';
+import { useMatchData } from '@/hooks/useMatchData';
 import { Loader2, Filter } from 'lucide-react';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';

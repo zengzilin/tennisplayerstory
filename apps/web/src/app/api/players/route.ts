@@ -12,6 +12,7 @@ export async function GET(request: Request) {
     const skip = (page - 1) * pageSize;
     const name = searchParams.get('name');
     const country = searchParams.get('country');
+    const checkDuplicate = searchParams.get('checkDuplicate') === 'true';
 
     const where: { source?: string; name?: { contains: string; mode: 'insensitive' }; country?: string } = {};
     if (source) {
@@ -22,6 +23,17 @@ export async function GET(request: Request) {
     }
     if (country) {
       where.country = country;
+    }
+
+    // Handle duplicate check
+    if (checkDuplicate && name && source) {
+      const existing = await prisma.player.findFirst({
+        where: {
+          name: { equals: name, mode: 'insensitive' },
+          source,
+        },
+      });
+      return NextResponse.json({ data: existing });
     }
 
     const [items, total] = await Promise.all([

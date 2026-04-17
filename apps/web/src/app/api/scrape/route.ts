@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getScrapingPbClient, checkPbHealth } from '@/lib/pocketbase-scraping';
+import prisma from '@/lib/prisma';
 
 function validateCronSecret(request: NextRequest): boolean {
   const secret = request.headers.get('x-cron-secret');
@@ -18,25 +18,20 @@ export async function GET(request: NextRequest) {
   // GET status — last update timestamps per source
   if (action === 'status') {
     try {
-      const { pb, cleanup } = await getScrapingPbClient();
-      defer(cleanup);
-
       const sources = ['atp', 'wta', 'itf'];
       const status: Record<string, { lastUpdate: string | null; lastStatus: string | null }> = {};
 
       for (const source of sources) {
-        try {
-          const records = await pb
-            .collection('scrape_logs')
-            .getFirstListItem(`source="${source}"`, { sort: '-created', $autoCancel: false });
+        const lastLog = await prisma.scrapeLog.findFirst({
+          where: { source },
+          orderBy: { createdAt: 'desc' },
+          select: { createdAt: true, status: true },
+        });
 
-          status[source] = {
-            lastUpdate: records.created,
-            lastStatus: records.status,
-          };
-        } catch {
-          status[source] = { lastUpdate: null, lastStatus: null };
-        }
+        status[source] = {
+          lastUpdate: lastLog?.createdAt?.toISOString() ?? null,
+          lastStatus: lastLog?.status ?? null,
+        };
       }
 
       return NextResponse.json({ status: 'ok', data: status });
@@ -52,24 +47,26 @@ export async function GET(request: NextRequest) {
   if (action === 'logs') {
     const page = parseInt(searchParams.get('page') || '1', 10);
     const perPage = Math.min(parseInt(searchParams.get('perPage') || '20', 10), 100);
+    const skip = (page - 1) * perPage;
 
     try {
-      const { pb, cleanup } = await getScrapingPbClient();
-      defer(cleanup);
-
-      const result = await pb.collection('scrape_logs').getList(page, perPage, {
-        sort: '-created',
-        $autoCancel: false,
-      });
+      const [logs, total] = await Promise.all([
+        prisma.scrapeLog.findMany({
+          orderBy: { createdAt: 'desc' },
+          skip,
+          take: perPage,
+        }),
+        prisma.scrapeLog.count(),
+      ]);
 
       return NextResponse.json({
         status: 'ok',
         data: {
-          logs: result.items,
-          total: result.totalItems,
-          page: result.page,
-          perPage: result.perPage,
-          totalPages: result.totalPages,
+          logs,
+          total,
+          page,
+          perPage,
+          totalPages: Math.ceil(total / perPage),
         },
       });
     } catch (err) {
@@ -83,34 +80,40 @@ export async function GET(request: NextRequest) {
   // GET stats — total players count and recent updates
   if (action === 'stats') {
     try {
-      const { pb, cleanup } = await getScrapingPbClient();
-      defer(cleanup);
-
       const sources = ['atp', 'wta', 'itf'] as const;
       const stats: Record<string, { total: number; lastUpdate: string | null }> = {};
 
       for (const source of sources) {
-        try {
-          const total = await pb.collection('players').getList(1, 1, {
-            filter: `source="${source}"`,
-            $autoCancel: false,
-          });
+        const [total, lastLog] = await Promise.all([
+          prisma.player.count({ where: { source } }),
+          prisma.scrapeLog.findFirst({
+            where: { source, status: 'success' },
+            orderBy: { createdAt: 'desc' },
+            select: { createdAt: true },
+          }),
+        ]);
 
-          const lastRecord = await pb.collection('scrape_logs').getFirstListItem(
-            `source="${source}" && status="success"`,
-            { sort: '-created', $autoCancel: false }
-          );
-
-          stats[source] = {
-            total: total.totalItems,
-            lastUpdate: lastRecord?.created ?? null,
-          };
-        } catch {
-          stats[source] = { total: 0, lastUpdate: null };
-        }
+        stats[source] = {
+          total,
+          lastUpdate: lastLog?.createdAt?.toISOString() ?? null,
+        };
       }
 
-      return NextResponse.json({ status: 'ok', data: stats });
+      // Calculate overall stats
+      const totalPlayers = await prisma.player.count();
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const recentUpdates = await prisma.scrapeLog.count({
+        where: { createdAt: { gte: oneDayAgo } },
+      });
+
+      return NextResponse.json({
+        status: 'ok',
+        data: {
+          sources: stats,
+          totalPlayers,
+          recentUpdates,
+        },
+      });
     } catch (err) {
       return NextResponse.json(
         { error: `Database error: ${err instanceof Error ? err.message : String(err)}` },
@@ -129,13 +132,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const pbHealth = await checkPbHealth();
-    if (!pbHealth) {
-      return NextResponse.json({ error: 'PocketBase is not available' }, { status: 503 });
-    }
-
     // Trigger all three sources by calling their respective route handlers
-    // In Next.js App Router, we can use fetch to call the internal routes
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const cronSecret = process.env.CRON_SECRET;
 
@@ -182,9 +179,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-function defer(fn: () => void): void {
-  // Simple cleanup helper — runs after the function returns
-  setTimeout(fn, 0);
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiFetch } from '@/lib/api';
-import { normalizePlayerRecord } from '@/hooks/usePlayerData.js';
+import { normalizePlayerRecord } from '@/hooks/usePlayerData';
 
 export const useRankingData = () => {
   const [rankings, setRankings] = useState({ atp: [], wta: [] });

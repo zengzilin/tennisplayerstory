@@ -60,6 +60,45 @@ export async function PATCH(
   }
 }
 
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const isAdmin = (session.user as { role?: string }).role === 'admin';
+    if (!isAdmin) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const { id } = await params;
+    const body = await request.json();
+    const { name, country, ranking, points, source, image } = body;
+
+    const updateData: { name?: string; country?: string; ranking?: number | null; points?: number | null; source?: string; image?: string | null } = {};
+    if (name !== undefined) updateData.name = name;
+    if (country !== undefined) updateData.country = country;
+    if (ranking !== undefined) updateData.ranking = ranking ? parseInt(String(ranking), 10) : null;
+    if (points !== undefined) updateData.points = points ? parseInt(String(points), 10) : null;
+    if (source !== undefined) updateData.source = source;
+    if (image !== undefined) updateData.image = image ?? null;
+
+    const updated = await prisma.player.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    console.error(`PUT /api/players/${id} error:`, error);
+    return NextResponse.json({ error: 'Failed to update player' }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

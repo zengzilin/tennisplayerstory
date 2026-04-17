@@ -299,6 +299,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../src/app/api/health/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/health">> = Specific
+  const handler = {} as typeof import("../../src/app/api/health/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/api/players/[id]/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/players/[id]">> = Specific
@@ -312,6 +321,42 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/players">> = Specific
   const handler = {} as typeof import("../../src/app/api/players/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/scrape/atp/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scrape/atp">> = Specific
+  const handler = {} as typeof import("../../src/app/api/scrape/atp/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/scrape/itf/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scrape/itf">> = Specific
+  const handler = {} as typeof import("../../src/app/api/scrape/itf/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/scrape/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scrape">> = Specific
+  const handler = {} as typeof import("../../src/app/api/scrape/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/scrape/wta/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/scrape/wta">> = Specific
+  const handler = {} as typeof import("../../src/app/api/scrape/wta/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

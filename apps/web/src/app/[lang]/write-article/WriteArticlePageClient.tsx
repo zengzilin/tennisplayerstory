@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslations } from 'next-intl';
-import pb from '@/lib/pocketbaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -73,7 +72,16 @@ const WriteArticlePageClient = ({ lang }: { lang: LangCode }) => {
 
       console.log('Attempting to submit article with data:', articleData);
 
-      const record = await pb.collection('articles').create(articleData, { $autoCancel: false });
+      const res = await fetch('/api/articles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(articleData),
+      });
+      const record = await res.json();
+
+      if (!res.ok) {
+        throw new Error(record.message || 'Failed to submit article');
+      }
 
       console.log('Article successfully created:', record);
 
@@ -83,14 +91,11 @@ const WriteArticlePageClient = ({ lang }: { lang: LangCode }) => {
 
     } catch (err) {
       console.error('Failed to submit article. Error details:', err);
-      console.error('PocketBase error response data:', err?.response?.data || err?.data);
 
-      const pbErrorMessage = err?.response?.message || err?.message;
-      if (pbErrorMessage) {
-        console.error('Specific error message:', pbErrorMessage);
-      }
+      const errorMessage = err instanceof Error ? err.message : (err?.response?.message || err?.message || 'Unknown error');
+      console.error('Specific error message:', errorMessage);
 
-      setError(t('articles.submitError'));
+      setError(t('articles.submitError') || errorMessage);
     } finally {
       setIsSubmitting(false);
     }
