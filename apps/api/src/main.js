@@ -4,11 +4,16 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
 import { errorMiddleware } from './middleware/index.js';
 import logger from './utils/logger.js';
 import { initializeScheduler } from './utils/scheduler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -34,16 +39,33 @@ process.on('SIGTERM', async () => {
 	process.exit();
 });
 
-app.use(helmet());
+app.use(helmet({
+	contentSecurityPolicy: false, // Disabled to allow React frontend assets to load properly
+}));
 app.use(cors({
-	origin: process.env.CORS_ORIGIN,
+	origin: process.env.CORS_ORIGIN || '*',
 	credentials: true,
 }));
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', routes());
+// API Routes
+app.use('/hcgi/api', routes());
+
+// Serve React static files
+const staticPath = path.join(__dirname, '../../web/dist');
+app.use(express.static(staticPath));
+
+// Catch-all middleware for client-side routing
+// Serves index.html for all non-API routes to enable client-side routing
+app.use((req, res, next) => {
+	// Don't serve index.html for API routes that weren't found
+	if (req.path.startsWith('/hcgi/api')) {
+		return next();
+	}
+	res.sendFile(path.join(staticPath, 'index.html'));
+});
 
 app.use(errorMiddleware);
 
@@ -51,7 +73,7 @@ app.use((req, res) => {
 	res.status(404).json({ error: 'Route not found' });
 });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
 	logger.info(`🚀 API Server running on http://localhost:${port}`);
