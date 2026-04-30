@@ -9,79 +9,21 @@ export const availableLanguages = [
   { code: 'zh', name: '中文', flag: '🇨🇳' },
   { code: 'ja', name: 'にほんご', flag: '🇯🇵' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' }
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
 ];
-
-const supportedLanguages = availableLanguages.map(({ code }) => code);
-
-export const localizedRouteSegments = {
-  players: {
-    en: 'players',
-    zh: '球员',
-    ja: 'プレイヤー',
-    es: 'jugadores',
-    fr: 'joueurs'
-  },
-  rankings: {
-    en: 'rankings',
-    zh: '排名',
-    ja: 'ランキング',
-    es: 'clasificaciones',
-    fr: 'classements'
-  },
-  stories: {
-    en: 'stories',
-    zh: '故事',
-    ja: 'ストーリー',
-    es: 'historias',
-    fr: 'histoires'
-  }
-};
-
-export const getLocalizedRouteSegment = (language, routeKey) => {
-  if (!routeKey || routeKey === 'home') {
-    return '';
-  }
-
-  return localizedRouteSegments[routeKey]?.[language] || routeKey;
-};
-
-export const getRouteKeyFromSegment = (segment) => {
-  if (!segment) {
-    return null;
-  }
-
-  const matchedEntry = Object.entries(localizedRouteSegments).find(([, translations]) =>
-    Object.values(translations).includes(segment)
-  );
-
-  return matchedEntry?.[0] || null;
-};
-
-export const buildLocalizedPath = (language, routeKey = 'home', suffix = '') => {
-  const normalizedSuffix = String(suffix || '').replace(/^\/+/, '');
-
-  if (!routeKey || routeKey === 'home') {
-    return normalizedSuffix ? `/${language}/${normalizedSuffix}` : `/${language}`;
-  }
-
-  const segment = getLocalizedRouteSegment(language, routeKey);
-  const basePath = `/${language}/${segment}`;
-
-  return normalizedSuffix ? `${basePath}/${normalizedSuffix}` : basePath;
-};
 
 export const LanguageProvider = ({ children }) => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   const [language, setLanguageState] = useState(() => {
     return localStorage.getItem('language') || i18n.language?.split('-')[0] || 'en';
   });
 
   const changeLanguage = useCallback((newLang, shouldNavigate = true) => {
-    if (!supportedLanguages.includes(newLang)) return;
+    if (!['en', 'zh', 'ja', 'es', 'fr', 'de'].includes(newLang)) return;
     if (newLang === language && !shouldNavigate) return;
 
     i18n.changeLanguage(newLang);
@@ -90,20 +32,12 @@ export const LanguageProvider = ({ children }) => {
 
     if (shouldNavigate) {
       const pathParts = location.pathname.split('/').filter(Boolean);
-      const currentPathWithoutLang = [...pathParts];
-
-      if (supportedLanguages.includes(currentPathWithoutLang[0])) {
-        currentPathWithoutLang.shift();
+      if (['en', 'zh', 'ja', 'es', 'fr', 'de'].includes(pathParts[0])) {
+        pathParts[0] = newLang;
+      } else {
+        pathParts.unshift(newLang);
       }
-
-      const currentSegment = currentPathWithoutLang[0];
-      const routeKey = getRouteKeyFromSegment(currentSegment);
-
-      if (routeKey) {
-        currentPathWithoutLang[0] = getLocalizedRouteSegment(newLang, routeKey);
-      }
-
-      const newUrl = `/${newLang}${currentPathWithoutLang.length ? `/${currentPathWithoutLang.join('/')}` : ''}${location.search}${location.hash}`;
+      const newUrl = `/${pathParts.join('/')}${location.search}${location.hash}`;
       navigate(newUrl, { replace: true });
     }
   }, [i18n, language, location, navigate]);
@@ -111,22 +45,21 @@ export const LanguageProvider = ({ children }) => {
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === 'language' && e.newValue !== language) {
-        if (supportedLanguages.includes(e.newValue)) {
+        if (['en', 'zh', 'ja', 'es', 'fr', 'de'].includes(e.newValue)) {
           changeLanguage(e.newValue, false);
         }
       }
     };
-
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [language, changeLanguage]);
 
   return (
-    <LanguageContext.Provider value={{
-      language,
-      currentLanguage: language,
-      changeLanguage,
-      availableLanguages
+    <LanguageContext.Provider value={{ 
+      language, 
+      currentLanguage: language, 
+      changeLanguage, 
+      availableLanguages 
     }}>
       {children}
     </LanguageContext.Provider>
@@ -135,15 +68,8 @@ export const LanguageProvider = ({ children }) => {
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
-  // During SSR/SSG (static generation), context may be undefined.
-  // Return a safe default to prevent build failures.
   if (context === undefined) {
-    return {
-      language: 'en',
-      currentLanguage: 'en',
-      changeLanguage: () => {},
-      availableLanguages,
-    };
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
 };

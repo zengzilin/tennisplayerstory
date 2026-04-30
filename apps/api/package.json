@@ -12,17 +12,18 @@
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "eslint-plugin-import": "^2.32.0",
     "express": "^5.0.1",
     "express-rate-limit": "^7.1.5",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0",
+    "multer": "^2.1.1",
     "node-cron": "^3.0.3",
     "pocketbase": "^0.26.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.0.0",
-    "eslint": "^9.39.4",
-    "globals": "^15.14.0",
-    "eslint-plugin-import": "^2.32.0"
+    "@eslint/js": "^8.57.0",
+    "eslint": "^8.57.1",
+    "globals": "^15.14.0"
   }
 }

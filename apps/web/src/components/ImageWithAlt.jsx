@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-const ImageWithAlt = ({ src, alt, className, ...props }) => {
+const ImageWithAlt = ({ src, alt, title, className, ...props }) => {
   if (!alt && alt !== "") {
     console.warn(`ImageWithAlt: Missing alt text for image ${src}`);
   }
@@ -9,8 +9,10 @@ const ImageWithAlt = ({ src, alt, className, ...props }) => {
   return (
     <img
       src={src}
-      alt={alt || "TennisHub Image"}
+      alt={alt || "TennisHub decorative image"}
+      title={title || alt}
       loading="lazy"
+      decoding="async"
       className={className}
       {...props}
     />

@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2 } from 'lucide-react';
+import pb from '@/lib/pocketbaseClient';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
@@ -53,13 +53,17 @@ const PlayerForm = ({ player, onSuccess, onCancel }) => {
 
     if (!newErrors.name && !newErrors.source && (!player || player.name !== formData.name || player.source !== formData.source)) {
       try {
-        const res = await fetch(`/api/players?checkDuplicate=true&name=${encodeURIComponent(formData.name)}&source=${formData.source}`);
-        const data = await res.json();
-        if (res.ok && data.data && data.data.id !== player?.id) {
+        const existing = await pb.collection('players').getFirstListItem(
+          `name="${formData.name.replace(/"/g, '\\"')}" && source="${formData.source}"`,
+          { $autoCancel: false }
+        );
+        if (existing && existing.id !== player?.id) {
           newErrors.name = t('playerForm.errors.duplicate');
         }
       } catch (err) {
-        console.error('Error checking duplicates:', err);
+        if (err.status !== 404) {
+          console.error('Error checking duplicates:', err);
+        }
       }
     }
 
@@ -81,20 +85,10 @@ const PlayerForm = ({ player, onSuccess, onCancel }) => {
       };
 
       if (player?.id) {
-        const res = await fetch(`/api/players/${player.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dataToSave),
-        });
-        if (!res.ok) throw new Error('Failed to update player');
+        await pb.collection('players').update(player.id, dataToSave, { $autoCancel: false });
         toast.success(t('playerForm.updateSuccess'));
       } else {
-        const res = await fetch('/api/players', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dataToSave),
-        });
-        if (!res.ok) throw new Error('Failed to create player');
+        await pb.collection('players').create(dataToSave, { $autoCancel: false });
         toast.success(t('playerForm.createSuccess'));
       }
       onSuccess();

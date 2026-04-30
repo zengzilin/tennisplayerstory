@@ -1,4 +1,3 @@
-
 const logger = {
   info: (message, data = null) => {
     const timestamp = new Date().toISOString();

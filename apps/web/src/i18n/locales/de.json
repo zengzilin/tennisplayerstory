@@ -1,0 +1,67 @@
+{
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "add": "Hinzufügen",
+    "submit": "Einreichen",
+    "search": "Suche...",
+    "filter": "Filter",
+    "noData": "Keine Daten verfügbar"
+  },
+  "nav": {
+    "home": "Startseite",
+    "players": "Spieler",
+    "rankings": "Ranglisten",
+    "stories": "Geschichten",
+    "vlogs": "Vlogs",
+    "admin": "Admin",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "signup": "Registrieren"
+  },
+  "vlogs": {
+    "title": "Tennis Vlogs",
+    "subtitle": "Sehen Sie sich die neuesten Analysen und Highlights an.",
+    "submitButton": "Video einreichen",
+    "searchPlaceholder": "Suche Vlogs nach Titel oder Kanal...",
+    "filterByDate": "Nach Datum sortieren",
+    "noVideos": "Keine Videos gefunden.",
+    "submitModal": {
+      "title": "Vlog einreichen",
+      "desc": "Teilen Sie ein Video mit der Community. Es wird von einem Administrator überprüft.",
+      "youtubeUrl": "YouTube-URL",
+      "videoTitle": "Videotitel",
+      "description": "Beschreibung (Optional)",
+      "userName": "Ihr Name / Kanal",
+      "submit": "Einreichen",
+      "success": "Video erfolgreich eingereicht! Warten auf Freigabe.",
+      "error": "Fehler beim Einreichen des Videos.",
+      "invalidUrl": "Bitte geben Sie eine gültige YouTube-URL ein."
+    },
+    "admin": {
+      "title": "Vlog-Verwaltung",
+      "desc": "Eingereichte Videos überprüfen und verwalten.",
+      "filterStatus": "Nach Status filtern",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "preview": "Vorschau",
+      "bulkApprove": "Auswahl genehmigen",
+      "bulkReject": "Auswahl ablehnen",
+      "noVlogs": "Keine Vlogs zu verwalten."
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt",
+      "all": "Alle Status"
+    }
+  }
+}

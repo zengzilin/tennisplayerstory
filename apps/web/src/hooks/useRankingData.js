@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiFetch } from '@/lib/api';
-import { normalizePlayerRecord } from '@/hooks/usePlayerData';
+import pb from '@/lib/pocketbaseClient';
 
 export const useRankingData = () => {
   const [rankings, setRankings] = useState({ atp: [], wta: [] });
@@ -11,46 +10,61 @@ export const useRankingData = () => {
 
     const fetchRankings = async () => {
       try {
-        console.log('useRankingData: Fetching ATP and WTA rankings...');
-
+        const atpFilter = 'source = "atp"';
+        const wtaFilter = 'source = "wta"';
+        
+        console.log(`[DEBUG] useRankingData: Executing ATP query with filter: '${atpFilter}'`);
+        console.log(`[DEBUG] useRankingData: Executing WTA query with filter: '${wtaFilter}'`);
+        
         const [atpResult, wtaResult] = await Promise.all([
-          apiFetch('/api/players?source=atp&sort=ranking'),
-          apiFetch('/api/players?source=wta&sort=ranking'),
+          pb.collection('players').getFullList({
+            filter: atpFilter,
+            sort: 'ranking',
+            $autoCancel: false,
+          }),
+          pb.collection('players').getFullList({
+            filter: wtaFilter,
+            sort: 'ranking',
+            $autoCancel: false,
+          }),
         ]);
 
-        console.log('useRankingData: Fetched ranking data:', {
-          atpCount: atpResult.length,
-          wtaCount: wtaResult.length,
-        });
+        console.log('[DEBUG] useRankingData: ATP raw results count:', atpResult.length);
+        if (atpResult.length > 0) {
+          console.log('[DEBUG] useRankingData: ATP sample source values:', atpResult.slice(0, 3).map(p => p.source));
+        }
+
+        console.log('[DEBUG] useRankingData: WTA raw results count:', wtaResult.length);
+        if (wtaResult.length > 0) {
+          console.log('[DEBUG] useRankingData: WTA sample source values:', wtaResult.slice(0, 3).map(p => p.source));
+        }
 
         if (!cancelled) {
-          const toRankingRow = (record, index) => {
-            const player = normalizePlayerRecord(record);
-
-            return {
-              ...player,
-              position: player.ranking || index + 1,
-              tournaments: '—',
-              trend: 'same',
-            };
-          };
+          const toRankingRow = (p, i) => ({
+            id: p.id,
+            position: p.ranking || i + 1,
+            name: p.name,
+            country: p.country,
+            points: p.points,
+            tournaments: null,
+            trend: 'same',
+            source: p.source
+          });
 
           setRankings({
-            atp: atpResult.items.map(toRankingRow),
-            wta: wtaResult.items.map(toRankingRow),
+            atp: atpResult.map(toRankingRow),
+            wta: wtaResult.map(toRankingRow),
           });
         }
       } catch (err) {
-        console.error('useRankingData: Failed to fetch rankings:', err);
+        console.error('[DEBUG] useRankingData: Failed to fetch rankings:', err);
       } finally {
         if (!cancelled) setLoading(false);
       }
     };
 
     fetchRankings();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
   return { rankings, loading };

@@ -1,4 +1,3 @@
-
 {
   "common": {
     "loading": "Cargando...",
@@ -12,312 +11,57 @@
     "submit": "Enviar",
     "search": "Buscar...",
     "filter": "Filtrar",
-    "noData": "No hay datos disponibles",
-    "name": "Nombre",
-    "country": "País",
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "confirmPassword": "Confirmar contraseña",
-    "retry": "Reintentar",
-    "on": "Encendido",
-    "off": "Apagado",
-    "unauthorized": "Acceso no autorizado",
-    "select": "Seleccionar..."
-  },
-  "language": {
-    "english": "English",
-    "chinese": "中文",
-    "japanese": "にほんご",
-    "spanish": "Español",
-    "french": "Francés"
-  },
-  "routes": {
-    "players": "jugadores",
-    "rankings": "clasificaciones",
-    "stories": "historias"
+    "noData": "No hay datos disponibles"
   },
   "nav": {
     "home": "Inicio",
-    "liveMatches": "Partidos en vivo",
-    "matches": "Partidos",
     "players": "Jugadores",
     "rankings": "Clasificaciones",
     "stories": "Historias",
+    "vlogs": "Vlogs",
     "admin": "Admin",
-    "write": "Escribir",
     "profile": "Perfil",
     "logout": "Cerrar sesión",
     "login": "Iniciar sesión",
-    "signup": "Registrarse",
-    "language": "Idioma"
+    "signup": "Registrarse"
   },
-  "pages": {
-    "homeTitle": "Inicio",
-    "playersTitle": "Jugadores",
-    "rankingsTitle": "Clasificaciones",
-    "matchesTitle": "Partidos",
-    "storiesTitle": "Historias",
-    "loginTitle": "Iniciar sesión",
-    "signupTitle": "Registrarse",
-    "profileTitle": "Perfil",
-    "adminTitle": "Admin"
-  },
-  "admin": {
-    "dashboard": "Panel de control",
-    "scraping": "Extracción de datos",
-    "players": "Jugadores",
-    "articles": "Artículos",
-    "logs": "Registros",
-    "title": "Panel de Administración",
-    "desc": "Gestionar contenido y datos de la plataforma",
-    "heading": "Panel de Administración",
-    "refresh": "Actualizar",
-    "tabs": {
-      "overview": "Resumen",
-      "articles": "Artículos",
-      "settings": "Ajustes"
+  "vlogs": {
+    "title": "Vlogs de Tenis",
+    "subtitle": "Mira los últimos análisis, destacados y contenido detrás de escena.",
+    "submitButton": "Enviar Video",
+    "searchPlaceholder": "Buscar vlogs por título o canal...",
+    "filterByDate": "Ordenar por fecha",
+    "noVideos": "No se encontraron videos que coincidan.",
+    "submitModal": {
+      "title": "Enviar un Vlog",
+      "desc": "Comparte un gran video con la comunidad. Será revisado antes de publicarse.",
+      "youtubeUrl": "URL de YouTube",
+      "videoTitle": "Título del video",
+      "description": "Descripción (Opcional)",
+      "userName": "Tu Nombre / Canal",
+      "submit": "Enviar Video",
+      "success": "¡Video enviado con éxito! Pendiente de aprobación.",
+      "error": "Error al enviar el video.",
+      "invalidUrl": "Por favor, introduce una URL de YouTube válida."
     },
-    "stats": {
-      "totalPlayers": "Total de Jugadores",
-      "totalArticles": "Total de Artículos",
-      "pendingArticles": "Artículos Pendientes"
+    "admin": {
+      "title": "Gestión de Vlogs",
+      "desc": "Revisar, aprobar y gestionar videos de usuarios.",
+      "filterStatus": "Filtrar por estado",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "preview": "Vista previa",
+      "bulkApprove": "Aprobar seleccionados",
+      "bulkReject": "Rechazar seleccionados",
+      "noVlogs": "No hay vlogs para gestionar."
     },
-    "quickLinks": {
-      "players": "Gestión de Jugadores",
-      "playersDesc": "Añadir, editar o eliminar jugadores de tenis de la base de datos.",
-      "managePlayers": "Gestionar Jugadores",
-      "scraping": "Extracción de Datos",
-      "scrapingDesc": "Supervisar y activar la extracción automática de datos de ATP/WTA/ITF.",
-      "viewScraping": "Panel de Extracción"
-    },
-    "createArticle": "Crear Artículo",
-    "table": {
-      "title": "Título",
-      "player": "Jugador",
-      "author": "Autor",
-      "date": "Fecha",
-      "status": "Estado",
-      "actions": "Acciones"
-    },
-    "emptyTitle": "Sin Artículos",
-    "emptyDesc": "No hay artículos para procesar",
-    "settingsDesc": "Gestionar preferencias de la plataforma",
-    "settings": {
-      "defaultLanguage": "Idioma Predeterminado"
-    },
-    "editArticle": "Editar Artículo",
-    "tags": "Etiquetas (separadas por comas)",
-    "content": "Contenido",
-    "deleteConfirmTitle": "¿Estás absolutamente seguro?",
-    "deleteConfirmDesc": "Esta acción no se puede deshacer. Esto eliminará permanentemente el artículo.",
     "status": {
       "pending": "Pendiente",
       "approved": "Aprobado",
-      "rejected": "Rechazado"
-    }
-  },
-  "adminArticles": {
-    "heading": "Artículos Pendientes",
-    "desc": "Revisar y moderar envíos de usuarios",
-    "refresh": "Actualizar",
-    "table": {
-      "title": "Título",
-      "playerName": "Nombre del Jugador",
-      "createdDate": "Fecha de Creación",
-      "status": "Estado",
-      "actions": "Acciones"
-    },
-    "emptyTitle": "No hay artículos pendientes",
-    "emptyDesc": "¡Estás al día! No hay artículos esperando revisión.",
-    "reject": "Rechazar",
-    "approve": "Aprobar",
-    "rejectTitle": "Rechazar Artículo",
-    "rejectDesc": "Por favor, proporciona una razón para rechazar '{{title}}'. El autor verá este mensaje.",
-    "rejectionReason": "Razón de Rechazo",
-    "rejectionPlaceholder": "ej., El contenido no cumple con nuestras directrices...",
-    "cancel": "Cancelar",
-    "confirmRejection": "Confirmar Rechazo",
-    "approveSuccess": "Artículo aprobado con éxito",
-    "approveError": "Error al aprobar el artículo.",
-    "rejectSuccess": "Artículo rechazado con éxito",
-    "rejectError": "Error al rechazar el artículo.",
-    "loadError": "Error al cargar los artículos pendientes.",
-    "reasonReq": "Por favor, proporciona una razón para el rechazo."
-  },
-  "articles": {
-    "title": "Título",
-    "content": "Contenido",
-    "author": "Autor",
-    "status": "Estado",
-    "tags": "Etiquetas",
-    "myArticles": "Mis Artículos",
-    "manageStories": "Gestiona tus historias enviadas",
-    "writeNew": "Escribir Nuevo Artículo",
-    "noArticles": "Aún no hay artículos",
-    "noArticlesDesc": "No has enviado ningún artículo para revisión.",
-    "startWriting": "Empezar a Escribir",
-    "player": "Jugador",
-    "date": "Fecha",
-    "actions": "Acciones",
-    "editArticle": "Editar Artículo",
-    "editDesc": "Realiza cambios en tu artículo pendiente.",
-    "featuredPlayer": "Jugador Destacado",
-    "saveChanges": "Guardar Cambios",
-    "confirmDelete": "¿Estás seguro?",
-    "deleteDesc": "Esto eliminará permanentemente el artículo. Esta acción no se puede deshacer.",
-    "rejectionReason": "Razón de Rechazo:",
-    "writeTitle": "Escribir un Artículo",
-    "writeDesc": "Comparte tus conocimientos de tenis con la comunidad",
-    "articleDetails": "Detalles del Artículo",
-    "articleDetailsDesc": "Tu artículo será revisado por un administrador antes de ser publicado.",
-    "articleTitle": "Título del Artículo",
-    "articleTitlePlaceholder": "ej., El Ascenso de Carlos Alcaraz",
-    "featuredPlayerPlaceholder": "ej., Carlos Alcaraz",
-    "featuredPlayerHelp": "El jugador principal del que trata este artículo.",
-    "articleContent": "Contenido del Artículo",
-    "articleContentPlaceholder": "Escribe tu artículo aquí...",
-    "submitReview": "Enviar para Revisión",
-    "submitting": "Enviando...",
-    "submitSuccess": "¡Artículo enviado con éxito! Ahora está pendiente de revisión.",
-    "submitError": "Error al enviar el artículo. Por favor, inténtalo de nuevo.",
-    "allFieldsRequired": "Todos los campos son obligatorios."
-  },
-  "playerCard": {
-    "titles": "Títulos",
-    "grandSlams": "Grand Slams",
-    "points": "puntos",
-    "tour": "Circuito",
-    "age": "Edad",
-    "updated": "Actualizado",
-    "profileAvailable": "Perfil externo disponible",
-    "addToFav": "Añadido a favoritos",
-    "removeFromFav": "Eliminado de favoritos",
-    "favError": "Error al actualizar favoritos. Por favor, inténtalo de nuevo."
-  },
-  "playerDetail": {
-    "notFoundTitle": "Jugador no encontrado",
-    "notFoundDesc": "No pudimos encontrar el jugador que buscas.",
-    "metaDesc": "{{name}} es un jugador de tenis de {{source}} de {{country}}. Consulta su ranking, puntos, resultados recientes e información de perfil en TennisHub.",
-    "backToPlayers": "Volver a jugadores",
-    "heroDesc": "Jugador de {{source}} que representa a {{country}}.",
-    "overview": "Resumen",
-    "currentRanking": "Ranking actual",
-    "points": "Puntos",
-    "country": "País",
-    "age": "Edad",
-    "tour": "Circuito",
-    "lastUpdated": "Última actualización",
-    "resources": "Recursos",
-    "openProfile": "Abrir perfil oficial",
-    "noProfile": "No hay perfil externo disponible.",
-    "recentResults": "Resultados recientes",
-    "noRecentResults": "No hay resultados recientes disponibles.",
-    "loadError": "No pudimos cargar este jugador en este momento."
-  },
-  "playerForm": {
-    "name": "Nombre del Jugador *",
-    "source": "Fuente *",
-    "ranking": "Clasificación",
-    "points": "Puntos",
-    "country": "País",
-    "age": "Edad",
-    "profileUrl": "URL del Perfil",
-    "cancel": "Cancelar",
-    "update": "Actualizar Jugador",
-    "create": "Crear Jugador",
-    "errors": {
-      "nameReq": "El nombre es obligatorio",
-      "sourceReq": "La fuente es obligatoria",
-      "rankingPos": "La clasificación debe ser un número positivo",
-      "pointsNum": "Los puntos deben ser un número",
-      "agePos": "La edad debe ser un número positivo",
-      "duplicate": "Ya existe un jugador con este nombre y fuente"
-    },
-    "createSuccess": "Jugador creado con éxito",
-    "updateSuccess": "Jugador actualizado con éxito",
-    "saveError": "Error al guardar el jugador"
-  },
-  "home": {
-    "title": "TennisHub | Inicio",
-    "metaDesc": "Experimenta el tenis como nunca antes con resultados en vivo y clasificaciones.",
-    "heroTitle": "Experimenta el tenis como nunca antes",
-    "heroDesc": "Resultados en vivo, clasificaciones de jugadores y noticias de última hora de los principales torneos de tenis del mundo.",
-    "viewLive": "Ver partidos en vivo",
-    "browseRankings": "Explorar clasificaciones",
-    "whyChoose": "¿Por qué elegir TennisHub?",
-    "whyChooseDesc": "Proporcionamos los datos de tenis más completos y actualizados.",
-    "liveMatches": "Partidos en Vivo",
-    "viewAll": "Ver Todos",
-    "trendingStories": "Historias en Tendencia",
-    "readMore": "Leer Más",
-    "heroImageAlt": "Partido de tenis profesional en cancha de arcilla",
-    "features": {
-      "live": {
-        "title": "Resultados en Vivo",
-        "desc": "Actualizaciones en tiempo real de partidos en todo el mundo."
-      },
-      "players": {
-        "title": "Perfiles de Jugadores",
-        "desc": "Estadísticas detalladas e historial de tus jugadores favoritos."
-      },
-      "rankings": {
-        "title": "Clasificaciones Globales",
-        "desc": "Clasificaciones ATP y WTA actualizadas."
-      }
-    }
-  },
-  "auth": {
-    "loginTitle": "Iniciar sesión - TennisHub",
-    "loginDesc": "Inicia sesión en tu cuenta",
-    "loginHeading": "Bienvenido de nuevo",
-    "invalidCredentials": "Correo electrónico o contraseña no válidos",
-    "forgotPassword": "¿Olvidaste tu contraseña?",
-    "signingIn": "Iniciando sesión...",
-    "noAccount": "¿No tienes una cuenta?",
-    "signUpLink": "Regístrate",
-    "signupTitle": "Registrarse - TennisHub",
-    "signupDesc": "Crear una nueva cuenta",
-    "signupHeading": "Crear Cuenta",
-    "fullName": "Nombre Completo",
-    "creatingAccount": "Creando cuenta...",
-    "hasAccount": "¿Ya tienes una cuenta?",
-    "signInLink": "Iniciar sesión",
-    "forgotTitle": "Contraseña Olvidada",
-    "forgotDesc": "Restablecer tu contraseña",
-    "forgotHeading": "Contraseña Olvidada",
-    "resetSuccess": "Enlace de restablecimiento de contraseña enviado a tu correo electrónico.",
-    "sendingLink": "Enviando...",
-    "sendLink": "Enviar Enlace de Restablecimiento",
-    "backToLogin": "Volver a Iniciar sesión",
-    "resetTitle": "Restablecer Contraseña",
-    "resetDesc": "Crear una nueva contraseña",
-    "resetHeading": "Restablecer Contraseña",
-    "resetComplete": "Contraseña restablecida con éxito. Redirigiendo...",
-    "newPassword": "Nueva Contraseña",
-    "confirmNewPassword": "Confirmar Contraseña",
-    "resetting": "Restableciendo...",
-    "resetBtn": "Restablecer Contraseña"
-  },
-  "legal": {
-    "privacy": {
-      "title": "Política de Privacidad",
-      "lastUpdated": "Última actualización: Abril 2026",
-      "version": "Versión 1.0",
-      "sections": [
-        { "title": "Recopilación de Información", "content": "Recopilamos información para proporcionar mejores servicios a nuestros usuarios." },
-        { "title": "Uso de la Información", "content": "La información que recopilamos se utiliza para mejorar nuestra plataforma y la experiencia del usuario." },
-        { "title": "Protección de Datos", "content": "Implementamos medidas de seguridad para mantener la seguridad de su información personal." }
-      ]
-    },
-    "terms": {
-      "title": "Términos de Servicio",
-      "lastUpdated": "Última actualización: Abril 2026",
-      "version": "Versión 1.0",
-      "sections": [
-        { "title": "Aceptación de los Términos", "content": "Al acceder y utilizar este servicio, usted acepta y acuerda estar sujeto a los términos y disposiciones de este acuerdo." },
-        { "title": "Conducta del Usuario", "content": "Usted acepta utilizar el servicio solo para fines legales y de una manera que no infrinja los derechos de, restrinja o inhiba el uso y disfrute del servicio por parte de cualquier otra persona." },
-        { "title": "Modificaciones", "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Su uso continuado del servicio constituye su acuerdo con los términos modificados." }
-      ]
+      "rejected": "Rechazado",
+      "all": "Todos los estados"
     }
   }
 }

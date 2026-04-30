@@ -1,4 +1,3 @@
-
 export const resources = {
   en: {
     translation: {

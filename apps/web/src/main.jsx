@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import '@/i18n/i18n.js'; // MUST BE IMPORTED BEFORE APP

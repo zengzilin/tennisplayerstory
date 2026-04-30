@@ -2,16 +2,13 @@ import 'dotenv/config';
 import pb from './pocketbaseClient.js';
 import logger from './logger.js';
 
-const normalizeSource = (source) => String(source || '').trim().toLowerCase();
-
 /**
  * Sync scraped player data to PocketBase 'players' collection
  * @param {Array} players - Array of player objects with name, ranking, country, points, profileUrl, source, age
- * @param {string} source - Source identifier (atp, wta, itf)
+ * @param {string} source - Source identifier (ATP, WTA, ITF)
  * @returns {Object} Sync results { created: number, updated: number, failed: number }
  */
 export async function syncPlayerData(players, source) {
-  const normalizedSource = normalizeSource(source);
   const results = {
     created: 0,
     updated: 0,
@@ -19,17 +16,17 @@ export async function syncPlayerData(players, source) {
   };
 
   if (!Array.isArray(players) || players.length === 0) {
-    logger.warn(`syncPlayerData called with invalid players array for source ${normalizedSource}`);
+    logger.warn(`syncPlayerData called with invalid players array for source ${source}`);
     return results;
   }
 
-  logger.info(`Starting sync of ${players.length} players from ${normalizedSource}`);
+  logger.info(`Starting sync of ${players.length} players from ${source}`);
 
   for (const player of players) {
     try {
       // Check if player exists by name and source
       const existingRecords = await pb.collection('players').getList(1, 1, {
-        filter: `name = "${player.name.replace(/"/g, '\\"')}" && source = "${normalizedSource}"`,
+        filter: `name = "${player.name.replace(/"/g, '\\"')}" && source = "${source}"`,
       });
 
       if (existingRecords.items.length > 0) {
@@ -41,7 +38,6 @@ export async function syncPlayerData(players, source) {
           country: player.country,
           profile_url: player.profileUrl,
           age: player.age || null,
-          source: normalizedSource,
           last_updated: new Date().toISOString(),
         });
         results.updated++;
@@ -55,18 +51,18 @@ export async function syncPlayerData(players, source) {
           points: player.points,
           profile_url: player.profileUrl,
           age: player.age || null,
-          source: normalizedSource,
+          source: source,
           last_updated: new Date().toISOString(),
         });
         results.created++;
         logger.debug(`Created player: ${player.name} (Rank: ${player.ranking})`);
       }
     } catch (error) {
-      logger.error(`Failed to sync player ${player.name} from ${normalizedSource}:`, error.message);
+      logger.error(`Failed to sync player ${player.name} from ${source}:`, error.message);
       results.failed++;
     }
   }
 
-  logger.info(`Sync completed for ${normalizedSource}: ${results.created} created, ${results.updated} updated, ${results.failed} failed`);
+  logger.info(`Sync completed for ${source}: ${results.created} created, ${results.updated} updated, ${results.failed} failed`);
   return results;
 }

@@ -300,7 +300,17 @@ export default defineConfig({
 		headers: {
 			'Cross-Origin-Embedder-Policy': 'credentialless',
 		},
-		allowedHosts: true,
+		allowedHosts: [
+			'.app-preview.com',
+			'.app-preview.io',
+		],
+		fs: {
+			strict: true,
+			allow: [
+				path.resolve(__dirname),
+				path.join(path.resolve(__dirname, '../..'), 'node_modules'),
+			],
+		},
 	},
 	resolve: {
 		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json',],

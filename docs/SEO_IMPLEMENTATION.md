@@ -1,4 +1,3 @@
-
 # TennisHub SEO Implementation Guide
 
 ## 1. Adding SEO Metadata to New Pages
