@@ -53,6 +53,11 @@ pocketbaseClient.beforeSend = async function (url, options) {
 };
 
 (async () => {
+    if (!process.env.WEBSITE_DOMAIN) {
+        logger.warn('PocketBase client initialization skipped because WEBSITE_DOMAIN is not configured');
+        return;
+    }
+
     try {
         await waitForHealth();
 
@@ -72,8 +77,6 @@ pocketbaseClient.beforeSend = async function (url, options) {
         logger.info('PocketBase client initialized successfully');
     } catch (err) {
         logger.error('Failed to initialize PocketBase client:', err);
-
-        process.exit(1);
     }
 })();
 
