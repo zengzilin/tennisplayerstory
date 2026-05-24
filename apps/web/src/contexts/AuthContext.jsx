@@ -4,19 +4,52 @@ import pb from '@/lib/pocketbaseClient.js';
 
 const AuthContext = createContext();
 
+const decodeAuthTokenId = (token) => {
+  if (!token) return null;
+
+  try {
+    const [, payload] = token.split('.');
+    if (!payload) return null;
+
+    const normalizedPayload = payload
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .padEnd(Math.ceil(payload.length / 4) * 4, '=');
+    const decodedPayload = JSON.parse(window.atob(normalizedPayload));
+    return decodedPayload.id || decodedPayload.recordId || decodedPayload.sub || null;
+  } catch (error) {
+    console.warn('[AuthContext] Failed to decode auth token:', error);
+    return null;
+  }
+};
+
+const normalizeAuthUser = (model) => {
+  if (!model && !pb.authStore.isValid) return null;
+
+  const tokenUserId = decodeAuthTokenId(pb.authStore.token);
+  if (!model) {
+    return tokenUserId ? { id: tokenUserId } : null;
+  }
+
+  return {
+    ...model,
+    id: model.id || tokenUserId,
+  };
+};
+
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(pb.authStore.model);
+  const [currentUser, setCurrentUser] = useState(normalizeAuthUser(pb.authStore.model));
   const [isAuthenticated, setIsAuthenticated] = useState(pb.authStore.isValid);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setCurrentUser(pb.authStore.model);
+    setCurrentUser(normalizeAuthUser(pb.authStore.model));
     setIsAuthenticated(pb.authStore.isValid);
     setLoading(false);
 
     const unsubscribe = pb.authStore.onChange((token, model) => {
       console.log('[AuthContext] Auth store changed. Valid:', pb.authStore.isValid, 'Has Token:', !!token);
-      setCurrentUser(model);
+      setCurrentUser(normalizeAuthUser(model));
       setIsAuthenticated(pb.authStore.isValid);
     });
 
@@ -29,7 +62,7 @@ export const AuthProvider = ({ children }) => {
       const authData = await pb.collection('users').authWithPassword(email, password, { $autoCancel: false });
       
       // Explicitly set state here as well as relying on the listener, for immediate updates
-      setCurrentUser(authData.record);
+      setCurrentUser(normalizeAuthUser(authData.record));
       setIsAuthenticated(true);
       
       return authData;
@@ -51,7 +84,7 @@ export const AuthProvider = ({ children }) => {
         console.log(`[OAuth] Callback successful for ${provider}.`);
         console.log(`[OAuth] Token stored in authStore:`, !!pb.authStore.token);
         console.log(`[OAuth] Auth data received for user ID:`, authData?.record?.id);
-        setCurrentUser(authData.record);
+        setCurrentUser(normalizeAuthUser(authData.record));
         setIsAuthenticated(true);
         return authData;
       })
