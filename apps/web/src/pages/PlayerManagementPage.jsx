@@ -25,7 +25,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { toast } from 'sonner';
 import { Plus, Search, Download, Trash2, ArrowUpDown, ArrowLeft, Upload, FileSpreadsheet, X, CheckCircle2, AlertCircle, Copy, TerminalSquare, ChevronDown, Beaker } from 'lucide-react';
 
-// ── Excel Parsing ───────────────────────────────────────────────────────────
+// ── Spreadsheet Parsing ─────────────────────────────────────────────────────
 
 function parseExcel(file) {
   return new Promise((resolve, reject) => {
@@ -74,7 +74,7 @@ function parseExcel(file) {
 
         resolve({ players, errors });
       } catch (err) {
-        reject(new Error(`Excel parsing failed: ${err.message}`));
+        reject(new Error(`Spreadsheet parsing failed: ${err.message}`));
       }
     };
     reader.onerror = () => reject(new Error('File read failed'));
@@ -716,12 +716,12 @@ const PlayerManagementPage = () => {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".xlsx,.xls"
+              accept=".xlsx,.xls,.csv,text/csv"
               className="hidden"
               onChange={handleFileSelect}
             />
             <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
-              <FileSpreadsheet className="h-4 w-4 mr-2" /> Import Excel
+              <FileSpreadsheet className="h-4 w-4 mr-2" /> Import Excel/CSV
             </Button>
             <Button onClick={() => { setEditingPlayer(null); setIsFormOpen(true); }}>
               <Plus className="h-4 w-4 mr-2" /> {t('admin.players.addPlayer', 'Add Player')}
