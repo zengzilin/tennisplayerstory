@@ -159,7 +159,7 @@ const stripPrivateFields = (record) => {
 
 const getAuthUser = (req) => {
 	const header = req.headers.authorization || '';
-	const token = header.startsWith('Bearer ') ? header.slice(7) : '';
+	const token = header.startsWith('Bearer ') ? header.slice(7) : header;
 	if (!token) return null;
 	try {
 		return jwt.verify(token, JWT_SECRET);
