@@ -55,6 +55,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/hcgi/platform', mysqlPlatformRouter);
 app.get('/sitemap.xml', sitemapXml);
 app.get('/robots.txt', robotsTxt);
+app.get('/google1cef52d09f08459f.html', (req, res) => {
+	res.type('text/html').send('google-site-verification: google1cef52d09f08459f.html');
+});
 
 // API Routes
 app.use('/hcgi/api', routes());
