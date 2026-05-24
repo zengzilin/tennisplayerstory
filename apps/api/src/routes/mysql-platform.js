@@ -176,6 +176,15 @@ const createToken = (record) => jwt.sign({
 	type: 'authRecord',
 }, JWT_SECRET, { expiresIn: '30d' });
 
+const requireAuth = (req, res) => {
+	const authUser = getAuthUser(req);
+	if (!authUser?.id) {
+		res.status(401).json({ code: 401, message: 'Unauthorized.' });
+		return null;
+	}
+	return authUser;
+};
+
 const getField = (record, field) => {
 	if (field.endsWith('.id')) {
 		return record[field.slice(0, -3)];
@@ -328,7 +337,8 @@ router.get('/api/collections/:collection/records/:id', async (req, res) => {
 router.post('/api/collections/:collection/records', async (req, res) => {
 	const { collection } = req.params;
 	const data = { ...req.body };
-	const authUser = getAuthUser(req);
+	const authUser = collection === 'users' ? getAuthUser(req) : requireAuth(req, res);
+	if (collection !== 'users' && !authUser) return;
 
 	if (collection === 'users') {
 		if (data.password) {
@@ -339,7 +349,11 @@ router.post('/api/collections/:collection/records', async (req, res) => {
 	}
 
 	if (collection === 'articles') {
-		data.author = data.author || authUser?.id;
+		data.author = authUser.id;
+	}
+
+	if (collection === 'vlogs') {
+		data.uploaderId = data.uploaderId || authUser.id;
 	}
 
 	const id = data.id || makeId();
@@ -348,6 +362,9 @@ router.post('/api/collections/:collection/records', async (req, res) => {
 });
 
 router.patch('/api/collections/:collection/records/:id', async (req, res) => {
+	const authUser = requireAuth(req, res);
+	if (!authUser) return;
+
 	const existing = await loadRecord(req.params.collection, req.params.id);
 	if (!existing) return res.status(404).json({ code: 404, message: 'Record not found.' });
 
@@ -365,6 +382,9 @@ router.patch('/api/collections/:collection/records/:id', async (req, res) => {
 });
 
 router.delete('/api/collections/:collection/records/:id', async (req, res) => {
+	const authUser = requireAuth(req, res);
+	if (!authUser) return;
+
 	await initDb();
 	await getPool().execute(
 		'DELETE FROM pb_records WHERE collection_name = ? AND record_id = ?',
