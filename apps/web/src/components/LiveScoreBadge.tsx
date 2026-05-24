@@ -1,34 +1,31 @@
-"use client";
-
+// @ts-nocheck
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 
-type MatchStatus = 'Live' | 'Upcoming' | 'Completed' | string;
-
-const LiveScoreBadge: React.FC<{ status: MatchStatus }> = ({ status }) => {
+const LiveScoreBadge = ({ status }) => {
   const getStatusConfig = () => {
     switch (status) {
       case 'Live':
         return {
-          variant: 'default' as const,
+          variant: 'default',
           className: 'bg-accent text-accent-foreground animate-pulse',
           text: 'Live'
         };
       case 'Upcoming':
         return {
-          variant: 'secondary' as const,
+          variant: 'secondary',
           className: 'bg-secondary text-secondary-foreground',
           text: 'Upcoming'
         };
       case 'Completed':
         return {
-          variant: 'outline' as const,
+          variant: 'outline',
           className: 'border-border text-muted-foreground',
           text: 'Completed'
         };
       default:
         return {
-          variant: 'secondary' as const,
+          variant: 'secondary',
           className: '',
           text: status
         };

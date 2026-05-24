@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import PlayerCard from '@/components/PlayerCard.tsx';
-import SearchBar from '@/components/SearchBar.jsx';
-import FilterBar from '@/components/FilterBar.jsx';
+import SearchBar from '@/components/SearchBar.tsx';
+import FilterBar from '@/components/FilterBar.tsx';
 import { usePlayerData } from '@/hooks/usePlayerData';
 import { Skeleton } from '@/components/ui/skeleton';
 

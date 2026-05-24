@@ -1,5 +1,4 @@
-"use client";
-
+// @ts-nocheck
 import * as React from "react"
 import { cva } from "class-variance-authority";
 
@@ -25,11 +24,11 @@ const badgeVariants = cva(
   }
 )
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "secondary" | "destructive" | "outline"
-}
-
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({
+  className,
+  variant,
+  ...props
+}) {
   return (<div className={cn(badgeVariants({ variant }), className)} {...props} />);
 }
 

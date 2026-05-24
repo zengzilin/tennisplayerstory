@@ -4,6 +4,7 @@ apps/api/node_modules/
 # 忽略构建产物文件夹
 dist/
 build/
+*.tsbuildinfo
 apps/web/public/llms.txt
 
 # 忽略 macOS 系统文件

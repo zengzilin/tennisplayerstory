@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import MatchCard from '@/components/MatchCard.jsx';
+import MatchCard from '@/components/MatchCard.tsx';
 import ArticlePreview from '@/components/ArticlePreview';
 import ImageWithAlt from '@/components/ImageWithAlt';
 import { ArrowRight, Trophy, Users, TrendingUp } from 'lucide-react';

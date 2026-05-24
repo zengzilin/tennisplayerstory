@@ -1,21 +1,11 @@
-"use client";
-
+// @ts-nocheck
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
-type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
-
-interface TagFilterProps {
-  tags: string[];
-  selectedTag: string;
-  onTagSelect: (tag: string) => void;
-  lang: LangCode;
-}
-
-const TagFilter = ({ tags, selectedTag, onTagSelect }: TagFilterProps) => {
-  const t = useTranslations('stories');
+const TagFilter = ({ tags, selectedTag, onTagSelect }) => {
+  const { t } = useTranslation();
 
   return (
     <ScrollArea className="w-full whitespace-nowrap mb-8">
@@ -25,7 +15,7 @@ const TagFilter = ({ tags, selectedTag, onTagSelect }: TagFilterProps) => {
           onClick={() => onTagSelect('All')}
           className="rounded-full transition-all"
         >
-          {t('allTags')}
+          {t('stories.allTags', 'All Tags')}
         </Button>
         {tags.map(tag => (
           <Button

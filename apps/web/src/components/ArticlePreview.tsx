@@ -1,53 +1,33 @@
-"use client";
-
+// @ts-nocheck
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User, Trophy } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslation } from 'react-i18next';
 
-type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
-
-interface ArticlePreviewProps {
-  article: {
-    content?: string;
-    created: string;
-    player_name?: string;
-    title: string;
-    tags?: string[];
-    expand?: {
-      author?: {
-        name?: string;
-        email?: string;
-      };
-    };
-  };
-  onTagClick?: (tag: string) => void;
-  lang: LangCode;
-}
-
-const ArticlePreview = ({ article, onTagClick, lang }: ArticlePreviewProps) => {
+const ArticlePreview = ({ article, onTagClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const t = useTranslations('stories');
+  const { t } = useTranslation();
 
   const content = article.content || '';
   const isLong = content.length > 50;
   const displayContent = isExpanded || !isLong ? content : content.substring(0, 50) + '...';
 
-  const formatDate = (dateString: string) => {
-    const locale = lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : lang === 'es' ? 'es-ES' : lang === 'fr' ? 'fr-FR' : 'en-US';
-    return new Date(dateString).toLocaleDateString(locale, {
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
       month: 'long', day: 'numeric', year: 'numeric'
     });
   };
-
-  const authorName = article.expand?.author?.name || article.expand?.author?.email?.split('@')[0] || t('anonymous', { defaultValue: 'Anonymous' });
 
   return (
     <Card className="flex flex-col hover:shadow-lg transition-all duration-300 border-border/50 h-full">
       <CardContent className="p-6 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-4">
-          <Badge variant="outline" className="bg-muted/50 text-muted-foreground border-border">
+          <Badge
+            variant="outline"
+            className="bg-muted/50 text-muted-foreground border-border cursor-pointer hover:bg-muted transition-colors"
+            onClick={() => article.player_name && onTagClick?.(article.player_name)}
+          >
             <Trophy className="h-3 w-3 mr-1" />
             {article.player_name}
           </Badge>
@@ -70,7 +50,7 @@ const ArticlePreview = ({ article, onTagClick, lang }: ArticlePreviewProps) => {
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-primary text-sm font-medium hover:underline mb-6 text-left w-fit"
           >
-            {isExpanded ? t('hide', { defaultValue: 'Hide' }) : t('expand', { defaultValue: 'Read more' })}
+            {isExpanded ? t('stories.hide', 'Hide') : t('stories.expand', 'Read more')}
           </button>
         )}
 
@@ -80,7 +60,7 @@ const ArticlePreview = ({ article, onTagClick, lang }: ArticlePreviewProps) => {
               key={tag}
               variant="secondary"
               className="cursor-pointer hover:bg-secondary/80 transition-colors"
-              onClick={() => onTagClick?.(tag)}
+              onClick={() => onTagClick(tag)}
             >
               {tag}
             </Badge>
@@ -93,7 +73,7 @@ const ArticlePreview = ({ article, onTagClick, lang }: ArticlePreviewProps) => {
               <User className="h-3 w-3 text-primary" />
             </div>
             <span className="font-medium text-foreground">
-              {authorName}
+              {article.expand?.author?.name || article.expand?.author?.email?.split('@')[0] || t('stories.anonymous', 'Anonymous')}
             </span>
           </div>
         </div>

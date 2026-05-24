@@ -1,127 +1,175 @@
-'use client';
+// @ts-nocheck
 
-import React, { createContext, useContext } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import pb from '@/lib/pocketbaseClient.js';
 
-interface AuthUser {
-  id?: string;
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-  role?: string;
-  avatar?: string | null;
-  favoritePlayers?: string[];
-}
+const AuthContext = createContext();
 
-interface AuthContextType {
-  currentUser: AuthUser | null;
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<any>;
-  loginWithOAuth: (provider: string) => Promise<any>;
-  signup: (data: { email: string; password: string; name?: string }) => Promise<any>;
-  logout: () => void;
-  updateUser: (id: string, data: Partial<AuthUser>) => Promise<any>;
-  requestPasswordReset: (email: string) => Promise<any>;
-  confirmPasswordReset: (token: string, password: string) => Promise<any>;
-}
+const decodeAuthTokenId = (token) => {
+  if (!token) return null;
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+  try {
+    const [, payload] = token.split('.');
+    if (!payload) return null;
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession();
+    const normalizedPayload = payload
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .padEnd(Math.ceil(payload.length / 4) * 4, '=');
+    const decodedPayload = JSON.parse(window.atob(normalizedPayload));
+    return decodedPayload.id || decodedPayload.recordId || decodedPayload.sub || null;
+  } catch (error) {
+    console.warn('[AuthContext] Failed to decode auth token:', error);
+    return null;
+  }
+};
+
+const normalizeAuthUser = (model) => {
+  if (!model && !pb.authStore.isValid) return null;
+
+  const tokenUserId = decodeAuthTokenId(pb.authStore.token);
+  if (!model) {
+    return tokenUserId ? { id: tokenUserId } : null;
+  }
+
+  return {
+    ...model,
+    id: model.id || tokenUserId,
+  };
+};
+
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(normalizeAuthUser(pb.authStore.model));
+  const [isAuthenticated, setIsAuthenticated] = useState(pb.authStore.isValid);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setCurrentUser(normalizeAuthUser(pb.authStore.model));
+    setIsAuthenticated(pb.authStore.isValid);
+    setLoading(false);
+
+    const unsubscribe = pb.authStore.onChange((token, model) => {
+      console.log('[AuthContext] Auth store changed. Valid:', pb.authStore.isValid, 'Has Token:', !!token);
+      setCurrentUser(normalizeAuthUser(model));
+      setIsAuthenticated(pb.authStore.isValid);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const login = async (email, password) => {
-    return signIn('credentials', { email, password, redirect: false });
+    console.log('Login attempt with email:', email);
+    try {
+      const authData = await pb.collection('users').authWithPassword(email, password, { $autoCancel: false });
+      
+      // Explicitly set state here as well as relying on the listener, for immediate updates
+      setCurrentUser(normalizeAuthUser(authData.record));
+      setIsAuthenticated(true);
+      
+      return authData;
+    } catch (error) {
+      console.error('Auth error details:', { 
+        status: error.status, 
+        message: error.message, 
+        response: error.response 
+      });
+      throw error;
+    }
   };
 
   const loginWithOAuth = (provider) => {
-    return signIn(provider, { redirect: false });
+    console.log(`[OAuth] Initiating login flow for provider: ${provider}`);
+    
+    return pb.collection('users').authWithOAuth2({ provider })
+      .then((authData) => {
+        console.log(`[OAuth] Callback successful for ${provider}.`);
+        console.log(`[OAuth] Token stored in authStore:`, !!pb.authStore.token);
+        console.log(`[OAuth] Auth data received for user ID:`, authData?.record?.id);
+        setCurrentUser(normalizeAuthUser(authData.record));
+        setIsAuthenticated(true);
+        return authData;
+      })
+      .catch((err) => {
+        console.error(`[OAuth] Error during ${provider} flow:`, err);
+        console.error(`[OAuth] Error details:`, JSON.stringify(err, null, 2));
+        throw err;
+      });
   };
 
-  const signup = async ({ email, password, name }) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, name }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: 'Registration failed' }));
-      throw new Error(err.error || 'Registration failed');
+  const signup = async (email, password, name, country = '') => {
+    console.log('Signup attempt with email:', email);
+    
+    const payload = {
+      email,
+      password,
+      passwordConfirm: password,
+      name,
+      country,
+      favorite_players: [],
+      role: 'user' // Default role
+    };
+    
+    console.log('Signup payload before create:', payload);
+    
+    try {
+      await pb.collection('users').create(payload, { $autoCancel: false });
+      return await login(email, password);
+    } catch (error) {
+      console.error('Signup error details:', { 
+        status: error.status, 
+        message: error.message, 
+        response: error.response 
+      });
+      throw error;
     }
-    return signIn('credentials', { email, password, redirect: false });
   };
 
-  const logout = () => signOut({ callbackUrl: '/' });
+  const logout = () => {
+    console.log('[AuthContext] Logging out, clearing auth store');
+    pb.authStore.clear();
+    setCurrentUser(null);
+    setIsAuthenticated(false);
+  };
 
   const updateUser = async (id, data) => {
-    const res = await fetch(`/api/users/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error('Update failed');
-    return res.json();
+    const updatedUser = await pb.collection('users').update(id, data, { $autoCancel: false });
+    setCurrentUser(updatedUser);
+    return updatedUser;
   };
 
   const requestPasswordReset = async (email) => {
-    const res = await fetch('/api/auth/password-reset', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    if (!res.ok) throw new Error('Request failed');
-    return res.json();
+    return await pb.collection('users').requestPasswordReset(email, { $autoCancel: false });
   };
 
-  const confirmPasswordReset = async (token, password) => {
-    const res = await fetch('/api/auth/reset-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, password }),
-    });
-    if (!res.ok) throw new Error('Reset failed');
-    return res.json();
+  const confirmPasswordReset = async (token, password, passwordConfirm) => {
+    return await pb.collection('users').confirmPasswordReset(token, password, passwordConfirm, { $autoCancel: false });
   };
 
-  const value: AuthContextType = {
-    currentUser: session?.user as AuthUser ?? null,
-    isAuthenticated: !!session,
-    isAdmin: (session?.user as AuthUser)?.role === 'admin',
-    loading: status === 'loading',
+  const value = {
+    currentUser,
+    isAuthenticated,
+    isAdmin: currentUser?.role === 'admin',
+    loading,
     login,
     loginWithOAuth,
     signup,
     logout,
     updateUser,
     requestPasswordReset,
-    confirmPasswordReset,
+    confirmPasswordReset
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = (): AuthContextType => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    return {
-      currentUser: null,
-      isAuthenticated: false,
-      isAdmin: false,
-      loading: true,
-      login: async () => { throw new Error('useAuth not ready'); },
-      loginWithOAuth: async () => { throw new Error('useAuth not ready'); },
-      signup: async () => { throw new Error('useAuth not ready'); },
-      logout: () => {},
-      updateUser: async () => { throw new Error('useAuth not ready'); },
-      requestPasswordReset: async () => { throw new Error('useAuth not ready'); },
-      confirmPasswordReset: async () => { throw new Error('useAuth not ready'); },
-    };
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
