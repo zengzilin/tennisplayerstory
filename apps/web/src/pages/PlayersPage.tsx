@@ -31,8 +31,7 @@ const PlayersPage = () => {
   const filterOptions = [
     { value: 'all', label: t('players.filters.all', 'All Players') },
     { value: 'atp', label: t('players.filters.atp', 'ATP') },
-    { value: 'wta', label: t('players.filters.wta', 'WTA') },
-    { value: 'itf', label: t('players.filters.itf', 'ITF') }
+    { value: 'wta', label: t('players.filters.wta', 'WTA') }
   ];
 
   const filteredPlayers = players.filter(player => {
@@ -75,7 +74,7 @@ const PlayersPage = () => {
                   World-Class Tennis Players
                 </h1>
                 <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 leading-relaxed max-w-2xl mx-auto">
-                  {t('players.desc', 'Discover the legends of the court. Browse rankings, stats, and biographies of top athletes across ATP, WTA, and ITF tours.')}
+                  {t('players.desc', 'Discover the legends of the court. Browse rankings, stats, and biographies of top athletes across ATP and WTA tours.')}
                 </p>
                 
                 <div className="max-w-2xl mx-auto bg-background/10 backdrop-blur-md p-2 rounded-2xl border border-white/20 shadow-2xl flex flex-col sm:flex-row gap-2">
