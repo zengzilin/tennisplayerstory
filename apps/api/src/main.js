@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
 import mysqlPlatformRouter from './routes/mysql-platform.js';
+import { robotsTxt, sitemapXml } from './routes/sitemap.js';
 import { errorMiddleware } from './middleware/index.js';
 import logger from './utils/logger.js';
 import { initializeScheduler } from './utils/scheduler.js';
@@ -52,6 +53,8 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/hcgi/platform', mysqlPlatformRouter);
+app.get('/sitemap.xml', sitemapXml);
+app.get('/robots.txt', robotsTxt);
 
 // API Routes
 app.use('/hcgi/api', routes());
