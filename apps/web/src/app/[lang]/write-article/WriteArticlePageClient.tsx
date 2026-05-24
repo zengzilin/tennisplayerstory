@@ -55,18 +55,12 @@ const WriteArticlePageClient = ({ lang }: { lang: LangCode }) => {
       return;
     }
 
-    if (!currentUser?.id) {
-      setError('Authentication error: User ID not found. Please log in again.');
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       const articleData = {
         title: formData.title,
         player_name: formData.player_name,
         content: formData.content,
-        author: currentUser.id,
         status: 'pending'
       };
 
