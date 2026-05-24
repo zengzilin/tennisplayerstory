@@ -5,6 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
@@ -53,8 +54,10 @@ app.use(express.urlencoded({ extended: true }));
 // API Routes
 app.use('/hcgi/api', routes());
 
-// Serve React static files
-const staticPath = path.join(__dirname, '../../web/dist');
+// Serve React static files from the root build output, with a local legacy fallback.
+const staticPath = fs.existsSync(path.join(__dirname, '../../../dist/apps/web'))
+	? path.join(__dirname, '../../../dist/apps/web')
+	: path.join(__dirname, '../../web/dist');
 app.use(express.static(staticPath));
 
 // Catch-all middleware for client-side routing
