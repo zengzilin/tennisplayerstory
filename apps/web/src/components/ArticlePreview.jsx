@@ -22,7 +22,11 @@ const ArticlePreview = ({ article, onTagClick }) => {
     <Card className="flex flex-col hover:shadow-lg transition-all duration-300 border-border/50 h-full">
       <CardContent className="p-6 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-4">
-          <Badge variant="outline" className="bg-muted/50 text-muted-foreground border-border">
+          <Badge
+            variant="outline"
+            className="bg-muted/50 text-muted-foreground border-border cursor-pointer hover:bg-muted transition-colors"
+            onClick={() => article.player_name && onTagClick?.(article.player_name)}
+          >
             <Trophy className="h-3 w-3 mr-1" />
             {article.player_name}
           </Badge>

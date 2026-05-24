@@ -34,11 +34,16 @@ const StoriesPage = () => {
     }
   };
 
-  const uniqueTags = [...new Set(articles.flatMap(a => a.tags || []))].filter(Boolean).sort();
+  const getArticleFilters = (article) => [
+    ...(Array.isArray(article.tags) ? article.tags : []),
+    article.player_name,
+  ].map(tag => String(tag || '').trim()).filter(Boolean);
+
+  const uniqueTags = [...new Set(articles.flatMap(getArticleFilters))].sort((a, b) => a.localeCompare(b));
 
   const filteredArticles = selectedTag === 'All' 
     ? articles 
-    : articles.filter(a => a.tags?.includes(selectedTag));
+    : articles.filter(article => getArticleFilters(article).includes(selectedTag));
 
   const breadcrumbs = generateBreadcrumbSchema([
     { name: 'Home', path: '/' },
