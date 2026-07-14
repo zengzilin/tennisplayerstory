@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { useTranslation } from 'react-i18next';
 
-const TagFilter = ({ tags, selectedTag, onTagSelect }) => {
+const TagFilter = ({ tags, selectedTag, onTagSelect, allLabel }) => {
   const { t } = useTranslation();
 
   return (
@@ -15,7 +15,7 @@ const TagFilter = ({ tags, selectedTag, onTagSelect }) => {
           onClick={() => onTagSelect('All')}
           className="rounded-full transition-all"
         >
-          {t('stories.allTags', 'All Tags')}
+          {allLabel || t('stories.allTags', 'All Tags')}
         </Button>
         {tags.map(tag => (
           <Button

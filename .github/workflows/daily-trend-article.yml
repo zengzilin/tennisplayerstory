@@ -1,0 +1,42 @@
+name: Daily Google Trends tennis article
+
+on:
+  schedule:
+    # 09:40 Asia/Shanghai. The ten-minute offset lets the in-process 09:30 job run first.
+    - cron: '40 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-google-trends-tennis-article
+  cancel-in-progress: false
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Trigger idempotent daily publisher
+        env:
+          CRON_SECRET: ${{ secrets.TENNIS_TREND_CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "Repository secret TENNIS_TREND_CRON_SECRET is required."
+            exit 1
+          fi
+
+          response_file="${RUNNER_TEMP}/trend-article-response.json"
+          curl --fail-with-body --silent --show-error \
+            --retry 3 \
+            --retry-delay 30 \
+            --retry-all-errors \
+            --max-time 900 \
+            --request POST \
+            --header "x-cron-secret: ${CRON_SECRET}" \
+            --output "${response_file}" \
+            'https://tennisplayerstory.com/hcgi/api/trend-articles/daily'
+
+          jq '{ok, skipped, reason, articleId: .article.id, title: .article.title, trendDate}' "${response_file}"

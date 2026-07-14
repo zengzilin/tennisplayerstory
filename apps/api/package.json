@@ -7,7 +7,8 @@
     "dev": "tsx src/main.ts",
     "start": "tsx src/main.ts",
     "build": "echo 'API ready for deployment'",
-    "lint": "eslint . --quiet"
+    "lint": "eslint . --quiet",
+    "trend-article": "tsx src/scripts/publish-daily-trend-article.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

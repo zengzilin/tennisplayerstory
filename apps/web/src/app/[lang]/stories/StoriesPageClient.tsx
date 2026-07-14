@@ -14,6 +14,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStoryData } from '@/hooks/useStoryData';
+import { localizeArticle } from '@/lib/localizeArticle.js';
 
 type LangCode = 'en' | 'zh' | 'ja' | 'es' | 'fr';
 
@@ -31,6 +32,7 @@ const StoriesPageClient = ({ lang }: { lang: LangCode }) => {
   const { currentUser } = useAuth();
 
   const { stories: articles, loading, error: rawError, refetch: fetchArticles } = useStoryData();
+  const localizedArticles = articles.map(article => localizeArticle(article, lang));
   const error = rawError ? t('common.error') : null;
 
   const handleSubmitClick = () => {
@@ -41,11 +43,11 @@ const StoriesPageClient = ({ lang }: { lang: LangCode }) => {
     }
   };
 
-  const uniqueTags = [...new Set(articles.flatMap(a => a.tags || []))].filter(Boolean).sort();
+  const uniqueTags = [...new Set(localizedArticles.flatMap(a => a.tags || []))].filter(Boolean).sort();
 
   const filteredArticles = selectedTag === 'All'
-    ? articles
-    : articles.filter(a => a.tags?.includes(selectedTag));
+    ? localizedArticles
+    : localizedArticles.filter(a => a.tags?.includes(selectedTag));
 
   return (
     <div className="min-h-screen flex flex-col">

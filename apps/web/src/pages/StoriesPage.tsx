@@ -14,17 +14,21 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useStoryData } from '@/hooks/useStoryData.js';
 import { generateBreadcrumbSchema, generateArticleSchema } from '@/lib/structuredData.js';
+import { localizeArticle } from '@/lib/localizeArticle.js';
 
 const StoriesPage = () => {
   const [selectedTag, setSelectedTag] = useState('All');
   
   const { t } = useTranslation();
   const { currentUser } = useAuth();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const { stories: articles, loading, error: rawError, refetch: fetchArticles } = useStoryData();
+  const localizedArticles = articles.map(article => localizeArticle(article, currentLanguage));
   const error = rawError ? t('common.error') : null;
 
   const handleSubmitClick = () => {
@@ -35,16 +39,22 @@ const StoriesPage = () => {
     }
   };
 
+  const getArticleTags = (article) => (
+    Array.isArray(article.tags)
+      ? article.tags
+      : String(article.tags || '').split(',')
+  );
+
   const getArticleFilters = (article) => [
-    ...(Array.isArray(article.tags) ? article.tags : []),
-    article.player_name,
+    ...getArticleTags(article),
+    article.player_name || article.playerName,
   ].map(tag => String(tag || '').trim()).filter(Boolean);
 
-  const uniqueTags = [...new Set(articles.flatMap(getArticleFilters))].sort((a, b) => a.localeCompare(b));
+  const uniqueTags = [...new Set(localizedArticles.flatMap(getArticleFilters))].sort((a, b) => a.localeCompare(b));
 
   const filteredArticles = selectedTag === 'All' 
-    ? articles 
-    : articles.filter(article => getArticleFilters(article).includes(selectedTag));
+    ? localizedArticles
+    : localizedArticles.filter(article => getArticleFilters(article).includes(selectedTag));
 
   const breadcrumbs = generateBreadcrumbSchema([
     { name: 'Home', path: '/' },
@@ -62,6 +72,9 @@ const StoriesPage = () => {
       <SEOHelmet 
         pageKey="stories"
         url="/stories"
+        overrideTitle="Tennis Player Stories, Match Analysis & Fan Articles"
+        overrideDescription="Read tennis player stories, match analysis, rankings context, and community articles about ATP and WTA players on TennisHub."
+        overrideKeywords="tennis player stories, ATP player stories, WTA player stories, tennis match analysis, tennis fan articles, tennis rankings analysis"
         structuredData={structuredData}
       />
 
@@ -79,8 +92,8 @@ const StoriesPage = () => {
                   className="max-w-3xl"
                 >
                   <div className="flex items-center gap-4 mb-4">
-                    <h1 className="text-4xl md:text-5xl font-bold" style={{ letterSpacing: '-0.02em' }}>
-                      Tennis Stories & Latest News
+                    <h1 className="text-4xl md:text-5xl font-bold">
+                      {t('stories.heading')}
                     </h1>
                     {!loading && !error && (
                       <Badge variant="secondary" className="text-sm px-3 py-1">
@@ -133,6 +146,7 @@ const StoriesPage = () => {
                   tags={uniqueTags} 
                   selectedTag={selectedTag} 
                   onTagSelect={setSelectedTag} 
+                  allLabel={t('stories.allTags')}
                 />
               )}
 
@@ -160,6 +174,12 @@ const StoriesPage = () => {
                       <ArticlePreview 
                         article={article} 
                         onTagClick={setSelectedTag} 
+                        labels={{
+                          expand: t('stories.expand', 'Read more'),
+                          hide: t('stories.hide', 'Show less'),
+                          anonymous: t('stories.anonymous', 'Anonymous'),
+                        }}
+                        lang={currentLanguage}
                       />
                     </motion.div>
                   ))}
