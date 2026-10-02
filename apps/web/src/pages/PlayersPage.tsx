@@ -59,38 +59,36 @@ const PlayersPage = () => {
         <Header />
 
         <main className="flex-1">
-          <section className="py-20 md:py-28 bg-gradient-to-br from-primary via-primary/90 to-secondary text-primary-foreground relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay pointer-events-none"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-20 pointer-events-none"></div>
+          <section className="py-16 border-b border-border bg-background text-foreground relative">
             
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="max-w-4xl mx-auto text-center"
+                className="max-w-3xl"
               >
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-6 text-balance font-serif">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-balance font-serif">
                   World-Class Tennis Players
                 </h1>
-                <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 leading-relaxed max-w-2xl mx-auto">
+                <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed max-w-2xl">
                   {t('players.desc', 'Discover the legends of the court. Browse rankings, stats, and biographies of top athletes across ATP and WTA tours.')}
                 </p>
                 
-                <div className="max-w-2xl mx-auto bg-background/10 backdrop-blur-md p-2 rounded-2xl border border-white/20 shadow-2xl flex flex-col sm:flex-row gap-2">
+                <div className="max-w-2xl bg-card p-2 rounded-lg border border-border flex flex-col sm:flex-row gap-2">
                   <div className="relative flex-1">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-primary-foreground/50" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                     <Input 
                       type="text"
                       placeholder="Search by name or country..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-12 pr-10 h-12 bg-background/20 border-transparent text-primary-foreground placeholder:text-primary-foreground/50 focus-visible:ring-white/30 rounded-xl text-lg"
+                      className="w-full pl-12 pr-10 h-12 bg-card border-input text-foreground placeholder:text-muted-foreground focus-visible:ring-ring rounded-md text-lg"
                     />
                     {searchQuery && (
                       <button 
                         onClick={() => setSearchQuery('')}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-primary-foreground/50 hover:text-primary-foreground transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <X className="h-4 w-4" />
                       </button>

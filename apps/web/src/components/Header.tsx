@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { Menu, Trophy, User, LogOut, ShieldAlert, Globe, LayoutDashboard, Settings } from 'lucide-react';
+import { Menu, ArrowUpRight, User, LogOut, ShieldAlert, Globe, LayoutDashboard, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext.tsx';
 import { useLanguage, availableLanguages } from '@/contexts/LanguageContext.tsx';
 import ThemeToggle from '@/components/ThemeToggle.tsx';
@@ -45,19 +45,19 @@ const Header = () => {
   const activeLangObj = availableLanguages.find(l => l.code === currentLanguage) || availableLanguages[0];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 dark:bg-slate-950/80 backdrop-blur-md transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between gap-4">
           <Link to={langPrefix} className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg p-1">
-            <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-              <Trophy className="h-6 w-6 text-primary" />
+            <div className="bg-accent p-2 rounded-full group-hover:bg-accent/80 transition-colors">
+              <ArrowUpRight className="h-5 w-5 text-accent-foreground" />
             </div>
             <span className="font-bold text-xl font-serif text-foreground dark:text-slate-50 tracking-tight">
               TennisHub
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6" aria-label="Main Navigation">
+          <nav className="hidden xl:flex items-center gap-6" aria-label="Main Navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -76,7 +76,7 @@ const Header = () => {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             <ThemeToggle />
             
             <DropdownMenu>
@@ -149,7 +149,7 @@ const Header = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <ThemeToggle />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
@@ -159,7 +159,7 @@ const Header = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px] flex flex-col border-l border-border/50 dark:bg-slate-950 dark:border-slate-800">
                 <div className="flex items-center gap-2 mb-8 mt-4">
-                  <Trophy className="h-6 w-6 text-primary" />
+                  <ArrowUpRight className="h-6 w-6 rounded-full bg-accent p-1 text-accent-foreground" />
                   <span className="font-bold text-xl font-serif dark:text-slate-50">TennisHub</span>
                 </div>
                 

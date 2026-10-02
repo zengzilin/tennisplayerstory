@@ -82,7 +82,7 @@ const StoriesPage = () => {
         <Header />
 
         <main className="flex-1">
-          <section className="py-16 bg-primary text-primary-foreground">
+          <section className="py-16 border-b border-border bg-background text-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                 <motion.div
@@ -101,7 +101,7 @@ const StoriesPage = () => {
                       </Badge>
                     )}
                   </div>
-                  <p className="text-lg text-primary-foreground/90">
+                  <p className="text-lg text-muted-foreground">
                     {t('stories.desc')}
                   </p>
                 </motion.div>

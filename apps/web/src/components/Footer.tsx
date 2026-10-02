@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Twitter, Instagram, Youtube } from 'lucide-react';
+import { ArrowUpRight, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 
@@ -34,12 +34,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-secondary text-secondary-foreground dark:bg-slate-900 dark:text-slate-50 border-t border-border dark:border-slate-800 mt-20 transition-colors duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-background text-foreground border-t border-border mt-12 transition-colors duration-300">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-2">
-              <Trophy className="h-6 w-6 text-primary" />
+              <ArrowUpRight className="h-6 w-6 rounded-full bg-accent p-1 text-accent-foreground" />
               <span className="font-bold text-xl">TennisHub</span>
             </div>
             <p className="text-sm text-secondary-foreground/80 dark:text-slate-400 max-w-xs">

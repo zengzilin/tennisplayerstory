@@ -58,7 +58,7 @@ const FeaturedPlayerCard = ({ player }) => {
         </div>
 
         <CardContent className="p-6 flex flex-col flex-1">
-          <div className="flex items-center gap-1 mb-4 text-accent">
+          <div className="flex items-center gap-1 mb-4 text-lime-700 dark:text-accent">
             {stars.map((_, i) => (
               <Star key={i} className="h-4 w-4 fill-current" />
             ))}

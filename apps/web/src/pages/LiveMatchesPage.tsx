@@ -38,7 +38,7 @@ const LiveMatchesPage = () => {
         <Header />
 
         <main className="flex-1">
-          <section className="py-12 bg-primary text-primary-foreground">
+          <section className="py-16 border-b border-border bg-background text-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ const LiveMatchesPage = () => {
                 <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ letterSpacing: '-0.02em' }}>
                   {t('liveMatches.heading')}
                 </h1>
-                <p className="text-lg text-primary-foreground/90 max-w-2xl">
+                <p className="text-lg text-muted-foreground max-w-2xl">
                   {t('liveMatches.desc')}
                 </p>
               </motion.div>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import pb from '@/lib/pocketbaseClient.js';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
@@ -26,10 +26,6 @@ const HomePage = () => {
   const { currentLanguage } = useLanguage();
   const langPrefix = `/${currentLanguage}`;
   
-  const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 1000], [0, 250]);
-  const heroOpacity = useTransform(scrollY, [0, 600], [1, 0]);
-
   const [players, setPlayers] = useState([]);
   const [vlogs, setVlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,71 +70,38 @@ const HomePage = () => {
         <Header />
 
         <main id="main-content" className="flex-1 overflow-x-hidden">
-          {/* HERO SECTION */}
-          <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950">
-            <motion.div 
-              style={{ y: heroY, opacity: heroOpacity }}
-              className="absolute inset-0 z-0"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1646649851800-48dba35edc76?q=80&w=2500&auto=format&fit=crop"
-                alt="Professional tennis player serving on court"
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/95 via-slate-900/80 to-primary/40 mix-blend-multiply" />
-            </motion.div>
-
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-4xl mx-auto text-center"
-              >
-                <Badge className="bg-accent/90 text-accent-foreground mb-6 font-bold uppercase tracking-widest px-4 py-1.5 shadow-lg border-none backdrop-blur-sm">
-                  The Home of Professional Tennis
-                </Badge>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] mb-8 text-white font-serif text-balance tracking-tight drop-shadow-sm">
-                  Tennis Player <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-white">Stories</span>
+          <section className="border-b border-border bg-background py-16 lg:py-20">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-3xl">
+                <p className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">The court, in context</p>
+                <h1 className="mb-6 text-5xl font-extrabold leading-[1.04] tracking-tight text-foreground md:text-7xl lg:text-[80px]">
+                  Tennis Player<br />Stories<span className="text-lime-600 dark:text-accent">.</span>
                 </h1>
-                <p className="text-xl md:text-2xl text-slate-200/90 mb-12 leading-relaxed max-w-3xl mx-auto text-balance font-medium drop-shadow">
-                  Discover elite athletes, watch inspiring match analysis vlogs, and track real-time ATP & WTA global rankings.
+                <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                  Discover elite athletes, follow the tour, and read the stories shaping professional tennis.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                  <Button asChild size="lg" className="w-full sm:w-auto text-lg h-14 px-8 bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl hover:shadow-primary/20 hover:-translate-y-0.5 transition-all duration-300">
-                    <Link to={`${langPrefix}/players`}>
-                      Explore Players
-                      <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-                    </Link>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button asChild size="lg" className="h-12 px-6">
+                    <Link to={`${langPrefix}/players`}>Explore Players <ArrowRight className="ml-2 h-4 w-4" /></Link>
                   </Button>
-                  <Button asChild variant="outline" size="lg" className="w-full sm:w-auto text-lg h-14 px-8 text-white border-white/30 bg-white/5 hover:bg-white/10 hover:text-white transition-all duration-300 backdrop-blur-md">
-                    <Link to={`${langPrefix}/vlogs`}>
-                      <PlaySquare className="mr-2 h-5 w-5" aria-hidden="true" />
-                      Watch Vlogs
-                    </Link>
+                  <Button asChild variant="outline" size="lg" className="h-12 px-6">
+                    <Link to={`${langPrefix}/news`}>Read Tennis Brief <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  </Button>
+                  <Button asChild variant="ghost" size="lg" className="h-12 px-6">
+                    <Link to={`${langPrefix}/vlogs`}><PlaySquare className="mr-2 h-4 w-4" /> Watch Vlogs</Link>
                   </Button>
                 </div>
-              </motion.div>
+              </div>
             </div>
-            
-            {/* Scroll Indicator */}
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 1 }}
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
-            >
-              <span className="text-white/60 text-sm font-medium uppercase tracking-widest">Scroll</span>
-              <div className="w-[1px] h-12 bg-gradient-to-b from-white/60 to-transparent" />
-            </motion.div>
           </section>
 
           {/* FEATURED PLAYERS SECTION */}
-          <section className="py-24 bg-muted/30 dark:bg-slate-900/40 relative">
+          <section className="py-14 bg-muted/30 dark:bg-slate-900/40 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+              <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
                 <div className="max-w-2xl">
-                  <h2 className="text-4xl md:text-5xl font-bold font-serif mb-6 text-foreground dark:text-slate-50 flex items-center gap-3">
-                    <Trophy className="h-10 w-10 text-accent" />
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif mb-6 text-foreground dark:text-slate-50 flex items-center gap-3">
+                    <Trophy className="h-10 w-10 text-lime-700 dark:text-accent" />
                     Elite Athletes
                   </h2>
                   <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed text-balance">
@@ -160,7 +123,7 @@ const HomePage = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                   {players.map((player, index) => (
-                    <div key={player.id} className={index % 2 !== 0 ? "lg:mt-8" : ""}>
+                    <div key={player.id} className="h-full">
                       <FeaturedPlayerCard player={player} />
                     </div>
                   ))}
@@ -170,12 +133,12 @@ const HomePage = () => {
           </section>
 
           {/* LATEST VLOGS SECTION */}
-          <section className="py-24 dark:bg-slate-950 relative overflow-hidden">
+          <section className="py-14 dark:bg-slate-950 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-muted/50 to-transparent dark:from-slate-900/50 pointer-events-none" />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
+              <div className="flex flex-col lg:flex-row justify-between gap-12 mb-10">
                 <div className="max-w-2xl">
-                  <h2 className="text-4xl md:text-5xl font-bold font-serif mb-6 text-foreground dark:text-slate-50 flex items-center gap-3">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif mb-6 text-foreground dark:text-slate-50 flex items-center gap-3">
                     <PlaySquare className="h-10 w-10 text-primary" />
                     Inspiring Vlogs
                   </h2>
@@ -208,7 +171,7 @@ const HomePage = () => {
           </section>
 
           {/* RANKINGS & STATS SECTION */}
-          <section className="py-24 bg-secondary/5 dark:bg-slate-900/30 border-y border-border/50 dark:border-slate-800">
+          <section className="py-14 bg-secondary/5 dark:bg-slate-900/30 border-y border-border/50 dark:border-slate-800">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                 
@@ -252,7 +215,7 @@ const HomePage = () => {
           </section>
 
           {/* CTA SECTIONS */}
-          <section className="py-24 dark:bg-slate-950">
+          <section className="py-14 dark:bg-slate-950">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
               
               <CTASection 

@@ -1,3 +1,9 @@
+const neutralPalette = {
+  50: '#f5f5ec', 100: '#eef0e5', 200: '#dce0d2', 300: '#c5ceba',
+  400: '#a1ae99', 500: '#647266', 600: '#4b624f', 700: '#354937',
+  800: '#23352a', 900: '#18291f', 950: '#101d16',
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -12,11 +18,27 @@ module.exports = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1200px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Arial', 'Helvetica', 'sans-serif'],
+        serif: ['Arial', 'Helvetica', 'sans-serif'],
+      },
       colors: {
+        slate: neutralPalette,
+        gray: neutralPalette,
+        blue: {
+          50: '#f0f2e5', 100: '#e9edde', 200: '#d9e5c3', 300: '#c3d78d',
+          400: '#a3bc5f', 500: '#637d3c', 600: '#476330', 700: '#354937',
+          800: '#263e2d', 900: '#163427', 950: '#101d16',
+        },
+        lime: {
+          50: '#f5f7e8', 100: '#edf2d0', 200: '#e3ec9e', 300: '#d8ed67',
+          400: '#c4da55', 500: '#a3bc3d', 600: '#7f9c29', 700: '#637d3c',
+          800: '#476330', 900: '#354937', 950: '#163427',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -62,9 +84,20 @@ module.exports = {
         },
       },
       borderRadius: {
+        '3xl': '0.5rem',
+        '2xl': '0.5rem',
+        xl: '0.4375rem',
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        DEFAULT: '0 1px 2px rgb(22 52 39 / 0.04)',
+        sm: '0 1px 2px rgb(22 52 39 / 0.03)',
+        md: '0 2px 5px rgb(22 52 39 / 0.05)',
+        lg: '0 4px 10px rgb(22 52 39 / 0.06)',
+        xl: '0 6px 16px rgb(22 52 39 / 0.07)',
+        '2xl': '0 8px 20px rgb(22 52 39 / 0.08)',
       },
       keyframes: {
         "accordion-down": {

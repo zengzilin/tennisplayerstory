@@ -180,7 +180,7 @@ const CommunityNewsPage = () => {
         )}
 
         <main id="main-content" className="flex-1">
-          <section className="relative overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+          <section className="relative overflow-hidden border-b border-slate-200 dark:border-slate-800 bg-card dark:bg-slate-900">
             <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_center,rgba(132,204,22,0.12),transparent_65%)]" />
             <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -204,7 +204,7 @@ const CommunityNewsPage = () => {
             </div>
           </section>
 
-          <section className="sticky top-16 z-30 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+          <section className="sticky top-20 z-30 border-b border-slate-200 bg-card/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
               <div className="flex min-w-max items-center gap-2 py-3">
                 {categories.map(category => (
@@ -296,7 +296,7 @@ const CommunityNewsPage = () => {
                           initial={{ opacity: 0, x: 12 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.08 }}
-                          className="group flex min-h-[185px] flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
+                          className="group flex min-h-[185px] flex-col rounded-3xl border border-slate-200 bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
                         >
                           <div className="flex items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
                             <span className="font-bold uppercase tracking-[0.14em] text-lime-700 dark:text-lime-400">
@@ -323,7 +323,7 @@ const CommunityNewsPage = () => {
                     <motion.article
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="rounded-3xl border border-lime-200 bg-white p-6 shadow-sm dark:border-lime-900/60 dark:bg-slate-900 sm:p-9"
+                      className="rounded-3xl border border-lime-200 bg-card p-6 shadow-sm dark:border-lime-900/60 dark:bg-slate-900 sm:p-9"
                     >
                       <div className="flex items-start justify-between gap-5">
                         <h2 className="text-2xl font-black text-slate-950 dark:text-white sm:text-3xl">
@@ -395,7 +395,7 @@ const CommunityNewsPage = () => {
                 </div>
 
                 <aside className="space-y-6 lg:col-span-4">
-                  <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                  <section className="rounded-3xl border border-slate-200 bg-card p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
                     <div className="flex items-center gap-3">
                       <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime-100 text-lime-800 dark:bg-lime-400/10 dark:text-lime-300">
                         <Sparkles className="h-5 w-5" />
@@ -443,7 +443,7 @@ const CommunityNewsPage = () => {
                     </section>
                   )}
 
-                  <section className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+                  <section className="rounded-3xl border border-slate-200 bg-card p-6 dark:border-slate-800 dark:bg-slate-900">
                     <h2 className="text-xl font-black text-slate-950 dark:text-white">{t('news.quickLinks', 'Quick court links')}</h2>
                     <div className="mt-4 grid gap-3">
                       {[
@@ -467,7 +467,7 @@ const CommunityNewsPage = () => {
                 </aside>
               </div>
             ) : !error && (
-              <div className="rounded-3xl border border-dashed border-slate-300 bg-white py-24 text-center dark:border-slate-700 dark:bg-slate-900">
+              <div className="rounded-3xl border border-dashed border-slate-300 bg-card py-24 text-center dark:border-slate-700 dark:bg-slate-900">
                 <Newspaper className="mx-auto h-12 w-12 text-slate-300" />
                 <h2 className="mt-4 text-2xl font-black text-slate-950 dark:text-white">{t('news.emptyTitle', 'No news in this category')}</h2>
                 <p className="mt-2 text-slate-500">{t('news.emptyDescription', 'Fresh tennis reports will appear here as soon as they are published.')}</p>

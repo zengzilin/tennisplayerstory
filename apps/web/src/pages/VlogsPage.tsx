@@ -77,8 +77,7 @@ const VlogsPage = () => {
         
         <main className="flex-1">
           {/* Hero Section */}
-          <section className="bg-primary/5 border-b border-border py-16 md:py-24 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+          <section className="bg-background border-b border-border py-16 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div className="flex flex-col md:flex-row gap-8 items-center justify-between">
                 <motion.div 

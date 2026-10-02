@@ -48,22 +48,21 @@ const RankingsPage = () => {
         <Header />
 
         <main id="main-content" className="flex-1 pb-20">
-          <section className="bg-primary pt-10 pb-24 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-5 mix-blend-overlay" />
+          <section className="bg-background border-b border-border pt-12 pb-16 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <BreadcrumbNav items={breadcrumbItems} />
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-primary-foreground mb-6">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-foreground mb-6">
                   {t('rankings.title', 'Global Tennis Rankings')}
                 </h1>
-                <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                   {t('rankings.desc', 'Up-to-date ATP and WTA tour rankings. Track the world\'s best professional tennis players.')}
                 </p>
               </motion.div>
             </div>
           </section>
 
-          <section className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+          <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 relative z-20">
             <div className="bg-card rounded-2xl shadow-lg border border-border p-4 md:p-6 mb-8">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
