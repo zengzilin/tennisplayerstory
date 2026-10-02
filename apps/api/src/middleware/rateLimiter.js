@@ -11,7 +11,7 @@ export const scrapeRateLimiter = rateLimit({
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false, // Disable `X-RateLimit-*` headers
   skip: (req) => {
-    // Skip rate limiting for health checks and status endpoints
-    return req.path === '/scrape/status';
+    // Mounted at /scrape, so Express exposes the relative /status path here.
+    return req.method === 'GET' && req.path === '/status';
   },
 });
