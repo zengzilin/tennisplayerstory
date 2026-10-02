@@ -1,0 +1,26 @@
+{
+  "url": "https://tennisplayerstory.com",
+  "format": "json",
+  "enabledChecks": [
+    "robotsTxt",
+    "sitemap",
+    "linkHeaders",
+    "dnsAid",
+    "markdownNegotiation",
+    "robotsTxtAiRules",
+    "contentSignals",
+    "webBotAuth",
+    "apiCatalog",
+    "oauthDiscovery",
+    "oauthProtectedResource",
+    "authMd",
+    "mcpServerCard",
+    "agentSkills",
+    "webMcp",
+    "ard",
+    "x402",
+    "mpp",
+    "ucp",
+    "acp"
+  ]
+}

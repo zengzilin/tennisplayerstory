@@ -1,0 +1,2 @@
+Hostinger DNS editor, 2026-10-02, tennisplayerstory.com
+Observed Type combobox Options: A, MX, AAAA, CNAME, SRV, TXT, CAA. No SVCB or HTTPS option.

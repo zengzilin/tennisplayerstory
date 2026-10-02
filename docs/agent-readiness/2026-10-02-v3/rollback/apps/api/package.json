@@ -12,7 +12,6 @@
     "youtube-article": "tsx src/scripts/publish-daily-youtube-article.js"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.31.0",
     "bcryptjs": "^3.0.3",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",

@@ -1,0 +1,109 @@
+{
+  "checks": [
+    {
+      "checked": true,
+      "id": "",
+      "value": "robotsTxt"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "sitemap"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "linkHeaders"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "dnsAid"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "markdownNegotiation"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "robotsTxtAiRules"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "contentSignals"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "webBotAuth"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "apiCatalog"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "oauthDiscovery"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "oauthProtectedResource"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "authMd"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "mcpServerCard"
+    },
+    {
+      "checked": false,
+      "id": "",
+      "value": "a2aAgentCard"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "agentSkills"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "webMcp"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "ard"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "x402"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "mpp"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "ucp"
+    },
+    {
+      "checked": true,
+      "id": "",
+      "value": "acp"
+    }
+  ]
+}

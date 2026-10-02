@@ -10,8 +10,6 @@ import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
 import agentDiscoveryRouter from './routes/agent-discovery.js';
-import agentMcpRouter from './routes/agent-mcp.js';
-import agentAuthConstructionRouter from './routes/agent-auth-construction.js';
 import mysqlPlatformRouter from './routes/mysql-platform.js';
 import { robotsTxt, sitemapXml } from './routes/sitemap.js';
 import { errorMiddleware } from './middleware/index.js';
@@ -51,13 +49,10 @@ app.use(cors({
 	origin: process.env.CORS_ORIGIN || '*',
 	credentials: true,
 }));
-// Reserved construction operations must not parse or log submitted identity bodies.
-app.use(agentAuthConstructionRouter);
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(agentDiscoveryRouter);
-app.use(agentMcpRouter);
 app.use('/hcgi/platform', mysqlPlatformRouter);
 app.get('/sitemap.xml', sitemapXml);
 app.get('/robots.txt', robotsTxt);

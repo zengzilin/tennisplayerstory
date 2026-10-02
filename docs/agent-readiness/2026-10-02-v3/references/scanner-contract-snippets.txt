@@ -1,0 +1,89 @@
+=Ne();if(t.length===0){pe("Select at least one check");return}const s=await fetch("/api/scan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:e,enabledChecks:t})}),o=await s.json();if(!s.ok)throw new Error(o.error||"Scan failed");o.siteError?It(o):At(o)}catch(t){const n=t instanceof Error?t.message:"An error occurred";pe(n)}finally{Ce(!1)}}function te(e){const t=at(e),n=new URLSearchParams;x?n.set("checks",[...x].join(",")):T!=="all"&&n.set("profile",T)
+
+core:a})=>{const u=je(d),c=Object.values(u),m=c.filter(p=>p.status==="pass").length,b=c.filter(p=>p.status==="neutral").length,y=c.length-b;return a&&(s+=m,o+=y),{name:l,score:y>0?Math.round(m/y*100):0,passed:m,total:y,checkCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibility:"Content",
+
+="pass").length,b=c.filter(p=>p.status==="neutral").length,y=c.length-b;return a&&(s+=m,o+=y),{name:l,score:y>0?Math.round(m/y*100):0,passed:m,total:y,checkCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibility:"Content",botAccessControl:"Bot Access Control",discovery:"API, Auth, MCP & Sk
+
+255,251,245,0.5)":"rgba(26,26,46,0.4)",b=Math.max(t.offsetWidth,700),y=await i(t,{scale:2,backgroundColor:d,width:b,height:(()=>{const g=Math.max(Math.min(t.offsetWidth/b,1),.8),S=Math.round(t.offsetHeight*g),C=150+Math.round((1-g)*100);return Math.max(S+C,660)})(),onCloneNode:g=>{if(!(g instanceof HTMLElement))return;const S=document.createElement("div");S.style.cssText=`display:flex;align-items:center;justify-content:center;gap:12px;padding-bottom:24px;margin-bottom:8px;border-bottom
+
+4)",b=Math.max(t.offsetWidth,700),y=await i(t,{scale:2,backgroundColor:d,width:b,height:(()=>{const g=Math.max(Math.min(t.offsetWidth/b,1),.8),S=Math.round(t.offsetHeight*g),C=150+Math.round((1-g)*100);return Math.max(S+C,660)})(),onCloneNode:g=>{if(!(g instanceof HTMLElement))return;const S=document.createElement("div");S.style.cssText=`display:flex;align-items:center;justify-content:center;gap:12px;padding-bottom:24px;margin-bottom:8px;border-bottom:1px solid ${a}`,S.innerHTML=`${n}<
+
+  </div>
+              ${C}
+            </div>
+          </div>
+          ${B}
+        </div>
+      </div>
+    `}function Ct(e,t,n,s,o){const r=ve[e]||e,i={pass:0,neutral:1,fail:2,unableToCheck:2},l=Object.entries(je(t)).sort(([,c],[,m])=>(i[c.status]??2)-(i[m.status]??2)),d=K(n.score),a=e==="commerce"?' <span class="category-optional">Optional</span>':"";let u="";return e==="commerce"&&(u=o?'<p class="commerce-note">Commerce protocols are emerging standards. These results are shown for i
+
+ignals","webBotAuth","apiCatalog","oauthDiscovery","oauthProtectedResource","authMd","mcpServerCard","a2aAgentCard","agentSkills","webMcp","ard","x402","mpp","ucp","acp","ap2"],Me=new Set(["a2aAgentCard","ap2"]),ge=me.filter(e=>!Me.has(e)),O={all:{name:"All Checks",description:"Run all default checks — best for comprehensive audits",checks:new Set(ge)},content:{name:"Content Site",description:"Blog, docs, or marketing site — focuses on discoverability and content accessibility",chec
+
+","acp","ap2"],Me=new Set(["a2aAgentCard","ap2"]),ge=me.filter(e=>!Me.has(e)),O={all:{name:"All Checks",description:"Run all default checks — best for comprehensive audits",checks:new Set(ge)},content:{name:"Content Site",description:"Blog, docs, or marketing site — focuses on discoverability and content accessibility",checks:new Set(["robotsTxt","sitemap","linkHeaders","dnsAid","markdownNegotiation","robotsTxtAiRules","contentSignals"])},apiApp:{name:"API / Application",description
+
+or comprehensive audits",checks:new Set(ge)},content:{name:"Content Site",description:"Blog, docs, or marketing site — focuses on discoverability and content accessibility",checks:new Set(["robotsTxt","sitemap","linkHeaders","dnsAid","markdownNegotiation","robotsTxtAiRules","contentSignals"])},apiApp:{name:"API / Application",description:"API service or web app — all checks except commerce",checks:new Set(["robotsTxt","sitemap","linkHeaders","dnsAid","markdownNegotiation","robotsTxt
+
+rs","dnsAid","markdownNegotiation","robotsTxtAiRules","contentSignals"])},apiApp:{name:"API / Application",description:"API service or web app — all checks except commerce",checks:new Set(["robotsTxt","sitemap","linkHeaders","dnsAid","markdownNegotiation","robotsTxtAiRules","contentSignals","webBotAuth","apiCatalog","oauthDiscovery","oauthProtectedResource","authMd","mcpServerCard","agentSkills","webMcp","ard"])}},dt={robotsTxt:"robots.txt",sitemap:"Sitemap",linkHeaders:"Link header
+
+sest(".profile-pill");if(!t)return;const n=t.dataset.profile;!n||!(n in O)||(T=n,x=null,he(),X(),Fe())});ue.addEventListener("change",e=>{if(e.target.name!=="check")return;const n=new Set;ue.querySelectorAll('input[name="check"]:checked').forEach(o=>{n.add(o.value)});let s=null;for(const[o,r]of Object.entries(O))if(n.size===r.checks.size&&[...n].every(i=>r.checks.has(i))){s=o;break}s?(T=s,x=null):x=n,X(),Fe()});function qe(e){const t=new Date(e);return`Last scanned ${t.toLocaleDateS
+
+ons")},1500)}});const ye=new URLSearchParams(window.location.search),Te=ye.get("checks"),ae=ye.get("profile");if(Te){const e=Te.split(",").filter(t=>me.includes(t));e.length>0&&(x=new Set(e),he(),X())}else ae&&ae in O&&(T=ae,x=null,he(),X());const Pe=Ue(window.location.pathname);if(Pe){const{scanUrl:e,pathSegment:t}=ie(Pe);D.value=e,te(t),V.hidden=!0,ee(e)}else{const e=ye.get("url");if(e){const{scanUrl:t,pathSegment:n}=ie(e);D.value=t,te(n),V.hidden=!0,ee(t)}}document.querySelectorA
+
+elector(".button-loading"),le=document.getElementById("form-error"),I=document.getElementById("results"),F=document.getElementById("results-timestamp"),De=document.getElementById("score-card-container"),Be=document.getElementById("check-categories"),mt=document.getElementById("scan-another"),V=document.getElementById("info-cards"),ne=document.getElementById("copy-all-fab"),j=document.getElementById("customize-toggle"),de=document.getElementById("customize-panel"),_e=document.getEl
+
+d,countInScore:a})=>{const u=je(d),c=Object.values(u),m=c.filter(p=>p.status==="pass").length,b=c.filter(p=>p.status==="neutral").length,y=c.length-b;return a&&(s+=m,o+=y),{name:l,score:y>0?Math.round(m/y*100):0,passed:m,total:y,checkCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibi
+
+,{name:l,score:y>0?Math.round(m/y*100):0,passed:m,total:y,checkCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibility:"Content",botAccessControl:"Bot Access Control",discovery:"API, Auth, MCP & Skill Discovery",commerce:"Commerce"},Ae={0:"var(--color-level-0)",1:"var(--color-level-1)
+
+y*100):0,passed:m,total:y,checkCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibility:"Content",botAccessControl:"Bot Access Control",discovery:"API, Auth, MCP & Skill Discovery",commerce:"Commerce"},Ae={0:"var(--color-level-0)",1:"var(--color-level-1)",2:"var(--color-level-2)",3:"va
+
+ckCount:c.length}}),i=o>0?Math.round(s/o*100):0;return{categories:r,overall:i}}function K(e){return e>=90?"var(--color-score-good)":e>=50?"var(--color-score-average)":"var(--color-score-poor)"}const ve={discoverability:"Discoverability",contentAccessibility:"Content",botAccessControl:"Bot Access Control",discovery:"API, Auth, MCP & Skill Discovery",commerce:"Commerce"},Ae={0:"var(--color-level-0)",1:"var(--color-level-1)",2:"var(--color-level-2)",3:"var(--color-level-3)",4:"var(--
+
+--color-gauge-bg)"
+              stroke-width="16"
+              stroke-linecap="round"
+              stroke-dasharray="6 4"
+            />
+          </g>
+        `;else{const q=v.score/100,Ke=L*q,Ve=H-Ke,Ze=K(v.score),be=q>.02?f(H,Ve):"";U=`
+          <g class="segment-group" data-index="${$}">
+            <path 
+              class="segment-bg"
+              d="${z}"
+              fill="none"
+              stroke="var(--color-gauge-bg)"
+              stroke-width="16"
+          
+
+ stroke-width="16"
+              stroke-linecap="round"
+              stroke-dasharray="6 4"
+            />
+          </g>
+        `;else{const q=v.score/100,Ke=L*q,Ve=H-Ke,Ze=K(v.score),be=q>.02?f(H,Ve):"";U=`
+          <g class="segment-group" data-index="${$}">
+            <path 
+              class="segment-bg"
+              d="${z}"
+              fill="none"
+              stroke="var(--color-gauge-bg)"
+              stroke-width="16"
+              stroke-linecap="round"
+     
+
+          stroke-linecap="round"
+            />
+            ${be?`
+            <path 
+              class="segment-fill"
+              data-category="${v.name}"
+              data-score="${v.score}"
+              d="${be}"
+              fill="none"
+              stroke="${Ze}"
+              stroke-width="16"
+              stroke-linecap="round"
+            />
+            `:""}
+          </g>
+        `}return E=G-12,U}).join("")}</g>`,N=K(e),oe=t.map((v,$)=>{const A=ve[v.name]||v.n

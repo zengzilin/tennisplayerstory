@@ -1,0 +1,195 @@
+标题 DNS / Nameservers, Value: 1
+									115 文本 DNS / Nameservers
+								116 container
+									117 内容列表
+										118 文本 DNS records
+										119 文本 Child nameservers
+										120 文本 Redirects
+										121 文本 DNSSEC
+										122 文本 DNS history
+										123 文本 Subdomains
+										124 文本 SSL
+									125 text Nameservers Nameservers handle internet requests for your domain. You can use Hostinger nameservers or use custom nameservers to point to other hosting provider. ns1.dns-parking.com ns2.dns-parking.com
+									126 按钮 Change Nameservers
+									127 标题 Manage DNS records, Value: 3
+										128 文本 Manage DNS records
+									129 文本 DNS records control how your domain works. Use DNS records to connect your domain to websites, email services, and other online tools.
+									130 按钮 Export
+									131 按钮 Import
+									132 标题 Quick setup, Value: 4
+										133 文本 Quick setup
+									134 文本 Connect to email, websites, and other services with one click. We'll add the right records for you.
+									135 切换按钮 Shopify, Value: 0
+									136 切换按钮 Google Workspace (Gmail), Value: 0
+									137 切换按钮 Google site verification, Value: 0
+									138 container
+										139 文本 Type
+										140 组合框 (settable) Type, Value: Choose type
+											141 文本 Choose type
+									142 container
+										143 文本 Name
+										144 文本栏 (disabled) -
+										145 文本栏 (disabled) Input, Value: .tennisplayerstory.com
+									146 container
+										147 文本 Value
+										148 文本栏 (disabled) Value, Placeholder: -
+									149 container
+										150 文本 TTL
+										151 步进器 (disabled) TTL, Value: 14400, Secondary Actions: Increment, Decrement
+									152 按钮 Add Record
+									153 链接 Add more records
+										154 文本 Add more records
+									155 文本栏 (settable) Search
+									156 表格
+										157 row
+											158 列标题
+												159 复选框 Select all rows, Value: 0
+											160 列标题
+												161 文本 Type
+											162 列标题
+												163 文本 Name
+											164 列标题
+												165 文本 Priority
+											166 列标题
+												167 文本 Content
+											168 列标题
+												169 文本 TTL
+											170 列标题
+												171 文本 actions
+										172 row
+											173 单元格
+												174 复选框 Select row, Value: 0
+											175 单元格
+												176 文本 CNAME
+											177 单元格
+												178 文本 www
+											179 单元格
+												180 文本 0
+											181 单元格
+												182 文本 www.tennisplayerstory.com.cdn.hstgr.net
+											183 单元格
+												184 文本 300
+											185 单元格
+												186 container
+													187 按钮 Edit
+													188 按钮 Delete
+										189 row
+											190 单元格
+												191 复选框 Select row, Value: 0
+											192 单元格
+												193 文本 A
+											194 单元格
+												195 文本 ftp
+											196 单元格
+												197 文本 0
+											198 单元格
+												199 文本 147.93.42.86
+											200 单元格
+												201 文本 1800
+											202 单元格
+												203 container
+													204 按钮 Edit
+													205 按钮 Delete
+										206 row
+											207 单元格
+												208 复选框 Select row, Value: 0
+											209 单元格
+												210 文本 ALIAS
+											211 单元格
+												212 文本 old
+											213 单元格
+												214 文本 0
+											215 单元格
+												216 文本 tennisplayerstory.com.cdn.hstgr.net
+											217 单元格
+												218 文本 300
+											219 单元格
+												220 container
+													221 按钮 Edit
+													222 按钮 Delete
+										223 row
+											224 单元格
+												225 复选框 Select row, Value: 0
+											226 单元格
+												227 文本 TXT
+											228 单元格
+												229 文本 _dmarc
+											230 单元格
+												231 文本 0
+											232 单元格
+												233 文本 "v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100"
+											234 单元格
+												235 文本 3600
+											236 单元格
+												237 container
+													238 按钮 Edit
+													239 按钮 Delete
+										240 row
+											241 单元格
+												242 复选框 Select row, Value: 0
+											243 单元格
+												244 文本 ALIAS
+											245 单元格
+												246 文本 @
+											247 单元格
+												248 文本 0
+											249 单元格
+												250 文本 tennisplayerstory.com.cdn.hstgr.net
+											251 单元格
+												252 文本 300
+											253 单元格
+												254 container
+													255 按钮 Edit
+													256 按钮 Delete
+										257 row
+											258 单元格
+												259 复选框 Select row, Value: 0
+											260 单元格
+												261 文本 TXT
+											262 单元格
+												263 文本 @
+											264 单元格
+												265 文本 0
+											266 单元格
+												267 文本 "v=spf1 include:spf.titan.email ~all"
+											268 单元格
+												269 文本 3600
+											270 单元格
+												271 container
+													272 按钮 Edit
+													273 按钮 Delete
+										274 row
+											275 单元格
+												276 复选框 Select row, Value: 0
+											277 单元格
+												278 文本 MX
+											279 单元格
+												280 文本 @
+											281 单元格
+												282 文本 10
+											283 单元格
+												284 文本 mx2.titan.email
+											285 单元格
+												286 文本 14400
+											287 单元格
+												288 container
+													289 按钮 Edit
+													290 按钮 Delete
+										291 row
+											292 单元格
+												293 复选框 Select row, Value: 0
+											294 单元格
+												295 文本 MX
+											296 单元格
+												297 文本 @
+											298 单元格
+												299 文本 5
+											300 单元格
+												301 文本 mx1.titan.email
+											302 单元格
+												303 文本 14400
+											304 单元格
+												305 container
+													306 按钮 Edit
+													307 按钮 Delete
+									308 text 

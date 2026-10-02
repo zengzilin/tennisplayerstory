@@ -1,0 +1,991 @@
+- banner:
+  - link "Cloudflare":
+    - /url: /
+    - img "Cloudflare"
+    - generic: Is Your Site Agent-Ready?
+  - link "Learn more about Agents":
+    - /url: https://agents.cloudflare.com/
+    - generic: Learn more about Agents
+  - button "System mode — click for light":
+- main:
+  - heading "Is Your Site Agent-Ready?" [level=1]
+  - paragraph:
+    - text: Scan your website to see how ready it is for AI agents. We check multiple emerging standards — from robots.txt and
+    - link "Markdown negotiation":
+      - /url: https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/
+    - text: to
+    - link "MCP":
+      - /url: https://modelcontextprotocol.io/
+    - text: ", OAuth,"
+    - link "Agent Skills":
+      - /url: https://agentskills.io/home
+    - text: and agentic commerce.
+  - generic: Website URL
+  - textbox "Website URL":
+    - /placeholder: https://example.com
+    - text: https://tennisplayerstory.com
+  - button "Scan":
+    - generic: Scan
+  - button "Customize scan" [expanded]:
+    - generic: Customize scan
+  - generic: Site type
+  - radiogroup "Site type":
+    - radio "All Checks" [checked]
+    - radio "Content Site"
+    - radio "API / Application"
+  - paragraph: Customize which checks to run
+  - group "Discoverability":
+    - generic: Discoverability
+    - checkbox "robots.txt" [checked]
+    - generic: robots.txt
+    - checkbox "Sitemap" [checked]
+    - generic: Sitemap
+    - checkbox "Link headers" [checked]
+    - generic: Link headers
+    - checkbox "DNS for AI Discovery (DNS-AID)" [checked]
+    - generic: DNS for AI Discovery (DNS-AID)
+  - group "Content Accessibility":
+    - generic: Content Accessibility
+    - checkbox "Markdown negotiation" [checked]
+    - generic: Markdown negotiation
+  - group "Bot Access Control":
+    - generic: Bot Access Control
+    - checkbox "AI bot rules" [checked]
+    - generic: AI bot rules
+    - checkbox "Content Signals" [checked]
+    - generic: Content Signals
+    - checkbox "Web Bot Auth" [checked]
+    - generic: Web Bot Auth
+  - group "API / Auth / MCP":
+    - generic: API / Auth / MCP
+    - checkbox "API Catalog" [checked]
+    - generic: API Catalog
+    - checkbox "OAuth discovery" [checked]
+    - generic: OAuth discovery
+    - checkbox "OAuth Protected Resource" [checked]
+    - generic: OAuth Protected Resource
+    - checkbox "Auth.md" [checked]
+    - generic: Auth.md
+    - checkbox "MCP Server Card" [checked]
+    - generic: MCP Server Card
+    - checkbox "A2A Agent Card"
+    - generic: A2A Agent Card
+    - checkbox "Agent Skills" [checked]
+    - generic: Agent Skills
+    - checkbox "WebMCP" [checked]
+    - generic: WebMCP
+    - checkbox "ARD manifest" [checked]
+    - generic: ARD manifest
+  - group "Commerce":
+    - generic: Commerce
+    - checkbox "x402" [checked]
+    - generic: x402
+    - checkbox "MPP" [checked]
+    - generic: MPP
+    - checkbox "UCP" [checked]
+    - generic: UCP
+    - checkbox "ACP" [checked]
+    - generic: ACP
+  - paragraph: Last scanned 2026/10/2 at 19:26:07
+  - button "Share score card":
+    - generic: Share
+  - generic: Results for
+  - generic: https://tennisplayerstory.com
+  - 'img "Overall score: 67 out of 100"'
+  - generic: "67"
+  - generic: Level 4
+  - generic: Agent-Integrated
+  - 'button "Discoverability: 3/4"':
+    - generic: Discoverability
+    - generic: 3/4
+  - 'button "Content: 1/1"':
+    - generic: Content
+    - generic: 1/1
+  - 'button "Bot Access Control: 2/2"':
+    - generic: Bot Access Control
+    - generic: 2/2
+  - 'button "API, Auth, MCP & Skill Discovery: 4/8"':
+    - generic: API, Auth, MCP & Skill Discovery
+    - generic: 4/8
+  - 'button "Commerce: Not checked"':
+    - generic: Commerce
+    - generic: Not checked
+  - button "Improve the score 5":
+    - generic: Improve the score
+    - generic: "5"
+  - heading "Discoverability" [level=2]
+  - generic: 3/4
+  - button "Pass robots.txt":
+    - img "Pass":
+    - generic: robots.txt
+  - generic: robots.txt
+  - generic: GET /robots.txt
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/plain; charset=utf-8":
+        - cell "content-type"
+        - cell "text/plain; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a443599f0b2ce66c-LAX":
+        - cell "cf-ray"
+        - cell "a443599f0b2ce66c-LAX"
+  - generic: "User-agent: * Allow: / Content-Signal: search=yes, ai-input=yes, ai-train=no Agentmap: https://tennisplayerstory.com/.well-known/ai-catalog.json Sitemap: https://tennisplayerstory.com/sitemap.xml"
+  - generic: Received valid robots.txt (200, text/plain; charset=utf-8)
+  - generic: Validate robots.txt structure
+  - generic: Contains valid User-agent directive(s)
+  - generic: Conclusion
+  - generic: robots.txt exists with valid format
+  - generic: Completed in 0ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass Sitemap":
+    - img "Pass":
+    - generic: Sitemap
+  - generic: Sitemap
+  - generic: Extract Sitemap directives from robots.txt
+  - generic: Found 1 Sitemap directive(s) in robots.txt
+  - generic: GET /sitemap.xml
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type application/xml; charset=utf-8":
+        - cell "content-type"
+        - cell "application/xml; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0bc32e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0bc32e66c-LAX"
+  - generic: Found valid xml sitemap at https://tennisplayerstory.com/sitemap.xml
+  - generic: Conclusion
+  - generic: sitemap.xml exists with valid structure
+  - generic: Completed in 233ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass Link headers":
+    - img "Pass":
+    - generic: Link headers
+  - generic: Link headers
+  - generic: GET /
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/html; charset=utf-8":
+        - cell "content-type"
+        - cell "text/html; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a3ae37e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a3ae37e66c-LAX"
+  - generic: Target page returned 200 with Link header
+  - generic: Parse Link header (RFC 8288)
+  - generic: Parsed 4 link(s) from header
+  - generic: Match agent-useful relations
+  - generic: "Found agent-useful relations: api-catalog, service-desc, service-doc"
+  - generic: Conclusion
+  - generic: "Found agent-useful Link relations: api-catalog, service-desc, service-doc"
+  - generic: Completed in 546ms
+  - button "Back to results":
+    - text: Back
+  - button "Fail DNS for AI Discovery (DNS-AID)":
+    - img "Fail":
+    - generic: DNS for AI Discovery (DNS-AID)
+  - term: Goal
+  - definition: Publish DNS for AI Discovery (DNS-AID) records for DNS-based agent discovery
+  - term: Issue
+  - definition: DNS for AI Discovery (DNS-AID) well-known entrypoint records not found
+  - generic: How to implement
+  - generic: Publish DNS for AI Discovery (DNS-AID) records under your domain, for example _index._agents.example.com or _a2a._agents.example.com, using ServiceMode SVCB/HTTPS records with alpn and endpoint parameters. Sign the public discovery zone with DNSSEC so validating resolvers return authenticated data.
+  - generic: Resources
+  - link "IETF Draft":
+    - /url: https://datatracker.ietf.org/doc/draft-mozleywilliams-dnsop-dnsaid/
+    - text: IETF Draft
+  - link "RFC 9460":
+    - /url: https://www.rfc-editor.org/rfc/rfc9460
+    - text: RFC 9460
+  - link "Skill":
+    - /url: https://isitagentready.com/.well-known/agent-skills/dns-aid/SKILL.md
+    - text: Skill
+  - button "Copy prompt Paste into your coding agent to fix this check":
+    - generic: Copy prompt
+    - text: Paste into your coding agent to fix this check
+  - button "View audit details":
+    - text: Audit details
+  - generic: DNS for AI Discovery (DNS-AID)
+  - generic: DoH SVCB _index._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_index._agents.tennisplayerstory.com\",\"type\":64}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No SVCB answers (NXDOMAIN)
+  - generic: DoH HTTPS _index._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_index._agents.tennisplayerstory.com\",\"type\":65}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No HTTPS answers (NXDOMAIN)
+  - generic: DoH SVCB _a2a._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_a2a._agents.tennisplayerstory.com\",\"type\":64}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No SVCB answers (NXDOMAIN)
+  - generic: DoH HTTPS _a2a._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_a2a._agents.tennisplayerstory.com\",\"type\":65}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No HTTPS answers (NXDOMAIN)
+  - generic: DoH SVCB _mcp._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_mcp._agents.tennisplayerstory.com\",\"type\":64}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No SVCB answers (NXDOMAIN)
+  - generic: DoH HTTPS _mcp._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_mcp._agents.tennisplayerstory.com\",\"type\":65}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No HTTPS answers (NXDOMAIN)
+  - generic: DoH TXT _index._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_index._agents.tennisplayerstory.com\",\"type\":16}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No TXT answers (NXDOMAIN)
+  - generic: Parse DNS for AI Discovery (DNS-AID) SVCB/HTTPS records
+  - generic: No DNS for AI Discovery (DNS-AID) SVCB or HTTPS records found at well-known entrypoints
+  - generic: Conclusion
+  - generic: DNS for AI Discovery (DNS-AID) well-known entrypoint records not found
+  - generic: Completed in 56ms
+  - button "Back to results":
+    - text: Back
+  - heading "Content" [level=2]
+  - generic: 1/1
+  - button "Pass Markdown Negotiation":
+    - img "Pass":
+    - generic: Markdown Negotiation
+  - generic: Markdown Negotiation
+  - generic: "GET target page (Accept: text/markdown)"
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept text/markdown":
+        - cell "accept"
+        - cell "text/markdown"
+      - row "cache-control no-cache":
+        - cell "cache-control"
+        - cell "no-cache"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type text/markdown; charset=utf-8":
+        - cell "content-type"
+        - cell "text/markdown; charset=utf-8"
+  - generic: Response content-type is text/markdown; charset=utf-8 -- site supports markdown negotiation
+  - generic: Conclusion
+  - generic: Site supports Markdown for Agents
+  - generic: Completed in 688ms
+  - button "Back to results":
+    - text: Back
+  - heading "Bot Access Control" [level=2]
+  - generic: 2/2
+  - button "Pass AI bot rules in robots.txt":
+    - img "Pass":
+    - generic: AI bot rules in robots.txt
+  - generic: AI bot rules in robots.txt
+  - generic: GET /robots.txt
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/plain; charset=utf-8":
+        - cell "content-type"
+        - cell "text/plain; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a443599f0b2ce66c-LAX":
+        - cell "cf-ray"
+        - cell "a443599f0b2ce66c-LAX"
+  - generic: "User-agent: * Allow: / Content-Signal: search=yes, ai-input=yes, ai-train=no Agentmap: https://tennisplayerstory.com/.well-known/ai-catalog.json Sitemap: https://tennisplayerstory.com/sitemap.xml"
+  - generic: Received valid robots.txt (200, text/plain; charset=utf-8)
+  - generic: Scan for AI bot User-agent directives
+  - generic: Checked 20 AI bot user agents -- none found, but wildcard rules apply
+  - generic: Conclusion
+  - generic: No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots
+  - generic: Completed in 0ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass Content Signals in robots.txt":
+    - img "Pass":
+    - generic: Content Signals in robots.txt
+  - generic: Content Signals in robots.txt
+  - generic: GET /robots.txt
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/plain; charset=utf-8":
+        - cell "content-type"
+        - cell "text/plain; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a443599f0b2ce66c-LAX":
+        - cell "cf-ray"
+        - cell "a443599f0b2ce66c-LAX"
+  - generic: "User-agent: * Allow: / Content-Signal: search=yes, ai-input=yes, ai-train=no Agentmap: https://tennisplayerstory.com/.well-known/ai-catalog.json Sitemap: https://tennisplayerstory.com/sitemap.xml"
+  - generic: Received valid robots.txt (200, text/plain; charset=utf-8)
+  - generic: Parse Content-Signal directives
+  - generic: Found 1 Content-Signal directive(s)
+  - generic: Conclusion
+  - generic: Content Signals found in robots.txt
+  - generic: Completed in 0ms
+  - button "Back to results":
+    - text: Back
+  - button "Not applicable Web Bot Auth request signing":
+    - img "Not applicable":
+    - generic: Web Bot Auth request signing
+  - text: Paste into your coding agent to fix this check
+  - generic: Web Bot Auth request signing
+  - generic: GET /.well-known/http-message-signatures-directory
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0bc34e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0bc34e66c-LAX"
+  - generic: Server returned 404 -- Web Bot Auth directory not found
+  - generic: Conclusion
+  - generic: Web Bot Auth directory not found
+  - generic: Completed in 83ms
+  - button "Back to results":
+    - text: Back
+  - heading "API, Auth, MCP & Skill Discovery" [level=2]
+  - generic: 4/8
+  - button "Pass API Catalog":
+    - img "Pass":
+    - generic: API Catalog
+  - generic: API Catalog
+  - generic: GET /.well-known/api-catalog
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/linkset+json, application/json":
+        - cell "accept"
+        - cell "application/linkset+json, application/json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/linkset+json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/linkset+json; charset=utf-8"
+      - row "content-length 254":
+        - cell "content-length"
+        - cell "254"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a29d8be66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a29d8be66c-LAX"
+  - generic: "{\"linkset\":[{\"anchor\":\"https://tennisplayerstory.com/api/agent/lookup\",\"service-desc\":[{\"href\":\"https://tennisplayerstory.com/openapi.json\",\"type\":\"application/json\"}],\"service-doc\":[{\"href\":\"https://tennisplayerstory.com/ai/\",\"type\":\"text/markdown\"}]}]}"
+  - generic: Received 200 with valid JSON response
+  - generic: Validate Linkset structure
+  - generic: Found "linkset" array with 1 entries
+  - generic: Analyze linkset entries
+  - generic: 1 API listed, correct content-type
+  - generic: Conclusion
+  - generic: API Catalog found with 1 API listed
+  - generic: Completed in 382ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass Agent Skills index":
+    - img "Pass":
+    - generic: Agent Skills index
+  - generic: Agent Skills index
+  - generic: GET /.well-known/agent-skills/index.json
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a27d6fe66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a27d6fe66c-LAX"
+  - generic: "Received 200 response with content-type: application/json; charset=utf-8"
+  - generic: Detect spec version
+  - generic: Found $schema field — v0.2.0 format detected
+  - generic: Count skills
+  - generic: Found "skills" array with 1 entry (1 with valid v0.2.0 fields)
+  - generic: Validate skill count
+  - generic: Index contains 1 skill
+  - generic: Conclusion
+  - generic: Agent Skills index exists with valid JSON
+  - generic: Completed in 514ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass WebMCP":
+    - img "Pass":
+    - generic: WebMCP
+  - generic: WebMCP
+  - generic: WebMCP detection
+  - generic: Checking page for WebMCP tool registrations
+  - generic: Navigate to https://tennisplayerstory.com
+  - generic: Loading page to detect WebMCP tool registrations
+  - generic: Check imperative WebMCP API
+  - generic: Found 1 tool(s) via document.modelContext
+  - generic: Conclusion
+  - generic: Found 1 WebMCP tool(s) via document.modelContext
+  - generic: Completed in 1499ms
+  - button "Back to results":
+    - text: Back
+  - button "Pass ARD (Agentic Resource Discovery)":
+    - img "Pass":
+    - generic: ARD (Agentic Resource Discovery)
+  - generic: ARD (Agentic Resource Discovery)
+  - generic: Extract Agentmap directives from robots.txt
+  - generic: Found 1 Agentmap directive
+  - generic: Extract <link rel="ai-catalog"> from page head
+  - generic: Found 1 catalog link
+  - generic: GET /.well-known/ai-catalog.json
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/json":
+        - cell "accept"
+        - cell "application/json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0bc33e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0bc33e66c-LAX"
+  - generic: "{\"specVersion\":\"1.0\",\"host\":{\"displayName\":\"TennisHub\",\"identifier\":\"did:web:tennisplayerstory.com\"},\"entries\":[{\"identifier\":\"urn:air:tennisplayerstory.com:api:public-lookup\",\"displayName\":\"TennisHub public lookup\",\"type\":\"application/json\",\"url\":\"https://tennisplayerstory.com/openapi.json\",\"representativeQueries\":[\"Find the TennisHub rankings page\",\"Find approved tennis articles\"]},{\"identifier\":\"urn:air:tennisplayerstory.com:skill:tennishub-lookup\",\"displayName\":\"TennisHub lookup instructions..."
+  - generic: Received 200 with valid JSON response
+  - generic: Validate manifest entries
+  - generic: 2 of 2 inspected entries valid; 2 use a conformant urn:air identifier
+  - generic: Conclusion
+  - generic: ARD capability manifest found with 2 agentic resources
+  - generic: DoH TXT _catalog._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_catalog._agents.tennisplayerstory.com\",\"type\":16}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No TXT answers (NXDOMAIN)
+  - generic: DoH SRV _search._agents.tennisplayerstory.com
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept application/dns-json":
+        - cell "accept"
+        - cell "application/dns-json"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type application/dns-json":
+        - cell "content-type"
+        - cell "application/dns-json"
+  - generic: "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"_search._agents.tennisplayerstory.com\",\"type\":33}],\"Authority\":[{\"name\":\"tennisplayerstory.com\",\"type\":6,\"TTL\":600,\"data\":\"ns1.dns-parking.com. dns.hostinger.com. 2026100101 10000 2400 604800 600\"}]}"
+  - generic: No SRV answers (NXDOMAIN)
+  - generic: Completed in 210ms
+  - button "Back to results":
+    - text: Back
+  - button "Fail OAuth / OIDC discovery":
+    - img "Fail":
+    - generic: OAuth / OIDC discovery
+  - term: Goal
+  - definition: Publish OAuth/OIDC discovery metadata so agents can authenticate with your APIs
+  - term: Issue
+  - definition: No OAuth/OIDC discovery metadata found
+  - generic: How to implement
+  - generic: If your site has protected APIs, publish /.well-known/openid-configuration (for OpenID Connect) or /.well-known/oauth-authorization-server (for pure OAuth 2.0) with your issuer, authorization_endpoint, token_endpoint, jwks_uri, and grant_types_supported. This allows AI agents to programmatically discover how to authenticate.
+  - generic: Resources
+  - link "OpenID Spec":
+    - /url: http://openid.net/specs/openid-connect-discovery-1_0.html
+    - text: OpenID Spec
+  - link "RFC 8414":
+    - /url: https://www.rfc-editor.org/rfc/rfc8414
+    - text: RFC 8414
+  - link "Skill":
+    - /url: https://isitagentready.com/.well-known/agent-skills/oauth-discovery/SKILL.md
+    - text: Skill
+  - button "Copy prompt Paste into your coding agent to fix this check":
+    - generic: Copy prompt
+    - text: Paste into your coding agent to fix this check
+  - button "View audit details":
+    - text: Audit details
+  - generic: OAuth / OIDC discovery
+  - generic: GET /.well-known/openid-configuration
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0bc35e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0bc35e66c-LAX"
+  - generic: openid-configuration returned 404
+  - generic: GET /.well-known/oauth-authorization-server
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0cc4ae66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0cc4ae66c-LAX"
+  - generic: oauth-authorization-server returned 404
+  - generic: Conclusion
+  - generic: No OAuth/OIDC discovery metadata found at either well-known path
+  - generic: Completed in 246ms
+  - button "Back to results":
+    - text: Back
+  - button "Fail OAuth Protected Resource":
+    - img "Fail":
+    - generic: OAuth Protected Resource
+  - term: Goal
+  - definition: Publish OAuth Protected Resource Metadata so agents can discover how to authenticate
+  - term: Issue
+  - definition: No OAuth Protected Resource Metadata found
+  - generic: How to implement
+  - generic: Publish /.well-known/oauth-protected-resource with your resource identifier, authorization_servers (list of OAuth/OIDC issuer URLs that can issue tokens for this resource), and scopes_supported. This tells agents how to obtain access tokens for your protected APIs.
+  - generic: Resources
+  - link "RFC 9728":
+    - /url: https://www.rfc-editor.org/rfc/rfc9728
+    - text: RFC 9728
+  - link "Skill":
+    - /url: https://isitagentready.com/.well-known/agent-skills/oauth-protected-resource/SKILL.md
+    - text: Skill
+  - button "Copy prompt Paste into your coding agent to fix this check":
+    - generic: Copy prompt
+    - text: Paste into your coding agent to fix this check
+  - button "View audit details":
+    - text: Audit details
+  - generic: OAuth Protected Resource
+  - generic: GET /.well-known/oauth-protected-resource
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a0cc4be66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a0cc4be66c-LAX"
+  - generic: Returned 404
+  - generic: GET /
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/html; charset=utf-8":
+        - cell "content-type"
+        - cell "text/html; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a13c8be66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a13c8be66c-LAX"
+  - generic: Target resource returned 200 (no WWW-Authenticate header)
+  - generic: Conclusion
+  - generic: No OAuth Protected Resource Metadata found
+  - generic: Completed in 310ms
+  - button "Back to results":
+    - text: Back
+  - button "Fail Auth.md agent registration":
+    - img "Fail":
+    - generic: Auth.md agent registration
+  - term: Goal
+  - definition: Publish Auth.md metadata for agent registration
+  - term: Issue
+  - definition: auth.md exists but does not describe agent registration
+  - generic: How to implement
+  - generic: Serve /auth.md at the site root with agent registration instructions, publish /.well-known/oauth-protected-resource, and include an agent_auth block in /.well-known/oauth-authorization-server with register_uri, supported identity types, credential types, and claim/revocation URLs where applicable.
+  - generic: Resources
+  - link "workos.com":
+    - /url: https://workos.com/auth-md
+    - text: workos.com
+  - link "workos/auth.md":
+    - /url: https://github.com/workos/auth.md
+    - text: workos/auth.md
+  - link "Skill":
+    - /url: https://isitagentready.com/.well-known/agent-skills/auth-md/SKILL.md
+    - text: Skill
+  - button "Copy prompt Paste into your coding agent to fix this check":
+    - generic: Copy prompt
+    - text: Paste into your coding agent to fix this check
+  - button "View audit details":
+    - text: Audit details
+  - generic: Auth.md agent registration
+  - generic: GET /auth.md
+  - generic: "200"
+  - generic: Request
+  - table:
+    - rowgroup:
+      - row "accept text/markdown, text/plain, */*":
+        - cell "accept"
+        - cell "text/markdown, text/plain, */*"
+  - generic: Response
+  - table:
+    - rowgroup:
+      - row "content-type text/markdown; charset=utf-8":
+        - cell "content-type"
+        - cell "text/markdown; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a1fd1ae66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a1fd1ae66c-LAX"
+  - generic: "# TennisHub auth.md ## Public agent access The [public lookup service](https://tennisplayerstory.com/ai/) is read-only and needs no registration or credentials. Agents should use it to find pages and approved articles. ## Existing human accounts TennisHub has an existing email/password account flow at [signup](https://tennisplayerstory.com/en/signup) and [login](https://tennisplayerstory.com/en/login). The application signs in through POST /hcgi/platform/api/collections/users/auth-with-passw..."
+  - generic: "Received 200 response with content-type: text/markdown; charset=utf-8"
+  - generic: Detect Auth.md registration markers
+  - generic: No Auth.md agent registration markers found
+  - generic: Conclusion
+  - generic: auth.md exists but does not describe agent registration
+  - generic: Completed in 284ms
+  - button "Back to results":
+    - text: Back
+  - button "Fail MCP Server Card":
+    - img "Fail":
+    - generic: MCP Server Card
+  - term: Goal
+  - definition: Publish an MCP Server Card for agent discovery
+  - term: Issue
+  - definition: MCP Server Card not found
+  - generic: How to implement
+  - generic: Serve an MCP Server Card (SEP-1649) at /.well-known/mcp/server-card.json with serverInfo (name, version), transport endpoint, and capabilities. The schema is being standardized at https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2127
+  - generic: Resources
+  - link "SEP-2127":
+    - /url: https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2127
+    - text: SEP-2127
+  - link "Skill":
+    - /url: https://isitagentready.com/.well-known/agent-skills/mcp-server-card/SKILL.md
+    - text: Skill
+  - button "Copy prompt Paste into your coding agent to fix this check":
+    - generic: Copy prompt
+    - text: Paste into your coding agent to fix this check
+  - button "View audit details":
+    - text: Audit details
+  - generic: MCP Server Card
+  - generic: GET /.well-known/mcp/server-card.json
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a22d34e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a22d34e66c-LAX"
+  - generic: /.well-known/mcp/server-card.json returned 404
+  - generic: GET /.well-known/mcp.json
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a23d42e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a23d42e66c-LAX"
+  - generic: /.well-known/mcp.json returned 404
+  - generic: GET /.well-known/mcp/server-cards.json
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a22d37e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a22d37e66c-LAX"
+  - generic: /.well-known/mcp/server-cards.json returned 404
+  - generic: Conclusion
+  - generic: MCP Server Card not found at any candidate path
+  - generic: Completed in 458ms
+  - button "Back to results":
+    - text: Back
+  - heading "Commerce Optional" [level=2]
+  - generic: 0/0
+  - paragraph: No e-commerce signals were detected on this site. These checks are shown for informational purposes and do not affect the score.
+  - button "Not applicable x402 Protocol":
+    - img "Not applicable":
+    - generic: x402 Protocol
+  - text: Paste into your coding agent to fix this check
+  - generic: x402 Protocol
+  - generic: GET /
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/html; charset=utf-8":
+        - cell "content-type"
+        - cell "text/html; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a31ddee66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a31ddee66c-LAX"
+  - generic: / returned 200 (not 402)
+  - generic: GET /api
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type text/html; charset=utf-8":
+        - cell "content-type"
+        - cell "text/html; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a32de5e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a32de5e66c-LAX"
+  - generic: /api returned 200 (not 402)
+  - generic: GET /api/v1
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a39e31e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a39e31e66c-LAX"
+  - generic: /api/v1 returned 404 (not 402)
+  - generic: GET /platform/v2/x402/discovery/resources
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type application/json":
+        - cell "content-type"
+        - cell "application/json"
+      - row "cf-ray a44359a2bda2e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a2bda2e66c-LAX"
+  - generic: GET Bazaar discovery API
+  - generic: Network error querying Bazaar API
+  - generic: Conclusion
+  - generic: x402 payment protocol not detected
+  - generic: Completed in 1489ms
+  - button "Back to results":
+    - text: Back
+  - button "Not applicable MPP (Machine Payment Protocol)":
+    - img "Not applicable":
+    - generic: MPP (Machine Payment Protocol)
+  - text: Paste into your coding agent to fix this check
+  - generic: MPP (Machine Payment Protocol)
+  - generic: GET /openapi.json
+  - generic: "200"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a39e33e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a39e33e66c-LAX"
+  - generic: /openapi.json found but no operations with x-payment-info
+  - generic: Conclusion
+  - generic: MPP payment discovery not detected
+  - generic: Completed in 539ms
+  - button "Back to results":
+    - text: Back
+  - button "Not applicable Universal Commerce Protocol":
+    - img "Not applicable":
+    - generic: Universal Commerce Protocol
+  - text: Paste into your coding agent to fix this check
+  - generic: Universal Commerce Protocol
+  - generic: GET /.well-known/ucp
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a2ad91e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a2ad91e66c-LAX"
+  - generic: Server returned 404 -- UCP profile not found
+  - generic: Conclusion
+  - generic: UCP profile not found
+  - generic: Completed in 388ms
+  - button "Back to results":
+    - text: Back
+  - button "Not applicable ACP (Agentic Commerce Protocol)":
+    - img "Not applicable":
+    - generic: ACP (Agentic Commerce Protocol)
+  - text: Paste into your coding agent to fix this check
+  - generic: ACP (Agentic Commerce Protocol)
+  - generic: GET /.well-known/acp.json
+  - generic: "404"
+  - table:
+    - rowgroup:
+      - row "content-type application/json; charset=utf-8":
+        - cell "content-type"
+        - cell "application/json; charset=utf-8"
+      - row "link <https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\"":
+        - cell "link"
+        - cell "<https://tennisplayerstory.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://tennisplayerstory.com/openapi.json>; rel=\"service-desc\", <https://tennisplayerstory.com/ai/>; rel=\"service-doc\", <https://tennisplayerstory.com/.well-known/ai-catalog.json>; rel=\"ai-catalog\""
+      - row "cf-ray a44359a3ae34e66c-LAX":
+        - cell "cf-ray"
+        - cell "a44359a3ae34e66c-LAX"
+  - generic: Server returned 404 -- ACP discovery document not found
+  - generic: Conclusion
+  - generic: ACP discovery document not found
+  - generic: Completed in 544ms
+  - button "Back to results":
+    - text: Back
+  - button "Scan another site":
+    - text: Scan another site
+- paragraph: These are AI-generated recommendations. AI can make mistakes. Please use your professional judgment when implementing these tips, as they are provided "as-is" and Cloudflare assumes no liability for any actions taken or outcomes based on this automated content.
+- contentinfo:
+  - paragraph:
+    - text: © 2026
+    - link "Cloudflare, Inc.":
+      - /url: https://cloudflare.com
+  - navigation:
+    - link "Privacy Policy":
+      - /url: https://www.cloudflare.com/privacypolicy/
+    - generic: "|"
+    - link "Terms of Use":
+      - /url: https://www.cloudflare.com/website-terms/
+    - generic: "|"
+    - link "Docs":
+      - /url: https://developers.cloudflare.com

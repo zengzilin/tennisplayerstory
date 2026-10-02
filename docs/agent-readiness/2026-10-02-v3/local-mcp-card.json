@@ -1,0 +1,1 @@
+{"serverInfo":{"name":"tennishub-public-lookup","version":"1.0.0"},"description":"Public, read-only TennisHub page and approved article lookup.","transport":{"type":"streamable-http","endpoint":"https://tennisplayerstory.com/mcp"},"capabilities":{"tools":{}},"authentication":{"required":false}}

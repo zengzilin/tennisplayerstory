@@ -3,14 +3,10 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import express from 'express';
 import router from '../src/routes/agent-discovery.js';
-import authRouter from '../src/routes/agent-auth-construction.js';
-import mcpRouter from '../src/routes/agent-mcp.js';
 import { parseLookupInput, publicArticle } from '../src/utils/agentLookup.js';
 
 const app = express();
-app.use(authRouter);
 app.use(router);
-app.use(mcpRouter);
 app.get(['/', '/en', '/en/stories', '/en/login'], (req, res) => res.type('html').send('<html><body>TennisHub</body></html>'));
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 let server;
@@ -114,27 +110,4 @@ test('partial translations do not mislabel original article content as translate
   assert.equal(result.title_language, 'zh');
   assert.equal(result.translation_available, true);
   assert.equal(result.translation_complete, false);
-});
-
-test('news Markdown uses the same filtered publisher feed as Tennis Brief', async () => {
-  const realFetch = globalThis.fetch;
-  globalThis.fetch = async url => {
-    assert.equal(url.origin, 'https://tennis-brief.zengzilin2016.workers.dev');
-    assert.equal(url.pathname, '/api/v1/articles');
-    assert.equal(url.searchParams.get('q'), 'Gauff');
-    assert.equal(url.searchParams.get('source'), 'bbc');
-    assert.equal(url.searchParams.get('page'), '2');
-    return new Response(JSON.stringify({ articles: [{ id: 'brief-known', title: 'Publisher headline', excerpt: 'Publisher excerpt', source_name: 'BBC Sport', source_url: 'https://www.bbc.com/sport/tennis/known', published_at: '2026-10-02T01:00:00Z', first_seen: '2026-10-02T01:10:00Z', updated_at: null }], has_more: false, page: 2 }));
-  };
-  try {
-    const response = await realFetch(`${origin}/en/news?q=Gauff&source=bbc&page=2`, { headers: { Accept: 'text/markdown' } });
-    assert.equal(response.status, 200);
-    const body = await response.text();
-    assert.match(body, /Publisher headline/);
-    assert.match(body, /BBC Sport/);
-    assert.match(body, /https:\/\/www.bbc.com\/sport\/tennis\/known/);
-    assert.match(body, /2026-10-02T01:00:00Z/);
-    assert.match(body, /original English/);
-    assert.doesNotMatch(body, /No approved articles/);
-  } finally { globalThis.fetch = realFetch; }
 });

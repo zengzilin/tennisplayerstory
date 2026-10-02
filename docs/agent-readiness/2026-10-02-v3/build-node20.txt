@@ -1,0 +1,17 @@
+
+> monorepo@0.0.0 build
+> npm run build --prefix apps/web
+
+
+> web@0.0.0 build
+> node tools/generate-llms.js || true && vite build --outDir ../../dist/apps/web
+
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 2511 modules transformed.
+rendering chunks...
+computing gzip size...
+../../dist/apps/web/index.html                     6.12 kB │ gzip:   2.32 kB
+../../dist/apps/web/assets/index-BUS5UCJL.css    118.57 kB │ gzip:  19.38 kB
+../../dist/apps/web/assets/index-DfRb-Ckl.js   1,346.11 kB │ gzip: 416.42 kB
+✓ built in 4.09s

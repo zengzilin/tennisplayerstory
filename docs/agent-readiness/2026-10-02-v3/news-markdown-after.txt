@@ -1,0 +1,20 @@
+✔ public page lookup finds a known page, reads it, handles missing and non-English routes (24.992375ms)
+✔ invalid, oversized, duplicate and non-integer inputs are rejected (2.3185ms)
+✔ approved article projection excludes private fields and preserves translation, unknown dates and truncation (0.276291ms)
+✔ Markdown and HTML negotiation remain distinct in both request orders, including q=0 (4.633375ms)
+✔ served skill bytes match index digest and all ARD resource links work (3.400833ms)
+✔ sitemap advertises only real public routes and robots declares content use without granting training (1.353625ms)
+✔ partial translations do not mislabel original article content as translated (0.093ms)
+✔ news Markdown uses the same filtered publisher feed as Tennis Brief (1.608042ms)
+✔ news proxy preserves publisher content and forwards supported filters (23.670417ms)
+✔ source status including failures is preserved (2.108875ms)
+✔ invalid filters never reach the upstream (6.369208ms)
+✔ upstream failures and invalid payloads yield a retryable uncached error (5.113542ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 229.720542

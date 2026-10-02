@@ -1,0 +1,83 @@
+{
+  "target_url": "https://tennisplayerstory.com",
+  "final_canonical_origin": "https://tennisplayerstory.com",
+  "result_url": "https://isitagentready.com/tennisplayerstory.com",
+  "browser_scanned_at_local": "2026-10-02 19:26:07 Asia/Shanghai",
+  "api_scanned_at": "2026-10-02T11:32:56.669Z",
+  "profile": "All Checks (current default)",
+  "enabled_checks": [
+    "robotsTxt",
+    "sitemap",
+    "linkHeaders",
+    "dnsAid",
+    "markdownNegotiation",
+    "robotsTxtAiRules",
+    "contentSignals",
+    "webBotAuth",
+    "apiCatalog",
+    "oauthDiscovery",
+    "oauthProtectedResource",
+    "authMd",
+    "mcpServerCard",
+    "agentSkills",
+    "webMcp",
+    "ard",
+    "x402",
+    "mpp",
+    "ucp",
+    "acp"
+  ],
+  "scored_checks": [
+    "robotsTxt",
+    "sitemap",
+    "linkHeaders",
+    "dnsAid",
+    "markdownNegotiation",
+    "robotsTxtAiRules",
+    "contentSignals",
+    "apiCatalog",
+    "oauthDiscovery",
+    "oauthProtectedResource",
+    "authMd",
+    "mcpServerCard",
+    "agentSkills",
+    "webMcp",
+    "ard"
+  ],
+  "pass": [
+    "robotsTxt",
+    "sitemap",
+    "linkHeaders",
+    "markdownNegotiation",
+    "robotsTxtAiRules",
+    "contentSignals",
+    "apiCatalog",
+    "agentSkills",
+    "webMcp",
+    "ard"
+  ],
+  "fail": {
+    "dnsAid": "DNS for AI Discovery (DNS-AID) well-known entrypoint records not found",
+    "oauthDiscovery": "No OAuth/OIDC discovery metadata found",
+    "oauthProtectedResource": "No OAuth Protected Resource Metadata found",
+    "authMd": "auth.md exists but does not describe agent registration",
+    "mcpServerCard": "MCP Server Card not found"
+  },
+  "neutral": [
+    "webBotAuth",
+    "x402",
+    "mpp",
+    "ucp",
+    "acp"
+  ],
+  "unableToCheck": [],
+  "displayed_score": 67,
+  "readiness_level": 4,
+  "readiness_level_name": "Agent-Integrated",
+  "api_score_field": null,
+  "excluded_extra_checks": [
+    "a2aAgentCard",
+    "ap2"
+  ],
+  "note": "Browser score independently observed; API has no numeric score. API request uses the same current default 20 IDs; browser and API timestamps are separate."
+}

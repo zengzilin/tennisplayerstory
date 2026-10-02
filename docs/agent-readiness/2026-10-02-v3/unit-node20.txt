@@ -1,0 +1,111 @@
+TAP version 13
+# {
+#   "passed": true,
+#   "checks": [
+#     "issuer/resource consistency",
+#     "all capabilities explicitly planned and disabled",
+#     "disabled empty JWKS",
+#     "all reserved operations 503/no-store",
+#     "malformed identity bodies never parsed",
+#     "public lookup stays available",
+#     "human login accurately preserved in documentation"
+#   ],
+#   "production_mounted": true,
+#   "owner_accepted": true
+# }
+# Subtest: /Users/zengzilin/git/tennisplayerstory/apps/api/tests/agent-auth-construction.test.js
+ok 1 - /Users/zengzilin/git/tennisplayerstory/apps/api/tests/agent-auth-construction.test.js
+  ---
+  duration_ms: 450.082583
+  ...
+# Subtest: public page lookup finds a known page, reads it, handles missing and non-English routes
+ok 2 - public page lookup finds a known page, reads it, handles missing and non-English routes
+  ---
+  duration_ms: 23.374583
+  ...
+# Subtest: invalid, oversized, duplicate and non-integer inputs are rejected
+ok 3 - invalid, oversized, duplicate and non-integer inputs are rejected
+  ---
+  duration_ms: 3.450792
+  ...
+# Subtest: approved article projection excludes private fields and preserves translation, unknown dates and truncation
+ok 4 - approved article projection excludes private fields and preserves translation, unknown dates and truncation
+  ---
+  duration_ms: 0.27375
+  ...
+# Subtest: Markdown and HTML negotiation remain distinct in both request orders, including q=0
+ok 5 - Markdown and HTML negotiation remain distinct in both request orders, including q=0
+  ---
+  duration_ms: 14.586334
+  ...
+# Subtest: served skill bytes match index digest and all ARD resource links work
+ok 6 - served skill bytes match index digest and all ARD resource links work
+  ---
+  duration_ms: 8.977625
+  ...
+# Subtest: sitemap advertises only real public routes and robots declares content use without granting training
+ok 7 - sitemap advertises only real public routes and robots declares content use without granting training
+  ---
+  duration_ms: 4.422833
+  ...
+# Subtest: partial translations do not mislabel original article content as translated
+ok 8 - partial translations do not mislabel original article content as translated
+  ---
+  duration_ms: 0.220792
+  ...
+# Subtest: news Markdown uses the same filtered publisher feed as Tennis Brief
+ok 9 - news Markdown uses the same filtered publisher feed as Tennis Brief
+  ---
+  duration_ms: 2.481458
+  ...
+# {
+#   "passed": true,
+#   "sdk": "1.31.0",
+#   "checks": [
+#     "initialize",
+#     "tools/list",
+#     "tools/call search",
+#     "exact read with Japanese source",
+#     "missing item",
+#     "invalid kind",
+#     "storage outage",
+#     "origin rejection",
+#     "GET method rejection",
+#     "server card"
+#   ],
+#   "production_integrated": true
+# }
+# Subtest: /Users/zengzilin/git/tennisplayerstory/apps/api/tests/agent-mcp.test.js
+ok 3 - /Users/zengzilin/git/tennisplayerstory/apps/api/tests/agent-mcp.test.js
+  ---
+  duration_ms: 486.081416
+  ...
+# Subtest: news proxy preserves publisher content and forwards supported filters
+ok 11 - news proxy preserves publisher content and forwards supported filters
+  ---
+  duration_ms: 51.617916
+  ...
+# Subtest: source status including failures is preserved
+ok 12 - source status including failures is preserved
+  ---
+  duration_ms: 4.119125
+  ...
+# Subtest: invalid filters never reach the upstream
+ok 13 - invalid filters never reach the upstream
+  ---
+  duration_ms: 12.690166
+  ...
+# Subtest: upstream failures and invalid payloads yield a retryable uncached error
+ok 14 - upstream failures and invalid payloads yield a retryable uncached error
+  ---
+  duration_ms: 15.705458
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 518.907167

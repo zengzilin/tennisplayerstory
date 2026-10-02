@@ -1,0 +1,12 @@
+
+> monorepo@0.0.0 lint
+> concurrently --raw "npm run lint --prefix apps/web" "npm run lint --prefix apps/api"
+
+
+> web@0.0.0 lint
+> eslint . --quiet
+
+
+> api@0.0.0 lint
+> eslint . --quiet
+

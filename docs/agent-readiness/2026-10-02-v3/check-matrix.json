@@ -1,0 +1,182 @@
+[
+  {
+    "check_id": "robotsTxt",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "sitemap",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "linkHeaders",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "dnsAid",
+    "baseline": "fail",
+    "expected_behavior": "Hostinger does not support signing or SVCB/HTTPS in current editor; staged record only. Requires owner-authorized DNS provider change or provider support.",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "DNS records and signing/registrar DS",
+    "test": "Authoritative SVCB/RRSIG, parent DS, validating DoH AD, then endpoint retrieval; never blind DS entry",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "markdownNegotiation",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "robotsTxtAiRules",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "contentSignals",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "webBotAuth",
+    "baseline": "neutral",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "apiCatalog",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "oauthDiscovery",
+    "baseline": "fail",
+    "expected_behavior": "Owner accepted clearly disabled planned agent OAuth; preserve human auth",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "agent-auth-construction.js, main.ts",
+    "test": "Issuer consistency, disabled flags, reserved operations 503/no-store before body parser",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "oauthProtectedResource",
+    "baseline": "fail",
+    "expected_behavior": "Origin-matching planned resource metadata, public lookup unchanged",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "agent-auth-construction.js",
+    "test": "Exact resource/issuer match; no challenge or account requirement",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "authMd",
+    "baseline": "fail",
+    "expected_behavior": "Preserve original human JWT description and disclose construction; point to public working service",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "agent-auth-construction.js",
+    "test": "H1 auth.md, construction flags, no identity processing, existing login routes",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "mcpServerCard",
+    "baseline": "fail",
+    "expected_behavior": "Mount official SDK stateless read-only tool, serve matching server card",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "apps/api/src/routes/agent-mcp.js, apps/api/package.json, package-lock.json, main.ts",
+    "test": "Official SDK independent client initialize/list/call, missing/invalid inputs, Origin rejection",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "agentSkills",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "webMcp",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "ard",
+    "baseline": "pass",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "x402",
+    "baseline": "neutral",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "mpp",
+    "baseline": "neutral",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "ucp",
+    "baseline": "neutral",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  },
+  {
+    "check_id": "acp",
+    "baseline": "neutral",
+    "expected_behavior": "Preserve existing operational capability; verify actual responses and digest where applicable",
+    "current_evidence": "baseline-api.json and baseline-browser.txt",
+    "affected_files_or_records": "Existing discovery/public routes",
+    "test": "Live HTTP or browser verification; optional neutral checks remain neutral",
+    "rollback": "python3 docs/agent-readiness/2026-10-02-v3/rollback.py; rebuild and deploy only selected app files. DNS separate; no DNS changes yet."
+  }
+]

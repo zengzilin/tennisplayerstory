@@ -1,0 +1,17 @@
+{
+  "base_commit": "6085f3eb570429090f37de21bc45e6afb55c8af9",
+  "files": {
+    "apps/api/src/routes/agent-discovery.js": true,
+    "apps/api/src/routes/tennis-brief.js": true,
+    "apps/api/src/utils/tennisBrief.js": false,
+    "shared/public-pages.mjs": true,
+    "apps/api/src/main.ts": true,
+    "apps/api/src/routes/agent-mcp.js": false,
+    "apps/api/src/routes/agent-auth-construction.js": false,
+    "apps/api/package.json": true,
+    "package-lock.json": true,
+    "apps/api/tests/agent-discovery.test.js": true,
+    "apps/api/tests/agent-mcp.test.js": false,
+    "apps/api/tests/agent-auth-construction.test.js": false
+  }
+}
