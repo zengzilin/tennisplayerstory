@@ -19,7 +19,8 @@ const SitemapPage = () => {
     { path: `${langPrefix}/live-matches`, label: 'Live Matches & Scores' },
     { path: `${langPrefix}/players`, label: 'Professional Players Database' },
     { path: `${langPrefix}/rankings`, label: 'Global Tennis Rankings' },
-    { path: `${langPrefix}/stories`, label: 'Tennis News & Stories' },
+    { path: `${langPrefix}/news`, label: 'Latest Tennis News' },
+    { path: `${langPrefix}/stories`, label: 'Tennis Stories & Community Articles' },
     { path: `${langPrefix}/vlogs`, label: 'Tennis Video Vlogs' }
   ];
 

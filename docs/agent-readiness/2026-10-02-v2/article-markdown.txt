@@ -1,0 +1,121 @@
+# Player stories
+
+Read approved community stories and match analysis. Use the public article lookup for individual records.
+
+Source: https://tennisplayerstory.com/zh/stories
+
+Languages: en, zh, ja, es, fr, de
+
+## Fixture newer story 0
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-00#article-newer-00)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-00&lang=zh
+
+## Fixture newer story 1
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-01#article-newer-01)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-01&lang=zh
+
+## Fixture newer story 2
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-02#article-newer-02)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-02&lang=zh
+
+## Fixture newer story 3
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-03#article-newer-03)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-03&lang=zh
+
+## Fixture newer story 4
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-04#article-newer-04)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-04&lang=zh
+
+## Fixture newer story 5
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-05#article-newer-05)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-05&lang=zh
+
+## Fixture newer story 6
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-06#article-newer-06)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-06&lang=zh
+
+## Fixture newer story 7
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-07#article-newer-07)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-07&lang=zh
+
+## Fixture newer story 8
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-08#article-newer-08)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-08&lang=zh
+
+## Fixture newer story 9
+
+Synthetic local browser fixture, not a live publication.
+
+Updated: Thu Jan 01 2026 00:00:00 GMT+0000 (Coordinated Universal Time)
+
+[Read source](https://tennisplayerstory.com/zh/stories?article=newer-09#article-newer-09)
+
+Read full record: https://tennisplayerstory.com/api/agent/lookup?kind=articles&id=newer-09&lang=zh
+- [TennisHub](https://tennisplayerstory.com/zh): Tennis news, player stories, rankings and match information.
+- [Live matches](https://tennisplayerstory.com/zh/live-matches): Browse match information. Availability and freshness depend on the upstream feed.
+- [Players](https://tennisplayerstory.com/zh/players): Browse tennis players and the rankings stored on TennisHub.
+- [Rankings](https://tennisplayerstory.com/zh/rankings): Browse stored ATP and WTA rankings. Check update dates before treating rankings as current.
+- [Tennis news](https://tennisplayerstory.com/zh/news): Read tennis news and analysis, including AI-assisted articles.
+- [Player stories](https://tennisplayerstory.com/zh/stories): Read approved community stories and match analysis. Use the public article lookup for individual records.
+- [Tennis vlogs](https://tennisplayerstory.com/zh/vlogs): Browse published tennis videos.
+- [Privacy policy](https://tennisplayerstory.com/zh/privacy-policy): Read the website privacy policy.
+- [Terms of service](https://tennisplayerstory.com/zh/terms-of-service): Read the website terms of service.
+- [Sitemap](https://tennisplayerstory.com/zh/sitemap): Browse public website navigation.
+
+[Agent guide](https://tennisplayerstory.com/ai/)
+
+Rankings and match data depend on upstream feeds; this summary does not assert current scores or rankings.

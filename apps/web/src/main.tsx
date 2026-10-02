@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom/client';
 import '@/i18n/i18n.js'; // MUST BE IMPORTED BEFORE APP
 import App from '@/App.tsx';
 import '@/index.css';
+import { registerAgentTools } from '@/lib/agentTools.js';
+
+registerAgentTools().catch(error => console.warn('Public agent tools unavailable:', error.message));
 
 console.log('[main.tsx] i18n imported, rendering React app...');
 

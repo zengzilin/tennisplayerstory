@@ -307,6 +307,16 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		cors: true,
+		proxy: {
+			...Object.fromEntries(['/api/agent', '/ai', '/.well-known', '/openapi.json', '/auth.md', '/llms.txt', '/llms-full.txt'].map(prefix => [prefix, {
+				target: process.env.VITE_API_PROXY_TARGET || 'http://localhost:3001',
+				changeOrigin: true,
+			}])),
+			'/hcgi': {
+				target: process.env.VITE_API_PROXY_TARGET || 'http://localhost:3001',
+				changeOrigin: true,
+			},
+		},
 		headers: {
 			'Cross-Origin-Embedder-Policy': 'credentialless',
 		},

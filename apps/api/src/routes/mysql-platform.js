@@ -398,3 +398,6 @@ router.get('/api/files/:collection/:recordId/:filename', (req, res) => {
 });
 
 export default router;
+
+// Reuse the existing pool for bounded, read-only public discovery queries.
+export { getPool as getPlatformPool };

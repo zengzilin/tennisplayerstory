@@ -1,0 +1,92 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "submit": "Soumettre",
+    "search": "Rechercher...",
+    "filter": "Filtrer",
+    "noData": "Aucune donnée disponible",
+    "retry": "Réessayer"
+  },
+  "nav": {
+    "home": "Accueil",
+    "players": "Joueurs",
+    "rankings": "Classements",
+    "liveMatches": "Matchs en direct",
+    "news": "Actualités",
+    "stories": "Histoires",
+    "vlogs": "Vlogs",
+    "admin": "Admin",
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "signup": "S'inscrire"
+  },
+  "news": {
+    "heading": "Actualités tennis",
+    "description": "Actualités des joueurs, tournois, analyses de matchs et informations du tennis professionnel.",
+    "breaking": "À la une",
+    "submitArticle": "Publier un article",
+    "leadStory": "Article principal",
+    "latest": "Dernières infos",
+    "newsDesk": "Rédaction",
+    "latestNews": "Dernières actualités tennis",
+    "articles": "articles",
+    "readFull": "Lire l’article",
+    "collapse": "Fermer l’article",
+    "now": "Maintenant",
+    "trendingTopics": "Sujets tendance",
+    "playersInFocus": "Joueurs à suivre",
+    "quickLinks": "Accès rapides",
+    "loadError": "Impossible de charger les actualités.",
+    "emptyTitle": "Aucune actualité dans cette catégorie",
+    "emptyDescription": "Les nouveaux articles apparaîtront ici dès leur publication.",
+    "showAll": "Voir toutes les actualités",
+    "categories": { "all": "Tout", "players": "Joueurs", "matches": "Matchs", "atp": "ATP", "wta": "WTA", "grandSlams": "Grands Chelems" }
+  },
+  "vlogs": {
+    "title": "Vlogs de Tennis",
+    "subtitle": "Regardez les dernières analyses, les moments forts et le contenu en coulisses.",
+    "submitButton": "Soumettre une vidéo",
+    "searchPlaceholder": "Rechercher des vlogs par titre ou chaîne...",
+    "filterByDate": "Trier par date",
+    "noVideos": "Aucune vidéo trouvée correspondant à vos critères.",
+    "submitModal": {
+      "title": "Soumettre un Vlog",
+      "desc": "Partagez une vidéo avec la communauté. Elle sera examinée par un administrateur.",
+      "youtubeUrl": "URL YouTube",
+      "videoTitle": "Titre de la vidéo",
+      "description": "Description (Optionnel)",
+      "userName": "Votre Nom / Chaîne",
+      "submit": "Soumettre",
+      "success": "Vidéo soumise avec succès! En attente d'approbation.",
+      "error": "Échec de la soumission de la vidéo.",
+      "invalidUrl": "Veuillez entrer une URL YouTube valide."
+    },
+    "admin": {
+      "title": "Gestion des Vlogs",
+      "desc": "Examiner, approuver et gérer les vidéos soumises.",
+      "filterStatus": "Filtrer par statut",
+      "approve": "Approuver",
+      "reject": "Rejeter",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "preview": "Aperçu",
+      "bulkApprove": "Approuver la sélection",
+      "bulkReject": "Rejeter la sélection",
+      "noVlogs": "Aucun vlog à gérer."
+    },
+    "status": {
+      "pending": "En attente",
+      "approved": "Approuvé",
+      "rejected": "Rejeté",
+      "all": "Tous les statuts"
+    }
+  }
+}

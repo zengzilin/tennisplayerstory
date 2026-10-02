@@ -1,0 +1,8 @@
+
+> monorepo@0.0.0 typecheck
+> npm run typecheck --prefix apps/web
+
+
+> web@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.json
+

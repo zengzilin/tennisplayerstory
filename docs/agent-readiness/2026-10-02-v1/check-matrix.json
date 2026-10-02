@@ -1,0 +1,182 @@
+[
+  {
+    "check_id": "robotsTxt",
+    "baseline_api_status": "pass",
+    "baseline_api_reason": "robots.txt exists with valid format",
+    "proposed_change": "Existing valid robots preserved, Content-Signal and Agentmap added",
+    "affected_files_records": "apps/api/src/routes/sitemap.js;apps/web/public/robots.txt",
+    "test": "Local handler/static file inspection",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "sitemap",
+    "baseline_api_status": "pass",
+    "baseline_api_reason": "sitemap.xml exists with valid structure",
+    "proposed_change": "Use actual public routes; add news/de; remove non-existent player detail routes",
+    "affected_files_records": "shared/public-pages.mjs;apps/api/src/routes/sitemap.js",
+    "test": "Browser router inspection; XML generation",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "linkHeaders",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "Target page returned status 429",
+    "proposed_change": "Append working API/document discovery relations on scanned homepage",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js;apps/api/src/main.ts",
+    "test": "HTTP tests",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "dnsAid",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "DNS for AI Discovery (DNS-AID) well-known entrypoint records not found",
+    "proposed_change": "No service index DNS record or DS; publish index endpoint; DNS changes pending account access",
+    "affected_files_records": "DNS _index._agents; /ai/index.ilang",
+    "test": "Saved DoH index and DS evidence; propagation not verified",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "markdownNegotiation",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "Site does not support Markdown for Agents",
+    "proposed_change": "Public route summaries and approved article excerpts; Vary:Accept; negotiated Markdown no-store",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js",
+    "test": "Tests both request orders and q=0",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "robotsTxtAiRules",
+    "baseline_api_status": "pass",
+    "baseline_api_reason": "No AI-specific bot rules; wildcard rules apply to all crawlers including AI bots",
+    "proposed_change": "Existing wildcard rules retained",
+    "affected_files_records": "apps/api/src/routes/sitemap.js",
+    "test": "Baseline pass; no bot restrictions changed",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "contentSignals",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "No Content Signals found in robots.txt",
+    "proposed_change": "search=yes,ai-input=yes,ai-train=no; training is not granted",
+    "affected_files_records": "apps/api/src/routes/sitemap.js;apps/web/public/robots.txt",
+    "test": "Response inspection",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "webBotAuth",
+    "baseline_api_status": "neutral",
+    "baseline_api_reason": "Web Bot Auth directory returned HTML instead of JSON (informational only)",
+    "proposed_change": "Informational; no invented commerce or signing features",
+    "affected_files_records": "None",
+    "test": "Baseline not applicable",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "apiCatalog",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "API Catalog returned status 429",
+    "proposed_change": "RFC9727 catalog and OpenAPI for bounded lookup",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js",
+    "test": "Media type and links tested",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "oauthDiscovery",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "No OAuth/OIDC discovery metadata found",
+    "proposed_change": "Unsupported by existing password/JWT login; no fabricated issuer or disabled placeholder added",
+    "affected_files_records": "No operational OAuth changes",
+    "test": "Pending real authentication design/access; existing login preserved",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "oauthProtectedResource",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "No OAuth Protected Resource Metadata found",
+    "proposed_change": "Public lookup has no auth requirement; existing JWT app has no OAuth issuer",
+    "affected_files_records": "No OAuth PRM added",
+    "test": "Pending real authentication design/access",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "authMd",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "auth.md returned status 429",
+    "proposed_change": "Truthful self-contained description of public service and human login; no agent provisioning claimed",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js",
+    "test": "HTTP Markdown/H1 tested; scanner acceptance unknown",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "mcpServerCard",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "/.well-known/mcp/server-card.json returned status 429",
+    "proposed_change": "Real MCP candidate verified in isolated SDK environment; not mounted in production",
+    "affected_files_records": "pending/agent-mcp.js",
+    "test": "Official Client initialize/list/call passed; dependency approval pending",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "agentSkills",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "Agent Skills index returned status 429",
+    "proposed_change": "Valid front matter, I-Lang instructions, served-byte SHA256",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js",
+    "test": "Digest HTTP test",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "webMcp",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "No WebMCP tools detected on page load",
+    "proposed_change": "Feature detection, real callback, AbortSignal lifecycle, shared API schema",
+    "affected_files_records": "apps/web/src/lib/agentTools.js;shared/agent-lookup-contract.mjs",
+    "test": "Actual browser tools executed: search/exact/missing/lang",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "ard",
+    "baseline_api_status": "fail",
+    "baseline_api_reason": "ARD capability manifest returned HTML instead of JSON",
+    "proposed_change": "Public manifest points to working OpenAPI and Skill; no inactive MCP advertisement",
+    "affected_files_records": "apps/api/src/routes/agent-discovery.js",
+    "test": "CORS/types/resource links tested",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "x402",
+    "baseline_api_status": "neutral",
+    "baseline_api_reason": "x402 payment protocol not detected (not a commerce site)",
+    "proposed_change": "Informational; no invented commerce or signing features",
+    "affected_files_records": "None",
+    "test": "Baseline not applicable",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "mpp",
+    "baseline_api_status": "neutral",
+    "baseline_api_reason": "MPP payment discovery not detected (not a commerce site)",
+    "proposed_change": "Informational; no invented commerce or signing features",
+    "affected_files_records": "None",
+    "test": "Baseline not applicable",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "ucp",
+    "baseline_api_status": "neutral",
+    "baseline_api_reason": "UCP profile returned status 429 (not a commerce site)",
+    "proposed_change": "Informational; no invented commerce or signing features",
+    "affected_files_records": "None",
+    "test": "Baseline not applicable",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  },
+  {
+    "check_id": "acp",
+    "baseline_api_status": "neutral",
+    "baseline_api_reason": "ACP discovery document returned status 429 (not a commerce site)",
+    "proposed_change": "Informational; no invented commerce or signing features",
+    "affected_files_records": "None",
+    "test": "Baseline not applicable",
+    "rollback": "rollback/manifest.json + rollback.py; DNS record only if later applied"
+  }
+]

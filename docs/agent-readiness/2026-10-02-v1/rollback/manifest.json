@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "date": "2026-10-02",
+  "git_head": "3c138936ec865309f740a5fa4be04001d4ee8d27",
+  "files": [
+    "apps/api/src/main.ts",
+    "apps/api/src/routes/mysql-platform.js",
+    "apps/api/src/routes/sitemap.js",
+    "apps/web/src/main.tsx",
+    "apps/web/index.html",
+    "apps/web/src/components/ArticlePreview.tsx",
+    "apps/web/public/robots.txt",
+    "apps/web/tools/generate-llms.js",
+    "apps/web/public/llms.txt",
+    "apps/web/vite.config.ts",
+    "apps/api/src/utils/agentLookup.js",
+    "apps/web/src/lib/localizeArticle.js",
+    "apps/api/tests/agent-discovery.test.js",
+    "apps/api/src/routes/agent-discovery.js",
+    "apps/web/src/hooks/useStoryData.js",
+    "apps/web/src/i18n/locales/en.json",
+    "apps/web/src/i18n/locales/zh.json",
+    "apps/web/src/i18n/locales/ja.json",
+    "apps/web/src/i18n/locales/es.json",
+    "apps/web/src/i18n/locales/fr.json",
+    "apps/web/src/i18n/locales/de.json"
+  ],
+  "deployed": false,
+  "new_files": [
+    "shared/public-pages.mjs",
+    "shared/agent-lookup-contract.mjs",
+    "apps/api/src/routes/agent-discovery.js",
+    "apps/api/src/utils/agentLookup.js",
+    "apps/api/tests/agent-discovery.test.js",
+    "apps/web/src/lib/agentTools.js",
+    "apps/api/tests/agent-lookup-mysql.test.js"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "source": "https://nodejs.org/dist/v20.19.1/",
+  "archive": "node-v20.19.1-darwin-arm64.tar.gz",
+  "sha256": "d3746fee0e00e3a7fedf50633f8e04adb6873b1fe9b5b50c37dff16f64a4f2c7",
+  "checksum_verified": true
+}

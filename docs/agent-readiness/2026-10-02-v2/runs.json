@@ -1,0 +1,31 @@
+{
+  "node20_download": {
+    "session_id": 73098,
+    "command": "curl official Node20.19.1 runtime and SHASUMS256.txt",
+    "status": "completed, SHA256 verified"
+  },
+  "mysql_image": {
+    "session_id": 81626,
+    "command": "docker pull mysql:8.4",
+    "status": "completed"
+  },
+  "production_deployed": false,
+  "mac_ui": "locked; user unlock requested",
+  "sdk_production_approval": "requested; awaiting answer",
+  "mysql_fixture": {
+    "container_id": "fe441e25c35b560bc5878af5cd37177a7d59abb7ca85b6e1d4c157f2585f082c",
+    "image": "mysql:8.4",
+    "port": 62078,
+    "database": "tennishub_agent_fixture",
+    "scope": "synthetic disposable local data only",
+    "status": "stopped; docker stop completed and --rm removed fixture",
+    "stop_session_id": 69401
+  },
+  "browser_backend": {
+    "session_id": 43183,
+    "runtime": "Node 20.19.1",
+    "port": 3015,
+    "status": "stopped; terminal exec exit 0",
+    "scheduler": "disabled; no production credentials or publishing calls"
+  }
+}

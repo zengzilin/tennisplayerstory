@@ -1,0 +1,20 @@
+{
+  "files": [
+    "apps/api/src/utils/agentLookup.js",
+    "apps/web/src/lib/localizeArticle.js",
+    "apps/api/tests/agent-discovery.test.js",
+    "apps/api/src/routes/agent-discovery.js",
+    "apps/web/src/hooks/useStoryData.js",
+    "apps/web/src/components/ArticlePreview.tsx",
+    "apps/web/src/i18n/locales/en.json",
+    "apps/web/src/i18n/locales/zh.json",
+    "apps/web/src/i18n/locales/ja.json",
+    "apps/web/src/i18n/locales/es.json",
+    "apps/web/src/i18n/locales/fr.json",
+    "apps/web/src/i18n/locales/de.json"
+  ],
+  "new_files": [
+    "apps/api/tests/agent-lookup-mysql.test.js"
+  ],
+  "deployed": false
+}

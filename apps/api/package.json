@@ -8,7 +8,8 @@
     "start": "tsx src/main.ts",
     "build": "echo 'API ready for deployment'",
     "lint": "eslint . --quiet",
-    "trend-article": "tsx src/scripts/publish-daily-trend-article.js"
+    "trend-article": "tsx src/scripts/publish-daily-trend-article.js",
+    "youtube-article": "tsx src/scripts/publish-daily-youtube-article.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

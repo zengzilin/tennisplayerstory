@@ -11,12 +11,15 @@
     "submit": "Soumettre",
     "search": "Rechercher...",
     "filter": "Filtrer",
-    "noData": "Aucune donnée disponible"
+    "noData": "Aucune donnée disponible",
+    "retry": "Réessayer"
   },
   "nav": {
     "home": "Accueil",
     "players": "Joueurs",
     "rankings": "Classements",
+    "liveMatches": "Matchs en direct",
+    "news": "Actualités",
     "stories": "Histoires",
     "vlogs": "Vlogs",
     "admin": "Admin",
@@ -24,6 +27,41 @@
     "logout": "Déconnexion",
     "login": "Connexion",
     "signup": "S'inscrire"
+  },
+  "stories": {
+    "title": "Histoires de Joueurs de Tennis | TennisHub",
+    "desc": "Lisez des histoires de joueurs, analyses de matchs, contexte des classements et articles de la communauté.",
+    "heading": "Histoires de Joueurs",
+    "articlesCount": "Articles",
+    "submitArticle": "Soumettre un article",
+    "emptyTitle": "Aucune histoire trouvée",
+    "emptyDesc": "Revenez plus tard pour plus d’histoires et d’analyses de tennis.",
+    "allTags": "Toutes les balises",
+    "expand": "Lire la suite",
+    "hide": "Afficher moins",
+    "anonymous": "Anonyme"
+  },
+  "news": {
+    "heading": "Actualités tennis",
+    "description": "Actualités des joueurs, tournois, analyses de matchs et informations du tennis professionnel.",
+    "breaking": "À la une",
+    "submitArticle": "Publier un article",
+    "leadStory": "Article principal",
+    "latest": "Dernières infos",
+    "newsDesk": "Rédaction",
+    "latestNews": "Dernières actualités tennis",
+    "articles": "articles",
+    "readFull": "Lire l’article",
+    "collapse": "Fermer l’article",
+    "now": "Maintenant",
+    "trendingTopics": "Sujets tendance",
+    "playersInFocus": "Joueurs à suivre",
+    "quickLinks": "Accès rapides",
+    "loadError": "Impossible de charger les actualités.",
+    "emptyTitle": "Aucune actualité dans cette catégorie",
+    "emptyDescription": "Les nouveaux articles apparaîtront ici dès leur publication.",
+    "showAll": "Voir toutes les actualités",
+    "categories": { "all": "Tout", "players": "Joueurs", "matches": "Matchs", "atp": "ATP", "wta": "WTA", "grandSlams": "Grands Chelems" }
   },
   "vlogs": {
     "title": "Vlogs de Tennis",

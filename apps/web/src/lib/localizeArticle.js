@@ -1,4 +1,4 @@
-const parseTranslations = (value) => {
+export const parseArticleTranslations = (value) => {
   if (!value) return null;
   if (typeof value === 'object' && !Array.isArray(value)) return value;
 
@@ -22,11 +22,11 @@ export const normalizeArticleLanguage = (language) => {
 export const localizeArticle = (article, language) => {
   if (!article) return article;
 
-  const translations = parseTranslations(article.translations);
+  const translations = parseArticleTranslations(article.translations);
   const languageCode = normalizeArticleLanguage(language);
   const translation = translations?.[languageCode];
 
-  if (!translation || typeof translation !== 'object') return article;
+  if (!translation || typeof translation !== 'object' || Array.isArray(translation)) return article;
 
   return {
     ...article,

@@ -9,6 +9,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
+import agentDiscoveryRouter from './routes/agent-discovery.js';
 import mysqlPlatformRouter from './routes/mysql-platform.js';
 import { robotsTxt, sitemapXml } from './routes/sitemap.js';
 import { errorMiddleware } from './middleware/index.js';
@@ -51,6 +52,7 @@ app.use(cors({
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(agentDiscoveryRouter);
 app.use('/hcgi/platform', mysqlPlatformRouter);
 app.get('/sitemap.xml', sitemapXml);
 app.get('/robots.txt', robotsTxt);
@@ -71,7 +73,7 @@ app.use(express.static(staticPath));
 // Serves index.html for all non-API routes to enable client-side routing
 app.use((req, res, next) => {
 	// Don't serve index.html for API routes that weren't found
-	if (req.path.startsWith('/hcgi/api')) {
+	if (req.path.startsWith('/hcgi/') || req.path.startsWith('/api/') || req.path.startsWith('/.well-known/') || req.path.startsWith('/ai/')) {
 		return next();
 	}
 	res.sendFile(path.join(staticPath, 'index.html'));

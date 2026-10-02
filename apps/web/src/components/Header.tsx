@@ -26,6 +26,7 @@ const Header = () => {
     { path: `${langPrefix}`, label: t('nav.home', 'Home') },
     { path: `${langPrefix}/players`, label: t('nav.players', 'Players') },
     { path: `${langPrefix}/rankings`, label: t('nav.rankings', 'Rankings') },
+    { path: `${langPrefix}/news`, label: t('nav.news', 'News') },
     { path: `${langPrefix}/stories`, label: t('nav.stories', 'Stories') },
     { path: `${langPrefix}/vlogs`, label: 'Vlogs' }
   ];
@@ -56,7 +57,7 @@ const Header = () => {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
+          <nav className="hidden md:flex items-center gap-6" aria-label="Main Navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.path}

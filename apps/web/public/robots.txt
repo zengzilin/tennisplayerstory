@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Agentmap: https://tennisplayerstory.com/.well-known/ai-catalog.json
 Sitemap: https://tennisplayerstory.com/sitemap.xml

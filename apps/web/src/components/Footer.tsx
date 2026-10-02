@@ -17,6 +17,7 @@ const Footer = () => {
     { path: `${langPrefix}/live-matches`, label: t('nav.liveMatches', 'Live Matches') },
     { path: `${langPrefix}/players`, label: t('nav.players', 'Players') },
     { path: `${langPrefix}/rankings`, label: t('nav.rankings', 'Rankings') },
+    { path: `${langPrefix}/news`, label: t('nav.news', 'News') },
     { path: `${langPrefix}/stories`, label: t('nav.stories', 'Stories') },
     { path: `${langPrefix}/vlogs`, label: 'Vlogs' }
   ];

@@ -48,6 +48,7 @@ async function main() {
 			trendDate: draft.trendDate,
 			sourceUrl: draft.sourceUrl,
 			trends: (draft.selectedTrends || []).map(trend => trend.title),
+			fallbackPlayer: draft.fallbackPlayer?.chineseName,
 			article: {
 				title: draft.article.title,
 				player_name: draft.article.player_name,
@@ -81,6 +82,7 @@ async function main() {
 		trendDate: result.trendDate,
 		sourceUrl: result.sourceUrl,
 		trends: (result.trends || []).map(trend => trend.title),
+		fallbackPlayer: result.fallbackPlayer?.chineseName,
 		languages: result.article?.translation_languages || [],
 	}, null, 2));
 }

@@ -1,12 +1,21 @@
 // @ts-nocheck
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User, Trophy } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { localizeArticle } from '@/lib/localizeArticle.js';
 
 const ArticlePreview = ({ article, onTagClick, labels = {}, lang }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [searchParams] = useSearchParams();
+  const isLinkedArticle = searchParams.get('article') === article.id;
+  const [isExpanded, setIsExpanded] = useState(isLinkedArticle);
+
+  useEffect(() => {
+    if (!isLinkedArticle) return;
+    setIsExpanded(true);
+    document.getElementById(`article-${article.id}`)?.scrollIntoView({ block: 'start' });
+  }, [article.id, isLinkedArticle]);
 
   const localizedArticle = localizeArticle(article, lang);
   const content = localizedArticle.content || '';
@@ -34,7 +43,7 @@ const ArticlePreview = ({ article, onTagClick, labels = {}, lang }) => {
   };
 
   return (
-    <Card className="flex flex-col hover:shadow-lg transition-all duration-300 border-border/50 h-full">
+    <Card id={`article-${article.id}`} className="flex flex-col hover:shadow-lg transition-all duration-300 border-border/50 h-full">
       <CardContent className="p-6 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-4">
           {playerName ? (

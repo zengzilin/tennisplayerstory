@@ -29,10 +29,16 @@ export const seoConfig = {
       keywords: 'tennis rankings, ATP rankings, WTA rankings, world tennis standings, tennis tour points, global tennis ranks',
       noindex: false
     },
+    news: {
+      title: 'Latest Tennis News, Player Updates & Match Reports',
+      description: 'Follow the latest ATP and WTA tennis news, player updates, tournament reports, match analysis, and Grand Slam stories.',
+      keywords: 'tennis news, ATP news, WTA news, tennis player updates, tournament news, tennis match reports, Grand Slam news',
+      noindex: false
+    },
     stories: {
-      title: 'Tennis News, Match Analysis & Professional Tour Stories',
-      description: 'Read the latest tennis news, in-depth match analysis, exclusive player interviews, and community stories from the professional tennis circuit.',
-      keywords: 'tennis news, tennis stories, match analysis, tennis articles, professional tennis tour news, player interviews',
+      title: 'Tennis Player Stories, Match Analysis & Fan Articles',
+      description: 'Read tennis player stories, match analysis, rankings context, and community articles about ATP and WTA players on TennisHub.',
+      keywords: 'tennis player stories, ATP player stories, WTA player stories, tennis match analysis, tennis fan articles, tennis rankings analysis',
       noindex: false
     },
     vlogs: {

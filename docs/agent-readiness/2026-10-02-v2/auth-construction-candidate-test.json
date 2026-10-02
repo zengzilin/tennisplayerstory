@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "issuer/resource consistency",
+    "all capabilities explicitly planned and disabled",
+    "disabled empty JWKS",
+    "all reserved operations 503/no-store",
+    "malformed identity bodies never parsed",
+    "public lookup stays available",
+    "human login accurately preserved in documentation"
+  ],
+  "production_mounted": false,
+  "owner_acceptance_pending": true
+}

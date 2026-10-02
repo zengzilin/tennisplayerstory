@@ -1,3 +1,4 @@
+import { publicPages, siteLanguages } from '../../../../shared/public-pages.mjs';
 import mysql from 'mysql2/promise';
 
 let pool;
@@ -12,18 +13,8 @@ const MYSQL_CONFIG = {
 	connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT || 10),
 };
 
-const languages = ['en', 'zh', 'ja', 'es', 'fr'];
-const staticRoutes = [
-	{ path: '', changefreq: 'daily', priority: '1.0' },
-	{ path: '/live-matches', changefreq: 'daily', priority: '0.9' },
-	{ path: '/players', changefreq: 'weekly', priority: '0.9' },
-	{ path: '/rankings', changefreq: 'daily', priority: '0.9' },
-	{ path: '/stories', changefreq: 'daily', priority: '0.8' },
-	{ path: '/vlogs', changefreq: 'daily', priority: '0.8' },
-	{ path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
-	{ path: '/terms-of-service', changefreq: 'yearly', priority: '0.3' },
-	{ path: '/sitemap', changefreq: 'monthly', priority: '0.4' },
-];
+const languages = siteLanguages;
+const staticRoutes = publicPages;
 
 const escapeXml = (value) => String(value)
 	.replace(/&/g, '&amp;')
@@ -96,10 +87,7 @@ export const sitemapXml = async (req, res) => {
 		}
 	}
 
-	const [vlogs, players] = await Promise.all([
-		loadRecords('vlogs', item => ['published', 'approved'].includes(item.status)),
-		loadRecords('players', item => item.id),
-	]);
+	const vlogs = await loadRecords('vlogs', item => ['published', 'approved'].includes(item.status));
 
 	for (const lang of languages) {
 		for (const vlog of vlogs) {
@@ -108,15 +96,6 @@ export const sitemapXml = async (req, res) => {
 				lastmod: toDate(vlog.updated),
 				changefreq: 'monthly',
 				priority: '0.6',
-			});
-		}
-
-		for (const player of players) {
-			urls.push({
-				loc: `${baseUrl}/${lang}/players/${player.id}`,
-				lastmod: toDate(player.updated),
-				changefreq: 'weekly',
-				priority: '0.7',
 			});
 		}
 	}
@@ -137,6 +116,8 @@ export const robotsTxt = (req, res) => {
 	res.type('text/plain').send([
 		'User-agent: *',
 		'Allow: /',
+		'Content-Signal: search=yes, ai-input=yes, ai-train=no',
+		'Agentmap: ' + baseUrl + '/.well-known/ai-catalog.json',
 		`Sitemap: ${baseUrl}/sitemap.xml`,
 		'',
 	].join('\n'));

@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: public page lookup finds a known page, reads it, handles missing and non-English routes
+ok 1 - public page lookup finds a known page, reads it, handles missing and non-English routes
+  ---
+  duration_ms: 21.164166
+  ...
+# Subtest: invalid, oversized, duplicate and non-integer inputs are rejected
+ok 2 - invalid, oversized, duplicate and non-integer inputs are rejected
+  ---
+  duration_ms: 2.561166
+  ...
+# Subtest: approved article projection excludes private fields and preserves translation, unknown dates and truncation
+ok 3 - approved article projection excludes private fields and preserves translation, unknown dates and truncation
+  ---
+  duration_ms: 0.220334
+  ...
+# Subtest: Markdown and HTML negotiation remain distinct in both request orders, including q=0
+ok 4 - Markdown and HTML negotiation remain distinct in both request orders, including q=0
+  ---
+  duration_ms: 6.508
+  ...
+# Subtest: served skill bytes match index digest and all ARD resource links work
+ok 5 - served skill bytes match index digest and all ARD resource links work
+  ---
+  duration_ms: 5.337166
+  ...
+# Subtest: sitemap advertises only real public routes and robots declares content use without granting training
+ok 6 - sitemap advertises only real public routes and robots declares content use without granting training
+  ---
+  duration_ms: 1.481666
+  ...
+# Subtest: partial translations do not mislabel original article content as translated
+ok 7 - partial translations do not mislabel original article content as translated
+  ---
+  duration_ms: 0.0965
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 186.619375

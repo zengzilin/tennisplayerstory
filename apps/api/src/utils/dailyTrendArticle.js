@@ -38,13 +38,54 @@ const DEFAULT_MIN_ARTICLE_CHARACTERS = 2500;
 const DEFAULT_MIN_TRANSLATION_CHARACTERS = 1200;
 const DEFAULT_MAX_OUTPUT_TOKENS = 8000;
 const DEFAULT_GENERATION_ATTEMPTS = 3;
-const ARTICLE_SYSTEM_INSTRUCTIONS = 'You write accurate, SEO-friendly Chinese tennis news articles from provided trend data. Use only supported facts and return only valid JSON.';
+const ARTICLE_SYSTEM_INSTRUCTIONS = 'You write accurate, SEO-friendly Chinese tennis articles from the supplied source data. Use only supported facts and return only valid JSON.';
 const ARTICLE_TRANSLATION_LANGUAGES = [
 	{ code: 'en', name: 'English' },
 	{ code: 'ja', name: 'Japanese' },
 	{ code: 'es', name: 'Spanish' },
 	{ code: 'fr', name: 'French' },
 	{ code: 'de', name: 'German' },
+];
+const FALLBACK_TENNIS_STARS = [
+	{
+		name: 'Novak Djokovic',
+		chineseName: '诺瓦克·德约科维奇',
+		sourceUrl: 'https://www.atptour.com/en/players/novak-djokovic/d643/overview',
+		facts: [
+			'诺瓦克·德约科维奇出生于1987年5月22日，来自塞尔维亚贝尔格莱德。',
+			'他在2003年转为职业球员。',
+			'他获得过24个大满贯男单冠军。',
+			'他的澳大利亚网球公开赛男单冠军数为10个。',
+			'他曾位居ATP世界第一，并在多个赛季结束时排名世界第一。',
+			'他在2024年巴黎奥运会获得网球男单金牌。',
+		],
+	},
+	{
+		name: 'Roger Federer',
+		chineseName: '罗杰·费德勒',
+		sourceUrl: 'https://www.atptour.com/en/players/roger-federer/f324/overview',
+		facts: [
+			'罗杰·费德勒出生于1981年8月8日，来自瑞士巴塞尔。',
+			'他在1998年转为职业球员。',
+			'他的职业生涯拥有20个大满贯男单冠军。',
+			'他获得过8个温布尔登网球锦标赛男单冠军。',
+			'他曾连续237周位列ATP世界第一。',
+			'他在2022年拉沃尔杯后结束职业网球生涯。',
+		],
+	},
+	{
+		name: 'Rafael Nadal',
+		chineseName: '拉斐尔·纳达尔',
+		sourceUrl: 'https://www.atptour.com/en/players/rafael-nadal/n409/overview',
+		facts: [
+			'拉斐尔·纳达尔出生于1986年6月3日，来自西班牙马纳科尔。',
+			'他在2001年转为职业球员。',
+			'他的职业生涯拥有22个大满贯男单冠军。',
+			'他获得过14个法国网球公开赛男单冠军。',
+			'他曾登上ATP世界第一。',
+			'他在2008年北京奥运会获得网球男单金牌，并在2016年里约奥运会获得男双金牌。',
+		],
+	},
 ];
 let activeDailyPublish = null;
 
@@ -264,7 +305,7 @@ const toTrendDigest = (trends) => trends.map((trend, index) => ({
 	link: trend.link || null,
 }));
 
-const buildPrompt = ({ trends, selectedTrends, trendDate, sourceUrl }) => `
+const buildTrendNewsPrompt = ({ trends, selectedTrends, trendDate, sourceUrl }) => `
 你是 TennisHub 的中文网球新闻编辑和 SEO 编辑。请根据 Google Trends 搜索趋势，为 https://tennisplayerstory.com/zh/stories 生成一篇面向中文搜索用户的网球新闻热点文章，不要写成泛泛的趋势介绍、人物小传或心得随笔。
 
 要求：
@@ -297,6 +338,39 @@ ${JSON.stringify(toTrendDigest(selectedTrends), null, 2)}
 今日 Google Trends 原始趋势摘要：
 ${JSON.stringify(toTrendDigest(trends.slice(0, 10)), null, 2)}
 `;
+
+const buildFallbackStarStoryPrompt = ({ fallbackPlayer, trendDate }) => `
+你是 TennisHub 的中文网球人物编辑和 SEO 编辑。今日 Google Trends 没有网球相关话题，因此请为 https://tennisplayerstory.com/zh/stories 撰写一篇关于 ${fallbackPlayer.chineseName} 的中文网球明星故事。文章不是热搜概览，也不是虚构人物传记或即时新闻；它必须只依据下列球员资料，清楚呈现这位球员的职业历程与可核实的成就。
+
+要求：
+- 开篇直接点出 ${fallbackPlayer.chineseName}、网球运动及其最具代表性的已给事实；标题和 meta_description 要自然包含“${fallbackPlayer.chineseName}”“网球”以及资料支持的大满贯、温网、法网、澳网或奥运会等搜索关键词。
+- 使用客观的叙事结构：人物与起点、职业历程中的已知节点、主要成就的事实梳理、这些记录在其生涯叙事中的位置。可使用 3-5 个小标题。
+- 只能陈述下方资料明确支持的事实。不得补充比赛比分、对手、教练、技术特点、性格、采访、伤病、家庭、赞助、具体赛季、比赛过程、因果解释、排名周数（除非资料给出）、文化影响或未来预测。
+- 可以通过段落组织、事实之间的时间顺序和谨慎的总结形成完整故事，但不得用空泛赞美、重复同一事实或虚构细节扩充篇幅。
+- 正文必须不少于 2500 个中文字符，建议控制在 2800-3500 个中文字符；使用 10-12 个内容充实的自然段，每段约 220-320 个非空白中文字符。输出前自行检查正文总长度。
+- tags 包含“网球新闻”“网球热点”“${fallbackPlayer.chineseName}”及资料支持的相关赛事或成就关键词。
+- 输出必须是 JSON，不要 Markdown 代码块。
+
+请返回这个 JSON 结构：
+{
+  "title": "50字以内中文标题",
+  "player_name": "${fallbackPlayer.chineseName}",
+  "content": "完整中文文章，分段，用换行分隔",
+  "tags": ["网球新闻", "网球热点", "..."],
+  "meta_description": "120字以内中文SEO摘要"
+}
+
+日期：${trendDate}
+球员资料官方来源：${fallbackPlayer.sourceUrl}
+只可使用的球员事实：
+${JSON.stringify(fallbackPlayer.facts, null, 2)}
+`;
+
+const selectFallbackTennisStar = (trendDate) => {
+	const index = [...trendDate].reduce((total, character) => total + character.charCodeAt(0), 0)
+		% FALLBACK_TENNIS_STARS.length;
+	return FALLBACK_TENNIS_STARS[index];
+};
 
 const buildTranslationPrompt = ({ article, language }) => `
 Translate the following Chinese tennis news article into ${language.name} for the matching language version of TennisHub.
@@ -570,8 +644,10 @@ const parseTranslatedArticle = (responseText, language) => (
 	validateTranslatedArticle(parseArticleDraft(responseText), language)
 );
 
-async function generateArticle({ trends, selectedTrends, trendDate, sourceUrl }) {
-	const prompt = buildPrompt({ trends, selectedTrends, trendDate, sourceUrl });
+async function generateArticle({ trends, selectedTrends, fallbackPlayer, trendDate, sourceUrl, prompt: suppliedPrompt, fallbackPlayerName = 'Google Trends' }) {
+	const prompt = suppliedPrompt || (fallbackPlayer
+		? buildFallbackStarStoryPrompt({ fallbackPlayer, trendDate })
+		: buildTrendNewsPrompt({ trends, selectedTrends, trendDate, sourceUrl }));
 	const errors = [];
 	let article = null;
 
@@ -581,8 +657,8 @@ async function generateArticle({ trends, selectedTrends, trendDate, sourceUrl })
 				generator: generateArticleWithOpenAI,
 				prompt,
 				instructions: ARTICLE_SYSTEM_INSTRUCTIONS,
-				parseResponse: parseGeneratedArticle,
-				parseDraft: parseArticleDraft,
+			parseResponse: responseText => validateGeneratedArticle(parseArticleDraft(responseText, fallbackPlayerName)),
+			parseDraft: responseText => parseArticleDraft(responseText, fallbackPlayerName),
 				validateDraft: validateGeneratedArticle,
 				subject: 'Chinese article',
 			});
@@ -598,8 +674,8 @@ async function generateArticle({ trends, selectedTrends, trendDate, sourceUrl })
 				generator: generateArticleWithDeepSeek,
 				prompt,
 				instructions: ARTICLE_SYSTEM_INSTRUCTIONS,
-				parseResponse: parseGeneratedArticle,
-				parseDraft: parseArticleDraft,
+			parseResponse: responseText => validateGeneratedArticle(parseArticleDraft(responseText, fallbackPlayerName)),
+			parseDraft: responseText => parseArticleDraft(responseText, fallbackPlayerName),
 				validateDraft: validateGeneratedArticle,
 				subject: 'Chinese article',
 			});
@@ -671,7 +747,13 @@ async function generateArticleTranslations(article) {
 	return translations;
 }
 
-const getTrendDate = () => {
+export async function generateArticleWithTranslations({ prompt, fallbackPlayerName }) {
+	const article = await generateArticle({ prompt, fallbackPlayerName });
+	const translations = await generateArticleTranslations(article);
+	return { article, translations };
+}
+
+export const getTrendDate = () => {
 	const parts = new globalThis.Intl.DateTimeFormat('en-US', {
 		timeZone: process.env.TREND_ARTICLE_TIMEZONE || 'Asia/Shanghai',
 		year: 'numeric',
@@ -693,7 +775,7 @@ async function findExistingDailyArticle(trendDate) {
 	return records.items[0] || null;
 }
 
-const normalizeTags = (tags) => {
+export const normalizeTags = (tags) => {
 	const set = new Set([
 		'网球新闻',
 		'网球热点',
@@ -703,7 +785,7 @@ const normalizeTags = (tags) => {
 	return [...set].slice(0, 10);
 };
 
-const normalizeTranslations = (translations) => Object.fromEntries(
+export const normalizeTranslations = (translations) => Object.fromEntries(
 	Object.entries(translations || {}).map(([language, translation]) => [
 		language,
 		{

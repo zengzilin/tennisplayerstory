@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { prepareDailyTrendArticleDraft, publishDailyTrendArticle } from '../utils/dailyTrendArticle.js';
+import { prepareDailyYoutubeArticleDraft, publishDailyYoutubeArticle } from '../utils/dailyYoutubeArticle.js';
 
 const router = Router();
 
@@ -30,6 +31,7 @@ router.post('/daily', async (req, res, next) => {
 				trendDate: draft.trendDate,
 				sourceUrl: draft.sourceUrl,
 				trends: (draft.selectedTrends || []).map(trend => trend.title),
+				fallbackPlayer: draft.fallbackPlayer?.chineseName,
 				article: draft.article,
 				translations: draft.translations,
 			});
@@ -42,6 +44,38 @@ router.post('/daily', async (req, res, next) => {
 			ok: true,
 			...result,
 		});
+	} catch (error) {
+		return next(error);
+	}
+});
+
+router.post('/youtube/daily', async (req, res, next) => {
+	try {
+		if (!isAuthorized(req)) {
+			return res.status(401).json({ error: 'Unauthorized' });
+		}
+
+		const dryRun = req.query.dryRun === 'true' || req.body?.dryRun === true;
+		if (dryRun) {
+			const draft = await prepareDailyYoutubeArticleDraft();
+			return res.json({
+				ok: true,
+				dryRun: true,
+				trendDate: draft.trendDate,
+				sourceUrl: draft.sourceUrl,
+				keywords: draft.matchedKeywords,
+				videos: draft.selectedVideos.map(video => ({
+					title: video.title,
+					sourceUrl: video.sourceUrl,
+				})),
+				article: draft.article,
+				translations: draft.translations,
+			});
+		}
+
+		const force = req.query.force === 'true' || req.body?.force === true;
+		const result = await publishDailyYoutubeArticle({ force });
+		return res.json({ ok: true, ...result });
 	} catch (error) {
 		return next(error);
 	}

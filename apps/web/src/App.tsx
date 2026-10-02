@@ -19,6 +19,7 @@ import LiveMatchesPage from '@/pages/LiveMatchesPage.tsx';
 import PlayersPage from '@/pages/PlayersPage.tsx';
 import RankingsPage from '@/pages/RankingsPage.tsx';
 import StoriesPage from '@/pages/StoriesPage.tsx';
+import NewsPage from '@/pages/NewsPage.tsx';
 import VlogsPage from '@/pages/VlogsPage.tsx';
 import VlogDetailPage from '@/pages/VlogDetailPage.tsx';
 import LoginPage from '@/pages/LoginPage.tsx';
@@ -84,6 +85,7 @@ function App() {
                   <Route path="live-matches" element={<LiveMatchesPage />} />
                   <Route path="players" element={<PlayersPage />} />
                   <Route path="rankings" element={<RankingsPage />} />
+                  <Route path="news" element={<NewsPage />} />
                   <Route path="stories" element={<StoriesPage />} />
                   <Route path="vlogs" element={<VlogsPage />} />
                   <Route path="vlog/:id" element={<VlogDetailPage />} />

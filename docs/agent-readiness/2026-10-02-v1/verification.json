@@ -1,0 +1,20 @@
+{
+  "verified_at": "2026-10-02T05:23:56.143533+00:00",
+  "deployed": false,
+  "automated_tests": "node --test apps/api/tests/agent-discovery.test.js (6 passed)",
+  "browser_webmcp": "Real registered tool search rankings, read Japanese page, missing ID passed on localhost:3015",
+  "browser_ui": "Desktop homepage and login form, mobile 390x844 homepage and menu verified. Login was not submitted. Article data unavailable without MySQL credentials.",
+  "mcp": "Isolated SDK 1.31.0 client passed; production integration pending approval",
+  "host_node": "24.14.0; required deployment Node 20.19.1 not locally verified",
+  "final_live_score": null,
+  "qa_server": {
+    "command": "Node Express public discovery router + static dist/apps/web on 127.0.0.1:3015; no cron or DB writes",
+    "exec_session_id": 11624,
+    "status": "stopped after verification"
+  },
+  "mcp_candidate_qa": {
+    "directory": "/tmp/tennishub-mcp-qa-20261002",
+    "command": "node /tmp/tennishub-mcp-qa-20261002/verify.mjs",
+    "report": "mcp-proposal-test.json"
+  }
+}

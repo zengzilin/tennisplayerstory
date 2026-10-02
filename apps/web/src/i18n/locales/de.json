@@ -11,12 +11,15 @@
     "submit": "Einreichen",
     "search": "Suche...",
     "filter": "Filter",
-    "noData": "Keine Daten verfügbar"
+    "noData": "Keine Daten verfügbar",
+    "retry": "Erneut versuchen"
   },
   "nav": {
     "home": "Startseite",
     "players": "Spieler",
     "rankings": "Ranglisten",
+    "liveMatches": "Live-Spiele",
+    "news": "Nachrichten",
     "stories": "Geschichten",
     "vlogs": "Vlogs",
     "admin": "Admin",
@@ -24,6 +27,41 @@
     "logout": "Abmelden",
     "login": "Anmelden",
     "signup": "Registrieren"
+  },
+  "stories": {
+    "heading": "Spielergeschichten",
+    "desc": "Lies Geschichten über Tennisspieler, Spielanalysen und Beiträge der Community.",
+    "all": "Alle",
+    "articlesCount": "Artikel",
+    "submitArticle": "Artikel einreichen",
+    "emptyTitle": "Keine Geschichten gefunden",
+    "emptyDesc": "Schau später erneut nach neuen Geschichten und Analysen.",
+    "loadError": "Die Geschichten konnten nicht geladen werden.",
+    "expand": "Weiterlesen",
+    "hide": "Weniger anzeigen",
+    "anonymous": "Anonym"
+  },
+  "news": {
+    "heading": "Tennis-Nachrichten",
+    "description": "Spieler-Updates, Turnierberichte, Matchanalysen und Nachrichten aus dem Profitennis.",
+    "breaking": "Topmeldung",
+    "submitArticle": "Artikel veröffentlichen",
+    "leadStory": "Titelstory",
+    "latest": "Aktuell",
+    "newsDesk": "Redaktion",
+    "latestNews": "Neueste Tennis-Nachrichten",
+    "articles": "Artikel",
+    "readFull": "Ganzen Artikel lesen",
+    "collapse": "Artikel schließen",
+    "now": "Jetzt",
+    "trendingTopics": "Trendthemen",
+    "playersInFocus": "Spieler im Fokus",
+    "quickLinks": "Schnellzugriff",
+    "loadError": "Die Nachrichten konnten nicht geladen werden.",
+    "emptyTitle": "Keine Nachrichten in dieser Kategorie",
+    "emptyDescription": "Neue Tennis-Berichte erscheinen hier nach der Veröffentlichung.",
+    "showAll": "Alle Nachrichten anzeigen",
+    "categories": { "all": "Alle", "players": "Spieler", "matches": "Matches", "atp": "ATP", "wta": "WTA", "grandSlams": "Grand Slams" }
   },
   "vlogs": {
     "title": "Tennis Vlogs",

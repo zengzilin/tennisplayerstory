@@ -23,6 +23,7 @@ const SitemapXml = () => {
           '',
           '/players',
           '/rankings',
+          '/news',
           '/stories',
           '/vlogs',
           '/live-matches',

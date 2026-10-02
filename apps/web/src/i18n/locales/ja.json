@@ -11,12 +11,15 @@
     "submit": "送信",
     "search": "検索...",
     "filter": "フィルター",
-    "noData": "データがありません"
+    "noData": "データがありません",
+    "retry": "再試行"
   },
   "nav": {
     "home": "ホーム",
     "players": "プレイヤー",
     "rankings": "ランキング",
+    "liveMatches": "ライブ試合",
+    "news": "ニュース",
     "stories": "ストーリー",
     "vlogs": "Vlog",
     "admin": "管理",
@@ -24,6 +27,41 @@
     "logout": "ログアウト",
     "login": "ログイン",
     "signup": "登録"
+  },
+  "stories": {
+    "title": "テニス選手ストーリー | TennisHub",
+    "desc": "テニス選手のストーリー、試合分析、ランキング解説、コミュニティ記事を読む。",
+    "heading": "選手ストーリー",
+    "articlesCount": "記事",
+    "submitArticle": "記事を投稿",
+    "emptyTitle": "ストーリーが見つかりません",
+    "emptyDesc": "新しいテニスストーリーと分析をまた確認してください。",
+    "allTags": "すべてのタグ",
+    "expand": "続きを読む",
+    "hide": "閉じる",
+    "anonymous": "匿名"
+  },
+  "news": {
+    "heading": "テニスニュース",
+    "description": "選手情報、ツアーレポート、試合分析、プロテニスの最新ニュース。",
+    "breaking": "トップニュース",
+    "submitArticle": "記事を投稿",
+    "leadStory": "注目記事",
+    "latest": "最新",
+    "newsDesk": "ニュースデスク",
+    "latestNews": "最新テニスニュース",
+    "articles": "記事",
+    "readFull": "全文を読む",
+    "collapse": "記事を閉じる",
+    "now": "注目",
+    "trendingTopics": "注目トピック",
+    "playersInFocus": "注目選手",
+    "quickLinks": "クイックリンク",
+    "loadError": "ニュースを読み込めませんでした。",
+    "emptyTitle": "このカテゴリーのニュースはありません",
+    "emptyDescription": "新しいテニス記事が公開されると、ここに表示されます。",
+    "showAll": "すべてのニュース",
+    "categories": { "all": "すべて", "players": "選手", "matches": "試合", "atp": "ATP", "wta": "WTA", "grandSlams": "グランドスラム" }
   },
   "vlogs": {
     "title": "テニス Vlog",

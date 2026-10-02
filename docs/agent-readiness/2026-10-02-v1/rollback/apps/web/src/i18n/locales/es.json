@@ -1,0 +1,92 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Añadir",
+    "submit": "Enviar",
+    "search": "Buscar...",
+    "filter": "Filtrar",
+    "noData": "No hay datos disponibles",
+    "retry": "Reintentar"
+  },
+  "nav": {
+    "home": "Inicio",
+    "players": "Jugadores",
+    "rankings": "Clasificaciones",
+    "liveMatches": "Partidos en vivo",
+    "news": "Noticias",
+    "stories": "Historias",
+    "vlogs": "Vlogs",
+    "admin": "Admin",
+    "profile": "Perfil",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse"
+  },
+  "news": {
+    "heading": "Noticias de tenis",
+    "description": "Actualidad de jugadores, torneos, análisis de partidos y noticias del tenis profesional.",
+    "breaking": "Noticia principal",
+    "submitArticle": "Publicar un artículo",
+    "leadStory": "Portada",
+    "latest": "Último",
+    "newsDesk": "Redacción",
+    "latestNews": "Últimas noticias de tenis",
+    "articles": "artículos",
+    "readFull": "Leer noticia completa",
+    "collapse": "Cerrar artículo",
+    "now": "Ahora",
+    "trendingTopics": "Temas destacados",
+    "playersInFocus": "Jugadores destacados",
+    "quickLinks": "Enlaces rápidos",
+    "loadError": "No se pudo cargar la sección de noticias.",
+    "emptyTitle": "No hay noticias en esta categoría",
+    "emptyDescription": "Las nuevas noticias aparecerán aquí cuando se publiquen.",
+    "showAll": "Ver todas las noticias",
+    "categories": { "all": "Todo", "players": "Jugadores", "matches": "Partidos", "atp": "ATP", "wta": "WTA", "grandSlams": "Grand Slams" }
+  },
+  "vlogs": {
+    "title": "Vlogs de Tenis",
+    "subtitle": "Mira los últimos análisis, destacados y contenido detrás de escena.",
+    "submitButton": "Enviar Video",
+    "searchPlaceholder": "Buscar vlogs por título o canal...",
+    "filterByDate": "Ordenar por fecha",
+    "noVideos": "No se encontraron videos que coincidan.",
+    "submitModal": {
+      "title": "Enviar un Vlog",
+      "desc": "Comparte un gran video con la comunidad. Será revisado antes de publicarse.",
+      "youtubeUrl": "URL de YouTube",
+      "videoTitle": "Título del video",
+      "description": "Descripción (Opcional)",
+      "userName": "Tu Nombre / Canal",
+      "submit": "Enviar Video",
+      "success": "¡Video enviado con éxito! Pendiente de aprobación.",
+      "error": "Error al enviar el video.",
+      "invalidUrl": "Por favor, introduce una URL de YouTube válida."
+    },
+    "admin": {
+      "title": "Gestión de Vlogs",
+      "desc": "Revisar, aprobar y gestionar videos de usuarios.",
+      "filterStatus": "Filtrar por estado",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "preview": "Vista previa",
+      "bulkApprove": "Aprobar seleccionados",
+      "bulkReject": "Rechazar seleccionados",
+      "noVlogs": "No hay vlogs para gestionar."
+    },
+    "status": {
+      "pending": "Pendiente",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "all": "Todos los estados"
+    }
+  }
+}

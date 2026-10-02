@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: real SQL and HTTP search expose approved articles only, without private fields
+ok 1 - real SQL and HTTP search expose approved articles only, without private fields
+  ---
+  duration_ms: 116.841541
+  ...
+# Subtest: exact reads return full content, stored dates and accurate complete/partial translation qualifiers
+ok 2 - exact reads return full content, stored dates and accurate complete/partial translation qualifiers
+  ---
+  duration_ms: 4.621417
+  ...
+# Subtest: missing, draft and injection-shaped identifiers all return 404 without disclosing records
+ok 3 - missing, draft and injection-shaped identifiers all return 404 without disclosing records
+  ---
+  duration_ms: 5.26225
+  ...
+# Subtest: bounded pagination is deterministic and search treats percent as literal text
+ok 4 - bounded pagination is deterministic and search treats percent as literal text
+  ---
+  duration_ms: 8.044875
+  ...
+# Subtest: article Markdown contains real database text, dates and retrieval/source links
+ok 5 - article Markdown contains real database text, dates and retrieval/source links
+  ---
+  duration_ms: 2.682
+  ...
+# Subtest: a real storage outage returns 503, never a successful empty inventory
+ok 6 - a real storage outage returns 503, never a successful empty inventory
+  ---
+  duration_ms: 14.258958
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 320.515417

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "sdk": "1.31.0",
+  "checks": [
+    "initialize",
+    "tools/list",
+    "tools/call search",
+    "exact read with Japanese source",
+    "missing item",
+    "invalid kind",
+    "storage outage",
+    "origin rejection",
+    "GET method rejection",
+    "server card"
+  ],
+  "production_integrated": false
+}

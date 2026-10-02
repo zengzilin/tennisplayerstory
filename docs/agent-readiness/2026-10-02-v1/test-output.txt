@@ -1,0 +1,14 @@
+✔ public page lookup finds a known page, reads it, handles missing and non-English routes (22.353625ms)
+✔ invalid, oversized, duplicate and non-integer inputs are rejected (2.481458ms)
+✔ approved article projection excludes private fields and preserves translation, unknown dates and truncation (0.20225ms)
+✔ Markdown and HTML negotiation remain distinct in both request orders, including q=0 (3.376208ms)
+✔ served skill bytes match index digest and all ARD resource links work (2.312417ms)
+✔ sitemap advertises only real public routes and robots declares content use without granting training (1.011708ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.60675
