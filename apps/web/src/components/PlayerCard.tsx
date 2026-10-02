@@ -114,7 +114,7 @@ const PlayerCard = ({ player }) => {
                 <Trophy className="h-3 w-3 text-accent" />
                 <span>{t('playerCard.titles', 'Titles')}</span>
               </div>
-              <p className="text-xl font-bold text-foreground tabular-nums">{player.titles || 0}</p>
+              <p className="text-xl font-bold text-foreground tabular-nums">{player.titles ?? '—'}</p>
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-1 text-muted-foreground text-xs uppercase tracking-wider font-medium">
