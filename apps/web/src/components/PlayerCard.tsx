@@ -26,7 +26,7 @@ const PlayerCard = ({ player }) => {
   const [isBioExpanded, setIsBioExpanded] = useState(false);
   
   const defaultImage = `https://ui-avatars.com/api/?name=${encodeURIComponent(player.name)}&size=400&background=f1f5f9&color=0f172a&font-size=0.33`;
-  const [imgSrc, setImgSrc] = useState(player.imageUrl || player.profile_url || defaultImage);
+  const [imgSrc, setImgSrc] = useState(player.imageUrl || defaultImage);
   const [imgError, setImgError] = useState(false);
 
   const favoritePlayers = currentUser?.favorite_players || [];

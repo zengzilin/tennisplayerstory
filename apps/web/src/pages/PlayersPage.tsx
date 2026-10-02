@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header.tsx';
+import RankingDataStatus from '@/components/RankingDataStatus.tsx';
 import Footer from '@/components/Footer.tsx';
 import PlayerCard from '@/components/PlayerCard.tsx';
 import SEOHelmet from '@/components/SEOHelmet.tsx';
@@ -74,6 +75,7 @@ const PlayersPage = () => {
                 <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed max-w-2xl">
                   {t('players.desc', 'Discover the legends of the court. Browse rankings, stats, and biographies of top athletes across ATP and WTA tours.')}
                 </p>
+                <RankingDataStatus />
                 
                 <div className="max-w-2xl bg-card p-2 rounded-lg border border-border flex flex-col sm:flex-row gap-2">
                   <div className="relative flex-1">

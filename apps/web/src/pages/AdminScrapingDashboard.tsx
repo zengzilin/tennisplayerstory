@@ -99,8 +99,8 @@ const AdminScrapingDashboard = () => {
       
       toast.success(t('admin.scrape.success', '{{source}} Scraped Successfully', { source: source.toUpperCase() }), {
         description: t('admin.scrape.successDesc', 'Created: {{created}} | Updated: {{updated}}', { 
-          created: data.playersCreated || 0, 
-          updated: data.playersUpdated || 0 
+          created: data.created || 0,
+          updated: data.updated || 0
         })
       });
       
@@ -211,7 +211,7 @@ const AdminScrapingDashboard = () => {
               </Alert>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
@@ -265,7 +265,7 @@ const AdminScrapingDashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* ATP */}
                   <div className="border border-border rounded-xl p-5 bg-background flex flex-col">
                     <div className="flex justify-between items-start mb-4">
@@ -310,27 +310,7 @@ const AdminScrapingDashboard = () => {
                     </Button>
                   </div>
 
-                  {/* ITF */}
-                  <div className="border border-border rounded-xl p-5 bg-background flex flex-col">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="font-bold text-foreground text-lg">ITF Tennis</h3>
-                      <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">{t('admin.scrape.global', "Global")}</Badge>
-                    </div>
-                    <div className="text-sm text-muted-foreground mb-6 flex-1">
-                      <div className="flex items-center gap-1 mb-1">
-                        <Clock className="h-3 w-3" /> {t('admin.scrape.lastUpdated', 'Last updated:')}
-                      </div>
-                      <span className="font-medium text-foreground">{formatDate(status.itf)}</span>
-                    </div>
-                    <Button
-                      onClick={() => handleScrape('itf')}
-                      disabled={scraping.itf || scraping.all}
-                      className="w-full"
-                    >
-                      {scraping.itf ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Play className="h-4 w-4 mr-2" />}
-                      {scraping.itf ? t('admin.scrape.extracting', 'Extracting...') : t('admin.scrape.scrapeItf', 'Scrape ITF')}
-                    </Button>
-                  </div>
+
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-border">

@@ -1,4 +1,8 @@
 {
+  "rankingData": {
+    "rankingDate": "Ranking date:",
+    "lastSynced": "Last synced:"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Error",

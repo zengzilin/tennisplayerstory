@@ -1,166 +1,38 @@
-# 网球排名手动抓取脚本
+# 球员和排名自动更新
 
-`scrape_tennis.py` 是一个手动备用抓取脚本，用于在网站自动抓取任务失败时，手动从 ATP、WTA、ITF 官方渠道获取最新球员排名，并同步至 PocketBase 数据库、导出为 Excel 文件供手动上传。
+`/zh/players` 与 `/zh/rankings` 共用 `players` 数据。API 服务每天 **02:00 UTC（北京时间 10:00）** 自动刷新 ATP、WTA；服务启动 5 秒后检查成功记录，超过 24 小时未更新则补跑。无需付费数据订阅或 API Key，使用现有 Node 服务与数据库。
 
-其逻辑与 `apps/api/src/routes/scrape.js` 中的 `/scrape/all` 接口完全等效。
+| 来源 | 免费公开地址 | 当前覆盖范围 |
+| --- | --- | --- |
+| ATP | https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings | ESPN 提供的前 150 名 |
+| WTA | https://www.wtatennis.com/rankings/singles | 官网首屏前 50 名 |
 
----
+同步姓名、国家、年龄、排名、积分、来源日期；ATP 还提供头像和资料页链接，WTA 提供参赛数量。来源排名发布日期与本网站同步时间分别保存和展示。上游更新频率决定排名新鲜度，公开接口或页面可能改变；这不是实时比分或完整历史排名服务。
 
-## 数据来源
+## 运行条件
 
-| 来源 | 抓取地址 | 说明 |
-|------|----------|------|
-| ATP  | `https://www.espn.com/tennis/rankings` | ATP 官网屏蔽服务器请求，改用 ESPN |
-| WTA  | `https://www.wtatennis.com/rankings/singles` | WTA 官网直接抓取 |
-| ITF  | `https://www.espn.com/tennis/rankings/_/type/wta` | ITF 官网屏蔽服务器请求，改用 ESPN |
+配置 `WEBSITE_DOMAIN`、`PB_SUPERUSER_EMAIL`、`PB_SUPERUSER_PASSWORD` 和生产环境现有 MySQL 连接变量。API 通过已有 `/hcgi/platform` 数据服务写入数据库。服务必须保持运行；休眠期间错过的任务在下一次启动时补跑。生产部署仍使用原有 GitHub → Hostinger 流程。
 
-每次抓取最多返回 150 名球员（ESPN），WTA 官网视分页情况而定。
+## 验证与手动触发
 
----
-
-## 环境要求
-
-- Python 3.10+
-- 依赖库：`requests`、`beautifulsoup4`、`openpyxl`
-
-推荐使用虚拟环境（macOS 系统 Python 默认不允许全局安装包）：
+- `POST /hcgi/api/scrape/all`：刷新 ATP、WTA。
+- `POST /hcgi/api/scrape/atp`、`POST /hcgi/api/scrape/wta`：单独刷新一个巡回赛。
+- 添加 `?dryRun=true`：仅抓取并验证，不写入数据库或日志。
+- `GET /hcgi/api/scrape/status`：最近成功同步时间与来源发布日期。
+- `GET /hcgi/api/scrape/logs`：成功和失败记录。
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install requests beautifulsoup4 openpyxl
+node --test apps/api/tests/tennis-rankings.test.js
+npm run lint --workspace=api
+npm run lint --workspace=web
+npm run typecheck --workspace=web
+npm run build --workspace=web
 ```
 
----
+## 故障和去重
 
-## 环境变量配置
+每个来源请求最多尝试 3 次，单次 30 秒超时。写入前验证至少 50 个合法、不重复、包含前 50 名的记录，避免把验证码页或不完整页面当作排名。一个来源失败时继续尝试另一个来源，并记录失败而非成功。
 
-脚本会自动读取以下位置的 `.env` 文件（按顺序，先找到先用）：
+以来源和上游球员 ID（旧记录按姓名匹配）更新既有记录，保留 ID、用户收藏和人工编辑字段。全部新数据写入成功后，离开当前覆盖范围的旧记录清空排名而不删除球员。页面只显示仍有排名的 ATP/WTA 球员。数据库逐条写入，途中故障可能留下部分更新；失败不会生成成功日志，下次任务会重试。
 
-1. 项目根目录 `.env`
-2. `apps/api/.env`
-
-也可以直接在 shell 中 export：
-
-```bash
-export WEBSITE_DOMAIN=your-domain.com
-export PB_SUPERUSER_EMAIL=admin@example.com
-export PB_SUPERUSER_PASSWORD=your-password
-```
-
-| 变量名 | 说明 | 示例 |
-|--------|------|------|
-| `WEBSITE_DOMAIN` | PocketBase 域名，不含 `https://` | `example.com` |
-| `PB_SUPERUSER_EMAIL` | PocketBase 超级用户邮箱 | `admin@example.com` |
-| `PB_SUPERUSER_PASSWORD` | PocketBase 超级用户密码 | `your-password` |
-
-> 若以上变量未配置，脚本会自动以 `--dry-run` 模式运行，只抓取并导出 Excel，不写入数据库。
-
----
-
-## 使用方式
-
-```bash
-# 抓取全部来源（ATP + WTA + ITF），写入数据库并导出 Excel
-python scrape_tennis.py
-
-# 只抓取某一个来源
-python scrape_tennis.py --source atp
-python scrape_tennis.py --source wta
-python scrape_tennis.py --source itf
-
-# 仅抓取并导出 Excel，不写入数据库
-python scrape_tennis.py --dry-run
-
-# 指定 Excel 输出路径（默认在当前目录生成 players_export_YYYY-MM-DD.xlsx）
-python scrape_tennis.py --output /path/to/output.xlsx
-
-# 不导出 Excel
-python scrape_tennis.py --no-export
-
-# 指定 .env 文件路径
-python scrape_tennis.py --env /path/to/.env
-```
-
-使用虚拟环境时，将 `python` 替换为 `.venv/bin/python`：
-
-```bash
-.venv/bin/python scrape_tennis.py --dry-run
-```
-
----
-
-## Excel 导出格式
-
-导出文件包含 **4 个 Sheet**：
-
-| Sheet | 内容 |
-|-------|------|
-| `All` | 全部来源汇总（按来源 + 排名排序） |
-| `ATP` | ATP 球员（深蓝表头） |
-| `WTA` | WTA 球员（紫色表头） |
-| `ITF` | ITF 球员（绿色表头） |
-
-每个 Sheet 的列与参考 CSV 格式一致：
-
-| Name | Ranking | Country | Points | Age | Source |
-|------|---------|---------|--------|-----|--------|
-| Carlos Alcaraz | 1 | Spain | 13590 | 22 | ATP |
-| … | … | … | … | … | … |
-
-导出文件默认命名为 `players_export_YYYY-MM-DD.xlsx`，生成在当前目录。
-
----
-
-## 输出示例
-
-```
-[19:55:44] [INFO ] ===== 开始抓取 ATP =====
-[19:55:46] [INFO ] 成功提取 150 名 ATP 球员
-[19:55:48] [INFO ] 成功提取 50 名 WTA 球员
-[19:55:50] [INFO ] 成功提取 150 名 ITF 球员
-[19:55:50] [INFO ] Excel 已导出: players_export_2026-04-11.xlsx（共 350 条记录）
-
-============================================================
-抓取汇总
-============================================================
-  ATP: 成功（共 150 名球员 | 新建 0 | 更新 150）
-  WTA: 成功（共 50 名球员 | 新建 0 | 更新 50）
-  ITF: 成功（共 150 名球员 | 新建 0 | 更新 150）
-
-总计: 3 成功 / 0 失败
-============================================================
-```
-
----
-
-## 同步逻辑
-
-以球员 `name + source` 作为唯一键进行去重：
-
-- 已存在 → 更新 `ranking`、`points`、`country`、`profile_url`、`age`、`last_updated`
-- 不存在 → 创建新记录
-
-每次抓取结束后，结果会写入 PocketBase `scrape_logs` 集合（`status` 为 `success` 或 `failed`）。
-
----
-
-## 错误处理
-
-- 每个请求最多重试 **3 次**，间隔为 1s → 2s → 4s（指数退避）
-- 单个来源失败不影响其他来源继续执行
-- 即使数据库同步失败，Excel 仍会正常导出
-- 全部失败时脚本以非零状态码退出（可用于 shell 脚本判断）
-
----
-
-## 与自动抓取的对应关系
-
-| Python 脚本 | JS 原版（`scrape.js`） |
-|---|---|
-| `parse_espn_rankings()` | `parseEspnRankings()` |
-| `parse_wta_rankings()` | WTA 内联解析逻辑 |
-| `sync_players()` | `syncPlayerData()`（`playerDataSync.js`） |
-| `log_scrape()` | `pb.collection('scrape_logs').create()` |
-| `export_to_excel()` | —（Python 脚本新增功能） |
-| 指数退避重试 | `fetchWithRetry()` |
+旧实现把 ESPN 女子排名标成 ITF，这是错误的。自动任务不再写入这类记录，`/scrape/itf` 返回 410。仓库中的 `scrape_tennis.py` 是旧手动工具，不等同于当前自动任务；不要用它执行生产 ITF 导入。

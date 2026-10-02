@@ -10,12 +10,14 @@ export const usePlayerData = () => {
     setLoading(true);
     setError(null);
     try {
-      const result = await pb.collection('players').getList(1, 50, {
+      const result = await pb.collection('players').getFullList({
+        filter: 'ranking > 0',
         sort: 'ranking',
         $autoCancel: false,
       });
       
-      setPlayers(result.items || []);
+      setPlayers(result.filter(player => ['atp', 'wta'].includes(player.source?.toLowerCase()))
+        .map(player => ({ ...player, source: player.source.toLowerCase() })));
     } catch (err) {
       console.error('Failed to fetch players:', err);
       setError(err.message || 'Failed to load players. Please try again later.');

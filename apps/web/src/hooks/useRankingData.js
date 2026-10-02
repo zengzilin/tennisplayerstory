@@ -10,8 +10,8 @@ export const useRankingData = () => {
 
     const fetchRankings = async () => {
       try {
-        const atpFilter = 'source = "atp"';
-        const wtaFilter = 'source = "wta"';
+        const atpFilter = '(source = "atp" && ranking > 0) || (source = "ATP" && ranking > 0)';
+        const wtaFilter = '(source = "wta" && ranking > 0) || (source = "WTA" && ranking > 0)';
         
         console.log(`[DEBUG] useRankingData: Executing ATP query with filter: '${atpFilter}'`);
         console.log(`[DEBUG] useRankingData: Executing WTA query with filter: '${wtaFilter}'`);
@@ -46,9 +46,9 @@ export const useRankingData = () => {
             name: p.name,
             country: p.country,
             points: p.points,
-            tournaments: null,
-            trend: 'same',
-            source: p.source
+            tournaments: p.tournaments ?? null,
+            trend: p.previous_ranking ? (p.previous_ranking > p.ranking ? 'up' : p.previous_ranking < p.ranking ? 'down' : 'same') : 'same',
+            source: p.source.toLowerCase()
           });
 
           setRankings({

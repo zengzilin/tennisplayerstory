@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import Header from '@/components/Header.tsx';
+import RankingDataStatus from '@/components/RankingDataStatus.tsx';
 import Footer from '@/components/Footer.tsx';
 import SEOHelmet from '@/components/SEOHelmet.tsx';
 import BreadcrumbNav from '@/components/BreadcrumbNav.tsx';
@@ -58,6 +59,7 @@ const RankingsPage = () => {
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                   {t('rankings.desc', 'Up-to-date ATP and WTA tour rankings. Track the world\'s best professional tennis players.')}
                 </p>
+                <RankingDataStatus />
               </motion.div>
             </div>
           </section>

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import cron from 'node-cron';
 import logger from './logger.js';
-import pb from './pocketbaseClient.js';
+import { refreshPlayerRankings } from './playerDataSync.js';
 import { publishDailyTrendArticle } from './dailyTrendArticle.js';
 import { publishDailyYoutubeArticle } from './dailyYoutubeArticle.js';
 import { parseDailyCronTime, shouldRunStartupCatchup } from './trendArticleSchedule.js';
@@ -54,47 +54,16 @@ const runYoutubeArticleTask = async (trigger) => {
  * Initialize scheduled scraping tasks
  */
 export function initializeScheduler() {
-  // Schedule daily scraping at 2 AM UTC
-  const scrapingTask = cron.schedule('0 2 * * *', async () => {
-    logger.info('Starting scheduled scraping task');
-    const startTime = new Date();
-
+  const runRankingsTask = async (onlyIfStale = false) => {
     try {
-      const response = await fetch('http://localhost:3001/scrape/all', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Scraping failed with status ${response.status}`);
-      }
-
-      const result = await response.json();
-      const endTime = new Date();
-      const duration = endTime - startTime;
-
-      // Log successful scrape
-      await pb.collection('scrape_logs').create({
-        source: 'SCHEDULED',
-        status: 'success',
-        message: result.message,
-        duration: duration,
-        timestamp: new Date().toISOString(),
-      }).catch(err => logger.error('Failed to log scheduled scrape:', err));
-
-      logger.info(`Scheduled scraping completed in ${duration}ms`, result);
+      await refreshPlayerRankings({ onlyIfStale });
     } catch (error) {
-      logger.error('Scheduled scraping failed:', error);
-
-      // Log failed scrape
-      await pb.collection('scrape_logs').create({
-        source: 'SCHEDULED',
-        status: 'failed',
-        error: error.message,
-        timestamp: new Date().toISOString(),
-      }).catch(err => logger.error('Failed to log scheduled scrape error:', err));
+      logger.error('Scheduled rankings refresh failed:', error);
     }
-  });
+  };
+  const scrapingTask = cron.schedule('0 2 * * *', () => runRankingsTask(), { timezone: 'UTC' });
+  // Catch missed runs after host restarts; recent successful snapshots are skipped.
+  const rankingsStartupTimer = setTimeout(() => runRankingsTask(true), 5000);
 
   const trendArticleCron = process.env.TREND_ARTICLE_CRON || '30 9 * * *';
   const trendArticleTimezone = process.env.TREND_ARTICLE_TIMEZONE || 'Asia/Shanghai';
@@ -155,6 +124,7 @@ export function initializeScheduler() {
   logger.info(`Scheduler initialized - daily scraping at 2 AM UTC; Google Trends article at "${trendArticleCron}" (${trendArticleTimezone}); YouTube trending article at "${youtubeArticleCron}" (${youtubeArticleTimezone})`);
   return {
     scrapingTask,
+    rankingsStartupTimer,
     trendArticleTask,
     startupCatchupTimer,
     youtubeArticleTask,

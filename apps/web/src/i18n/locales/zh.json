@@ -1,4 +1,8 @@
 {
+  "rankingData": {
+    "rankingDate": "排名日期：",
+    "lastSynced": "最近同步："
+  },
   "common": {
     "loading": "加载中...",
     "error": "错误",
