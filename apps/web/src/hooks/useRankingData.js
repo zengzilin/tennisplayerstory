@@ -4,17 +4,18 @@ import pb from '@/lib/pocketbaseClient';
 export const useRankingData = () => {
   const [rankings, setRankings] = useState({ atp: [], wta: [] });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
 
     const fetchRankings = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const atpFilter = '(source = "atp" && ranking > 0) || (source = "ATP" && ranking > 0)';
         const wtaFilter = '(source = "wta" && ranking > 0) || (source = "WTA" && ranking > 0)';
-        
-        console.log(`[DEBUG] useRankingData: Executing ATP query with filter: '${atpFilter}'`);
-        console.log(`[DEBUG] useRankingData: Executing WTA query with filter: '${wtaFilter}'`);
         
         const [atpResult, wtaResult] = await Promise.all([
           pb.collection('players').getFullList({
@@ -29,16 +30,6 @@ export const useRankingData = () => {
           }),
         ]);
 
-        console.log('[DEBUG] useRankingData: ATP raw results count:', atpResult.length);
-        if (atpResult.length > 0) {
-          console.log('[DEBUG] useRankingData: ATP sample source values:', atpResult.slice(0, 3).map(p => p.source));
-        }
-
-        console.log('[DEBUG] useRankingData: WTA raw results count:', wtaResult.length);
-        if (wtaResult.length > 0) {
-          console.log('[DEBUG] useRankingData: WTA sample source values:', wtaResult.slice(0, 3).map(p => p.source));
-        }
-
         if (!cancelled) {
           const toRankingRow = (p, i) => ({
             id: p.id,
@@ -47,7 +38,7 @@ export const useRankingData = () => {
             country: p.country,
             points: p.points,
             tournaments: p.tournaments ?? null,
-            trend: p.previous_ranking ? (p.previous_ranking > p.ranking ? 'up' : p.previous_ranking < p.ranking ? 'down' : 'same') : 'same',
+            trend: p.previous_ranking ? (p.previous_ranking > p.ranking ? 'up' : p.previous_ranking < p.ranking ? 'down' : 'same') : null,
             source: p.source.toLowerCase()
           });
 
@@ -57,7 +48,7 @@ export const useRankingData = () => {
           });
         }
       } catch (err) {
-        console.error('[DEBUG] useRankingData: Failed to fetch rankings:', err);
+        if (!cancelled) setError(err);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -65,7 +56,7 @@ export const useRankingData = () => {
 
     fetchRankings();
     return () => { cancelled = true; };
-  }, []);
+  }, [attempt]);
 
-  return { rankings, loading };
+  return { rankings, loading, error, retry: () => setAttempt(value => value + 1) };
 };

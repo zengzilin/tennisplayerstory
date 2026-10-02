@@ -1,7 +1,8 @@
 import * as cheerio from 'cheerio';
+import { ATP_RANKINGS_URL, parseAtpRankings } from './atpRankings.js';
 
 export const rankingSources = {
-  atp: 'https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings',
+  atp: ATP_RANKINGS_URL,
   wta: 'https://www.wtatennis.com/rankings/singles',
 };
 
@@ -10,36 +11,17 @@ const integer = text => Number(String(text).replace(/,/g, '').trim());
 // Reject incomplete/challenge pages before any database writes.
 export function validateRankings(players) {
   if (players.length < 50 || players.some(player =>
-    !player.name || !player.country || !Number.isInteger(player.ranking) || player.ranking < 1 ||
+    !player.name || !Number.isInteger(player.ranking) || player.ranking < 1 ||
     !Number.isFinite(player.points) || player.points < 0)) {
     throw new Error('Incomplete or invalid rankings feed');
   }
-  const ranks = new Set(players.map(player => player.ranking));
+  const ordered = [...players].sort((a, b) => a.ranking - b.ranking);
   const names = new Set(players.map(player => player.name));
-  if (ranks.size !== players.length || names.size !== players.length ||
-    Array.from({ length: 50 }, (_, index) => index + 1).some(rank => !ranks.has(rank))) {
+  if (names.size !== players.length || ordered.some((player, index) =>
+    player.ranking !== index + 1 && (index === 0 || player.ranking !== ordered[index - 1].ranking))) {
     throw new Error('Duplicate or missing ranking rows');
   }
   return players;
-}
-
-export function parseEspnRankings(payload, source = 'atp') {
-  const ranking = payload.rankings?.find(item => item.type === source);
-  if (!ranking?.ranks) throw new Error(`Missing ${source} rankings`);
-  return validateRankings(ranking.ranks.map(row => ({
-    name: row.athlete.displayName,
-    ranking: row.current,
-    previous_ranking: row.previous ?? null,
-    points: row.points,
-    country: row.athlete.flagAltText || row.athlete.citizenshipCountry,
-    age: row.athlete.age ?? null,
-    imageUrl: row.athlete.headshot || '',
-    profile_url: row.athlete.links?.find(link => link.rel?.includes('playercard'))?.href || '',
-    external_id: row.athlete.id,
-    source,
-    source_url: rankingSources[source],
-    ranking_date: ranking.update || null,
-  })));
 }
 
 export function parseWtaRankings(html) {
@@ -74,7 +56,7 @@ export async function fetchRankings(source) {
       });
       if (!response.ok || response.status === 202) throw new Error(`Rankings HTTP ${response.status}`);
       return source === 'atp'
-        ? parseEspnRankings(await response.json(), source)
+        ? validateRankings(await parseAtpRankings(Buffer.from(await response.arrayBuffer())))
         : parseWtaRankings(await response.text());
     } catch (error) {
       lastError = error;

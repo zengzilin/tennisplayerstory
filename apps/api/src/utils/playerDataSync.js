@@ -1,18 +1,27 @@
 import pb from './pocketbaseClient.js';
 import logger from './logger.js';
-import { fetchRankings, validateRankings } from './tennisRankings.js';
+import { fetchRankings, rankingSources, validateRankings } from './tennisRankings.js';
+
+// ESPN and ATP use different display order / preferred names for these players.
+const atpNameAliases = { 'Bu Yunchaokete': 'Yunchaokete Bu', 'Wu Yibing': 'Yibing Wu', 'Chak Lam Coleman Wong': 'Coleman Wong' };
+const normalizedName = name => (atpNameAliases[name] || name).normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** Sync a complete tour snapshot, preserving player IDs and editorial fields. */
 export async function syncPlayerData(players, source, client = pb) {
   validateRankings(players);
   const existing = await client.collection('players').getFullList();
   const tourRecords = existing.filter(player => player.source?.toLowerCase() === source);
+  if (players[0].ranking_date && tourRecords.some(record => record.ranking_date &&
+    Date.parse(record.ranking_date) > Date.parse(players[0].ranking_date))) {
+    throw new Error('Incoming rankings are older than the saved snapshot');
+  }
   const results = { created: 0, updated: 0, failed: 0, unranked: 0 };
   const activeIds = new Set();
   const timestamp = new Date().toISOString();
   for (const player of players) {
-    const record = tourRecords.find(item =>
-      (item.external_id && item.external_id === player.external_id) || item.name === player.name);
+    const matches = tourRecords.filter(item =>
+      (item.external_id && item.external_id === player.external_id) || normalizedName(item.name) === normalizedName(player.name));
+    const record = matches.find(item => item.external_id) || matches[0];
     const data = { ...player, source, last_updated: timestamp };
     if (record) {
       await client.collection('players').update(record.id, data);
@@ -48,7 +57,7 @@ export async function refreshPlayerRankings({ sources = ['atp', 'wta'], dryRun =
             filter: pb.filter('source = {:source} && status = "success"', { source: source.toUpperCase() }),
             sort: '-timestamp',
           });
-          if (logs.items[0] && Date.now() - Date.parse(logs.items[0].timestamp) < 24 * 60 * 60 * 1000) {
+          if (logs.items[0]?.source_url === rankingSources[source] && Date.now() - Date.parse(logs.items[0].timestamp) < 24 * 60 * 60 * 1000) {
             result.sources[source] = { success: true, skipped: true };
             continue;
           }

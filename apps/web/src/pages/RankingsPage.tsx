@@ -1,8 +1,6 @@
 // @ts-nocheck
-
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import Header from '@/components/Header.tsx';
@@ -19,225 +17,107 @@ import { TableSkeleton, CardListSkeleton } from '@/components/LoadingSkeletons.t
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Trophy, Calendar, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { generateBreadcrumbSchema } from '@/lib/structuredData.js';
+import { tennisCountryCode } from '../../../../shared/tennis-countries.mjs';
 
 const RankingsPage = () => {
-  const { rankings, loading } = useRankingData();
-  const { t } = useTranslation();
+  const { rankings, loading, error, retry } = useRankingData();
+  const { t, i18n } = useTranslation();
   const { currentLanguage } = useLanguage();
   const langPrefix = `/${currentLanguage}`;
-
-  const { search, setSearch, source, setSource, sortBy, setSortBy, page, setPage, totalPages, filteredData, totalResults } = useRankingFilters(rankings.atp, rankings.wta);
-
-  const breadcrumbItems = [
-    { name: 'Home', path: langPrefix },
-    { name: 'Rankings', path: `${langPrefix}/rankings` }
-  ];
-  const structuredData = [generateBreadcrumbSchema(breadcrumbItems)];
-
+  const listTop = useRef(null);
+  const countryName = country => {
+    const code = tennisCountryCode(country);
+    return /^[A-Z]{2}$/.test(code) ? new Intl.DisplayNames([i18n.language], { type: 'region' }).of(code) : code;
+  };
+  const filters = useRankingFilters(rankings.atp, rankings.wta, countryName);
+  const { search, source, sortBy, country, range, limit, page, totalPages, filteredData, totalResults } = filters;
+  const text = key => t(`rankingFilters.${key}`);
+  const breadcrumbItems = [{ name: t('nav.home', 'Home'), path: langPrefix }, { name: text('title'), path: `${langPrefix}/rankings` }];
+  const changePage = value => {
+    filters.setPage(value);
+    listTop.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  };
+  const selectClass = 'h-11 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground';
+  const pagination = () => (
+    <nav aria-label={text('pagination')} className="flex flex-wrap items-center justify-between gap-3 py-4">
+      <p className="text-sm text-muted-foreground" aria-live="polite">
+        {t('rankingFilters.results', { from: totalResults ? (page - 1) * limit + 1 : 0, to: Math.min(page * limit, totalResults), total: totalResults })}
+      </p>
+      <div className="flex items-center gap-2">
+        <Button variant="outline" size="sm" onClick={() => changePage(page - 1)} disabled={page === 1} aria-label={text('previous')}><ChevronLeft className="h-4 w-4" /></Button>
+        <label className="flex items-center gap-2 text-sm">{text('page')}
+          <select className="h-9 rounded-md border border-input bg-background px-2" aria-label={text('page')} value={page} onChange={event => changePage(Number(event.target.value))}>
+            {Array.from({ length: totalPages }, (_, index) => <option key={index} value={index + 1}>{index + 1} / {totalPages}</option>)}
+          </select>
+        </label>
+        <Button variant="outline" size="sm" onClick={() => changePage(page + 1)} disabled={page === totalPages} aria-label={text('next')}><ChevronRight className="h-4 w-4" /></Button>
+      </div>
+    </nav>
+  );
+  const trend = player => player.trend ? <TrendIndicator trend={player.trend} /> : <span className="text-muted-foreground">—</span>;
   return (
     <>
-      <SEOHelmet 
-        pageKey="rankings"
-        url="/rankings"
-        structuredData={structuredData}
-      />
-
+      <SEOHelmet pageKey="rankings" url="/rankings" structuredData={[generateBreadcrumbSchema(breadcrumbItems)]} />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
-
         <main id="main-content" className="flex-1 pb-20">
-          <section className="bg-background border-b border-border pt-12 pb-16 relative">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <section className="border-b border-border py-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <BreadcrumbNav items={breadcrumbItems} />
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-foreground mb-6">
-                  {t('rankings.title', 'Global Tennis Rankings')}
-                </h1>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  {t('rankings.desc', 'Up-to-date ATP and WTA tour rankings. Track the world\'s best professional tennis players.')}
-                </p>
-                <RankingDataStatus />
-              </motion.div>
+              <h1 className="text-3xl md:text-5xl font-bold font-serif text-foreground mb-4">{text('title')}</h1>
+              <p className="text-muted-foreground">{text('desc')}</p>
+              <RankingDataStatus source={source} />
             </div>
           </section>
-
-          <section className="container mx-auto px-4 sm:px-6 lg:px-8 mt-8 relative z-20">
-            <div className="bg-card rounded-2xl shadow-lg border border-border p-4 md:p-6 mb-8">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
-                  <Input 
-                    type="search"
-                    placeholder={t('rankings.search', 'Search players by name...')}
-                    value={search}
-                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                    className="pl-10 h-12 bg-background border-input text-foreground"
-                    aria-label="Search tennis players"
-                  />
-                </div>
-                
-                <div className="flex gap-4">
-                  <Select value={source} onValueChange={(v) => { setSource(v); setPage(1); }}>
-                    <SelectTrigger className="w-32 h-12 bg-background" aria-label="Filter by Tour">
-                      <SelectValue placeholder="Tour" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">{t('rankings.all', 'All Tours')}</SelectItem>
-                      <SelectItem value="atp">ATP (Men)</SelectItem>
-                      <SelectItem value="wta">WTA (Women)</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={sortBy} onValueChange={(v) => { setSortBy(v); setPage(1); }}>
-                    <SelectTrigger className="w-40 h-12 bg-background" aria-label="Sort options">
-                      <SelectValue placeholder="Sort By" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rank">{t('rankings.sortOptions.rank', 'By Rank')}</SelectItem>
-                      <SelectItem value="points">{t('rankings.sortOptions.points', 'By Points')}</SelectItem>
-                      <SelectItem value="name">{t('rankings.sortOptions.name', 'By Name')}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          <section ref={listTop} className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6 scroll-mt-24">
+            <div className="bg-card rounded-2xl border border-border p-4 md:p-6">
+              <div role="tablist" aria-label={text('tour')} className="flex gap-2 mb-4">
+                {['atp', 'wta'].map(tour => <Button key={tour} role="tab" aria-selected={source === tour} aria-controls="ranking-list" variant={source === tour ? 'default' : 'outline'} className="flex-1 sm:flex-none" onClick={() => filters.setSource(tour)}>{text(tour)}</Button>)}
               </div>
+              <div className="relative mb-4">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
+                <Input type="search" placeholder={text('search')} aria-label={text('search')} value={search} onChange={event => filters.setSearch(event.target.value)} className="pl-10 h-11" />
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <label className="space-y-1 text-sm">{text('range')}<select aria-label={text('range')} className={selectClass} value={range} onChange={event => filters.setRange(event.target.value)}>
+                  <option value="all">{text('allRanks')}</option>{[10, 50, 100].map(value => <option key={value} value={value}>{text('top')} {value}</option>)}
+                </select></label>
+                <label className="space-y-1 text-sm">{text('country')}<select aria-label={text('country')} className={selectClass} value={country} onChange={event => filters.setCountry(event.target.value)}>
+                  <option value="">{text('allCountries')}</option>{filters.countries.map(value => <option key={value} value={value}>{countryName(value)}</option>)}
+                </select></label>
+                <label className="space-y-1 text-sm">{text('sort')}<select aria-label={text('sort')} className={selectClass} value={sortBy} onChange={event => filters.setSortBy(event.target.value)}>
+                  <option value="rank">{text('sortRank')}</option><option value="points">{text('sortPoints')}</option><option value="name">{text('sortName')}</option>
+                </select></label>
+                <label className="space-y-1 text-sm">{text('size')}<select aria-label={text('size')} className={selectClass} value={limit} onChange={event => filters.setLimit(Number(event.target.value))}>
+                  {[25, 50, 100].map(value => <option key={value} value={value}>{value}</option>)}
+                </select></label>
+              </div>
+              {(search || country || range !== 'all' || sortBy !== 'rank') && <Button className="mt-3" variant="ghost" size="sm" onClick={filters.resetFilters}>{text('reset')}</Button>}
             </div>
-
-            {loading ? (
-              <div className="space-y-8">
-                <div className="hidden md:block"><TableSkeleton rows={10} /></div>
-                <div className="block md:hidden"><CardListSkeleton count={10} /></div>
-              </div>
-            ) : filteredData.length === 0 ? (
-              <div className="bg-card rounded-2xl border border-dashed border-border p-12 text-center">
-                <Users className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-foreground mb-2">No Results</h3>
-                <p className="text-muted-foreground">{t('rankings.empty', 'No players found matching your criteria.')}</p>
-                <Button variant="outline" className="mt-6" onClick={() => { setSearch(''); setSource('all'); setSortBy('rank'); }}>
-                  Clear Filters
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                <div className="hidden md:block bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
-                  <Table>
-                    <TableHeader className="bg-muted/50">
-                      <TableRow className="hover:bg-transparent">
-                        <TableHead className="w-20 text-center font-bold text-foreground">Rank</TableHead>
-                        <TableHead className="font-bold text-foreground">Player Name</TableHead>
-                        <TableHead className="font-bold text-foreground">Country</TableHead>
-                        <TableHead className="font-bold text-foreground text-right">Points</TableHead>
-                        <TableHead className="font-bold text-foreground text-center">Trend</TableHead>
-                        <TableHead className="font-bold text-foreground text-right">Tour</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <AnimatePresence mode="popLayout">
-                        {filteredData.map((player, index) => (
-                          <motion.tr 
-                            key={`${player.source}-${player.id}`}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2, delay: index * 0.02 }}
-                            className="group hover:bg-muted/50 transition-colors border-b border-border/50 last:border-0"
-                          >
-                            <TableCell className="text-center font-medium">
-                              <RankBadge rank={player.position} />
-                            </TableCell>
-                            <TableCell>
-                              <Link to={`${langPrefix}/players`} className="font-semibold text-foreground group-hover:text-primary transition-colors" aria-label={`View ${player.name} profile`}>
-                                {player.name}
-                              </Link>
-                            </TableCell>
-                            <TableCell>
-                              <CountryFlag country={player.country} />
-                            </TableCell>
-                            <TableCell className="text-right font-mono font-medium text-foreground">
-                              {player.points?.toLocaleString() || '-'}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <div className="flex justify-center"><TrendIndicator trend={player.trend || 'same'} /></div>
-                            </TableCell>
-                            <TableCell className="text-right">
-                              <span className="inline-flex items-center rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-semibold text-secondary uppercase tracking-wider">
-                                {player.source}
-                              </span>
-                            </TableCell>
-                          </motion.tr>
-                        ))}
-                      </AnimatePresence>
-                    </TableBody>
-                  </Table>
-                </div>
-
-                <div className="grid md:hidden gap-4">
-                  <AnimatePresence mode="popLayout">
-                    {filteredData.map((player, index) => (
-                      <motion.div
-                        key={`mob-${player.source}-${player.id}`}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2, delay: index * 0.02 }}
-                        className="bg-card rounded-xl border border-border shadow-sm p-4 flex flex-col gap-4"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <RankBadge rank={player.position} />
-                            <div>
-                              <Link to={`${langPrefix}/players`} className="font-bold text-lg text-foreground hover:text-primary transition-colors">
-                                {player.name}
-                              </Link>
-                              <div className="mt-1">
-                                <CountryFlag country={player.country} />
-                              </div>
-                            </div>
-                          </div>
-                          <span className="inline-flex items-center rounded-full bg-secondary/10 px-2.5 py-0.5 text-xs font-semibold text-secondary uppercase">
-                            {player.source}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                          <div className="flex items-center gap-2">
-                            <Trophy className="h-4 w-4 text-accent" aria-hidden="true" />
-                            <span className="font-mono font-bold text-foreground">{player.points?.toLocaleString() || '-'} pts</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground uppercase tracking-wider">Trend</span>
-                            <TrendIndicator trend={player.trend || 'same'} />
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </div>
-
-                {totalPages > 1 && (
-                  <div className="flex items-center justify-between pt-8">
-                    <p className="text-sm text-muted-foreground hidden sm:block">
-                      Showing {(page - 1) * 20 + 1} to {Math.min(page * 20, totalResults)} of {totalResults} players
-                    </p>
-                    <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                      <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} aria-label="Previous page">
-                        <ChevronLeft className="h-4 w-4 mr-1" /> Previous
-                      </Button>
-                      <span className="text-sm font-medium mx-4 sm:mx-2 text-foreground" aria-live="polite">
-                        Page {page} of {totalPages}
-                      </span>
-                      <Button variant="outline" size="sm" onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} aria-label="Next page">
-                        Next <ChevronRight className="h-4 w-4 ml-1" />
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+            <div id="ranking-list" role="tabpanel" aria-label={text(source)}>
+              {loading ? <><div className="hidden md:block mt-4"><TableSkeleton rows={10} /></div><div className="md:hidden mt-4"><CardListSkeleton count={5} /></div></> : error ?
+                <div className="p-8 text-center" role="alert"><p>{text('error')}</p><Button onClick={retry} className="mt-4">{text('retry')}</Button></div> : <>
+                  {pagination()}
+                  {!totalResults ? <div className="rounded-xl border border-dashed p-8 text-center"><p>{text('empty')}</p><Button variant="outline" className="mt-4" onClick={filters.resetFilters}>{text('reset')}</Button></div> : <>
+                    <div className="hidden md:block bg-card rounded-xl border border-border overflow-hidden"><Table>
+                      <TableHeader><TableRow><TableHead className="w-20 text-center">{text('rank')}</TableHead><TableHead>{text('player')}</TableHead><TableHead>{text('country')}</TableHead><TableHead className="text-right">{text('points')}</TableHead><TableHead className="text-center">{text('trend')}</TableHead></TableRow></TableHeader>
+                      <TableBody>{filteredData.map(player => <TableRow key={player.id}>
+                        <TableCell className="text-center"><RankBadge rank={player.position} /></TableCell>
+                        <TableCell><Link className="font-semibold hover:text-primary" to={`${langPrefix}/players`}>{player.name}</Link></TableCell>
+                        <TableCell><CountryFlag country={player.country} /></TableCell><TableCell className="text-right font-mono">{player.points?.toLocaleString(i18n.language)}</TableCell><TableCell><div className="flex justify-center">{trend(player)}</div></TableCell>
+                      </TableRow>)}</TableBody>
+                    </Table></div>
+                    <div className="grid md:hidden gap-3">{filteredData.map(player => <div key={player.id} className="bg-card rounded-xl border border-border p-4">
+                      <div className="flex items-center gap-3"><RankBadge rank={player.position} /><div className="min-w-0"><Link to={`${langPrefix}/players`} className="font-semibold break-words">{player.name}</Link><CountryFlag country={player.country} /></div></div>
+                      <div className="mt-3 pt-3 border-t flex justify-between text-sm"><span>{text('points')} <strong>{player.points?.toLocaleString(i18n.language)}</strong></span><span className="flex items-center gap-2">{text('trend')}{trend(player)}</span></div>
+                    </div>)}</div>
+                    {totalPages > 1 && pagination()}
+                  </>}
+                </>}
+            </div>
           </section>
-
           <section className="py-16 bg-muted/20 border-t border-border mt-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <article className="max-w-4xl mx-auto prose prose-slate dark:prose-invert">

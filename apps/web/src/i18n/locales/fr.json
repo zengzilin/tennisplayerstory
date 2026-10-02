@@ -101,5 +101,37 @@
       "rejected": "Rejeté",
       "all": "Tous les statuts"
     }
+  },
+  "rankingFilters": {
+    "official": "PDF officiel",
+    "pagination": "Pages du classement",
+    "previous": "Page précédente",
+    "next": "Page suivante",
+    "page": "Page",
+    "results": "{{from}}–{{to}} sur {{total}} joueurs",
+    "tour": "Circuit",
+    "atp": "ATP · Hommes",
+    "wta": "WTA · Femmes",
+    "search": "Rechercher un joueur ou un pays",
+    "range": "Plage de classement",
+    "allRanks": "Tous les rangs disponibles",
+    "top": "Top",
+    "country": "Pays / région",
+    "allCountries": "Tous les pays / régions",
+    "sort": "Trier par",
+    "size": "Joueurs par page",
+    "reset": "Effacer les filtres",
+    "error": "Impossible de charger le classement.",
+    "retry": "Réessayer",
+    "rank": "Rang",
+    "player": "Joueur",
+    "points": "Points",
+    "trend": "Évolution",
+    "title": "Classement mondial de tennis",
+    "desc": "Consultez les classements hebdomadaires en simple ATP et WTA.",
+    "empty": "Aucun joueur ne correspond aux filtres.",
+    "sortRank": "Par rang",
+    "sortPoints": "Par points",
+    "sortName": "Par nom"
   }
 }

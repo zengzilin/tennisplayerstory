@@ -1,53 +1,33 @@
-import { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { readRankingFilters, filterRankingRows } from '@/lib/rankingFilters';
 
-export const useRankingFilters = (atpData = [], wtaData = []) => {
-  const [search, setSearch] = useState('');
-  const [source, setSource] = useState('all'); // all, atp, wta
-  const [sortBy, setSortBy] = useState('rank'); // rank, name, country, points
-  const [page, setPage] = useState(1);
-  const limit = 20;
-
-  const filteredData = useMemo(() => {
-    let combined = [];
-    if (source === 'all') combined = [...atpData, ...wtaData];
-    else if (source === 'atp') combined = [...atpData];
-    else if (source === 'wta') combined = [...wtaData];
-
-    if (search.trim()) {
-      const lowerSearch = search.toLowerCase();
-      combined = combined.filter(p => 
-        p.name.toLowerCase().includes(lowerSearch) || 
-        (p.country && p.country.toLowerCase().includes(lowerSearch))
-      );
+export const useRankingFilters = (atpData = [], wtaData = [], countryName) => {
+  const [params, setParams] = useSearchParams();
+  const filters = readRankingFilters(params);
+  const rows = filters.source === 'atp' ? atpData : wtaData;
+  const filtered = filterRankingRows(rows, filters, countryName);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / filters.limit));
+  const page = Math.min(filters.page, totalPages);
+  const change = (values, replace = false) => {
+    const next = new URLSearchParams(params);
+    for (const [key, value] of Object.entries(values)) {
+      if (value === '' || value === 'all') next.delete(key);
+      else next.set(key, String(value));
     }
-
-    combined.sort((a, b) => {
-      if (sortBy === 'rank') return a.position - b.position;
-      if (sortBy === 'points') return (b.points || 0) - (a.points || 0);
-      if (sortBy === 'name') return a.name.localeCompare(b.name);
-      if (sortBy === 'country') return (a.country || '').localeCompare(b.country || '');
-      return 0;
-    });
-
-    return combined;
-  }, [atpData, wtaData, search, source, sortBy]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredData.length / limit));
-  
-  // Ensure page is within bounds after filtering
-  const safePage = Math.min(page, totalPages);
-  
-  const paginatedData = useMemo(() => {
-    return filteredData.slice((safePage - 1) * limit, safePage * limit);
-  }, [filteredData, safePage, limit]);
-
+    if (!('page' in values)) next.delete('page');
+    setParams(next, { replace, preventScrollReset: true });
+  };
   return {
-    search, setSearch,
-    source, setSource,
-    sortBy, setSortBy,
-    page: safePage, setPage,
-    totalPages,
-    filteredData: paginatedData,
-    totalResults: filteredData.length
+    ...filters, page, totalPages, totalResults: filtered.length,
+    countries: [...new Set(rows.map(row => row.country).filter(Boolean))].sort((a, b) => countryName(a).localeCompare(countryName(b))),
+    filteredData: filtered.slice((page - 1) * filters.limit, page * filters.limit),
+    setSearch: value => change({ q: value }, true),
+    setSource: value => change({ tour: value, country: '' }),
+    setSortBy: value => change({ sort: value }),
+    setCountry: value => change({ country: value }),
+    setRange: value => change({ top: value }),
+    setLimit: value => change({ size: value }),
+    setPage: value => change({ page: Math.min(totalPages, Math.max(1, value)) }),
+    resetFilters: () => setParams({ tour: filters.source }, { preventScrollReset: true }),
   };
 };

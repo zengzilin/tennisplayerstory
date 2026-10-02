@@ -101,5 +101,37 @@
       "rejected": "拒否",
       "all": "すべてのステータス"
     }
+  },
+  "rankingFilters": {
+    "official": "公式 PDF",
+    "pagination": "ランキングのページ",
+    "previous": "前のページ",
+    "next": "次のページ",
+    "page": "ページ",
+    "results": "{{total}} 人中 {{from}}–{{to}} 人を表示",
+    "tour": "ツアー",
+    "atp": "ATP · 男子",
+    "wta": "WTA · 女子",
+    "search": "選手名・国や地域を検索",
+    "range": "順位範囲",
+    "allRanks": "収録されている全順位",
+    "top": "上位",
+    "country": "国・地域",
+    "allCountries": "すべての国・地域",
+    "sort": "並べ替え",
+    "size": "1 ページの人数",
+    "reset": "絞り込みを解除",
+    "error": "ランキングを読み込めませんでした。",
+    "retry": "再試行",
+    "rank": "順位",
+    "player": "選手",
+    "points": "ポイント",
+    "trend": "変動",
+    "title": "テニス世界ランキング",
+    "desc": "ATP・WTA の週間シングルスランキング。",
+    "empty": "条件に一致する選手はいません。",
+    "sortRank": "順位順",
+    "sortPoints": "ポイント順",
+    "sortName": "名前順"
   }
 }
