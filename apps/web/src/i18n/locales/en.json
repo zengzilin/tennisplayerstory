@@ -63,7 +63,14 @@
     "emptyTitle": "No news in this category",
     "emptyDescription": "Fresh tennis reports will appear here as soon as they are published.",
     "showAll": "Show all news",
-    "categories": { "all": "All", "players": "Players", "matches": "Matches", "atp": "ATP", "wta": "WTA", "grandSlams": "Grand Slams" }
+    "categories": {
+      "all": "All",
+      "players": "Players",
+      "matches": "Matches",
+      "atp": "ATP",
+      "wta": "WTA",
+      "grandSlams": "Grand Slams"
+    }
   },
   "vlogs": {
     "title": "Tennis Vlogs",
@@ -103,5 +110,59 @@
       "rejected": "Rejected",
       "all": "All Statuses"
     }
+  },
+  "brief": {
+    "seoTitle": "Tennis Brief — Latest Tennis News & RSS Headlines",
+    "sections": "News sections",
+    "community": "Community articles",
+    "sourcesPolicy": "Sources & policy",
+    "eyebrow": "THE COURT, IN CONTEXT",
+    "headingLine1": "Your daily",
+    "headingLine2": "tennis briefing",
+    "description": "Headlines that matter. Original sources, clearly credited. Follow the tour without losing the thread.",
+    "cadence": "RSS updates · Each source checked every 30 minutes",
+    "latest": "Latest from the tour",
+    "subscribe": "Subscribe via RSS",
+    "search": "Search",
+    "placeholder": "Player, tournament or keyword",
+    "topic": "Topic",
+    "source": "Source",
+    "allTopics": "All topics",
+    "allSources": "All sources",
+    "topics": [
+      "Tour news",
+      "Grand Slams",
+      "US tennis",
+      "Rankings"
+    ],
+    "find": "Find news",
+    "reset": "Reset",
+    "loading": "Loading the latest briefing…",
+    "error": "Tennis Brief is temporarily unavailable. Please try again.",
+    "retry": "Retry",
+    "noMatches": "No matching headlines",
+    "empty": "The next briefing is on its way",
+    "tryFilters": "Try a different player, topic or source.",
+    "awaiting": "The first successful source check will populate this page. Check the source status below.",
+    "providedBy": "Provided by",
+    "noDate": "Date not supplied",
+    "readOriginal": "Read original",
+    "details": "Source details",
+    "collected": "First collected",
+    "changed": "Last content change",
+    "excerptPolicy": "Publisher-provided RSS excerpt. The publisher owns this headline and excerpt. This report has not been independently verified; read the original for the full article.",
+    "pagination": "News pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}}",
+    "sourceHeading": "Know where your news comes from",
+    "statusError": "Source status is temporarily unavailable.",
+    "failed": "Check failed",
+    "connected": "Connected",
+    "pending": "Awaiting first check",
+    "lastCheck": "Last successful check",
+    "stale": "Previously collected items remain available; freshness is not guaranteed.",
+    "visit": "Visit publisher",
+    "policy": "English headlines and publisher-provided RSS excerpts from Tennis Brief. Topic labels are inferred from headlines. Each feed is checked every 30 minutes, subject to availability; items are retained for up to 14 days after collection. No AI rewriting or full article copying. This is an independent aggregator, not affiliated with ESPN or the BBC."
   }
 }

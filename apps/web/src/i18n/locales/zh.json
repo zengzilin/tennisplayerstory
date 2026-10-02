@@ -63,7 +63,14 @@
     "emptyTitle": "该分类暂无新闻",
     "emptyDescription": "新的网球报道发布后会第一时间显示在这里。",
     "showAll": "查看全部新闻",
-    "categories": { "all": "全部", "players": "球员动态", "matches": "比赛资讯", "atp": "ATP", "wta": "WTA", "grandSlams": "大满贯" }
+    "categories": {
+      "all": "全部",
+      "players": "球员动态",
+      "matches": "比赛资讯",
+      "atp": "ATP",
+      "wta": "WTA",
+      "grandSlams": "大满贯"
+    }
   },
   "vlogs": {
     "title": "网球视频博客",
@@ -103,5 +110,59 @@
       "rejected": "已拒绝",
       "all": "所有状态"
     }
+  },
+  "brief": {
+    "seoTitle": "Tennis Brief — 最新网球新闻与 RSS 简报",
+    "sections": "新闻栏目",
+    "community": "社区文章",
+    "sourcesPolicy": "来源与使用说明",
+    "eyebrow": "从赛场到全局",
+    "headingLine1": "每日网球",
+    "headingLine2": "新闻简报",
+    "description": "聚焦值得关注的网球新闻，清晰标注原始来源，让你轻松跟进巡回赛动态。",
+    "cadence": "RSS 更新 · 每个来源每 30 分钟检查一次",
+    "latest": "巡回赛最新动态",
+    "subscribe": "通过 RSS 订阅",
+    "search": "搜索",
+    "placeholder": "球员、赛事或关键词",
+    "topic": "主题",
+    "source": "来源",
+    "allTopics": "全部主题",
+    "allSources": "全部来源",
+    "topics": [
+      "巡回赛新闻",
+      "大满贯",
+      "美国网球",
+      "排名"
+    ],
+    "find": "查找新闻",
+    "reset": "重置",
+    "loading": "正在加载最新简报…",
+    "error": "Tennis Brief 暂时无法访问，请重试。",
+    "retry": "重试",
+    "noMatches": "没有匹配的新闻",
+    "empty": "下一期简报即将到来",
+    "tryFilters": "请尝试其他球员、主题或来源。",
+    "awaiting": "来源首次成功更新后，新闻将在此显示。请查看下方的来源状态。",
+    "providedBy": "来源：",
+    "noDate": "未提供日期",
+    "readOriginal": "阅读原文",
+    "details": "来源详情",
+    "collected": "首次收录",
+    "changed": "内容最后更新",
+    "excerptPolicy": "这是发布方提供的 RSS 摘要，标题和摘要归原发布方所有。本站未独立核实报道，请前往原站阅读全文。",
+    "pagination": "新闻分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "第 {{page}} 页",
+    "sourceHeading": "了解你的新闻来源",
+    "statusError": "暂时无法获取来源状态。",
+    "failed": "检查失败",
+    "connected": "已连接",
+    "pending": "等待首次检查",
+    "lastCheck": "上次成功检查",
+    "stale": "此前收录的新闻仍可查看，但无法保证其时效性。",
+    "visit": "访问发布方",
+    "policy": "通过 Tennis Brief 同步英文新闻标题和发布方提供的 RSS 摘要。主题由标题推断。每个来源每 30 分钟检查一次，具体取决于来源可用性；新闻自收录起保留最多 14 天。不进行 AI 改写，不复制全文。本站为独立聚合站，与 ESPN、BBC 无隶属关系。"
   }
 }
