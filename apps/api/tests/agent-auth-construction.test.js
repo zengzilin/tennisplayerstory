@@ -20,6 +20,8 @@ try {
  }
  assert.equal(parserReached,false);
  const authDoc=await(await fetch(origin+'/auth.md')).text();assert.match(authDoc,/^# TennisHub auth.md/);assert.match(authDoc,/not human login/);assert.match(authDoc,/Coming soon/);
+ const documentedContract=JSON.parse(authDoc.match(/```json\n([\s\S]*?)\n```/)[1]);
+ assert.deepEqual(documentedContract,as.agent_auth);
  assert.equal((await fetch(origin+'/api/agent/lookup')).status,200);
  console.log(JSON.stringify({passed:true,checks:['issuer/resource consistency','all capabilities explicitly planned and disabled','disabled empty JWKS','all reserved operations 503/no-store','malformed identity bodies never parsed','public lookup stays available','human login accurately preserved in documentation'],production_mounted:true,owner_accepted:true},null,2));
 } finally {await new Promise(resolve=>server.close(resolve));}
