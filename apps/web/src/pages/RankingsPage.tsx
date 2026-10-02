@@ -73,8 +73,8 @@ const RankingsPage = () => {
           </section>
           <section ref={listTop} className="container mx-auto px-4 sm:px-6 lg:px-8 mt-6 scroll-mt-24">
             <div className="bg-card rounded-2xl border border-border p-4 md:p-6">
-              <div role="tablist" aria-label={text('tour')} className="flex gap-2 mb-4">
-                {['atp', 'wta'].map(tour => <Button key={tour} role="tab" aria-selected={source === tour} aria-controls="ranking-list" variant={source === tour ? 'default' : 'outline'} className="flex-1 sm:flex-none" onClick={() => filters.setSource(tour)}>{text(tour)}</Button>)}
+              <div role="group" aria-label={text('tour')} className="flex gap-2 mb-4">
+                {['atp', 'wta'].map(tour => <Button key={tour} aria-pressed={source === tour} variant={source === tour ? 'default' : 'outline'} className="flex-1 sm:flex-none" onClick={() => filters.setSource(tour)}>{text(tour)}</Button>)}
               </div>
               <div className="relative mb-4">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
@@ -96,7 +96,7 @@ const RankingsPage = () => {
               </div>
               {(search || country || range !== 'all' || sortBy !== 'rank') && <Button className="mt-3" variant="ghost" size="sm" onClick={filters.resetFilters}>{text('reset')}</Button>}
             </div>
-            <div id="ranking-list" role="tabpanel" aria-label={text(source)}>
+            <div id="ranking-list" role="region" aria-label={text(source)}>
               {loading ? <><div className="hidden md:block mt-4"><TableSkeleton rows={10} /></div><div className="md:hidden mt-4"><CardListSkeleton count={5} /></div></> : error ?
                 <div className="p-8 text-center" role="alert"><p>{text('error')}</p><Button onClick={retry} className="mt-4">{text('retry')}</Button></div> : <>
                   {pagination()}
