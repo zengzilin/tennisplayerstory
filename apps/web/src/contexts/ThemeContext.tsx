@@ -6,31 +6,14 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme-preference') || 'system';
+    return localStorage.getItem('theme-preference') === 'dark' ? 'dark' : 'light';
   });
 
   useEffect(() => {
     localStorage.setItem('theme-preference', theme);
     const root = document.documentElement;
-    
-    const applyTheme = (currentTheme) => {
-      root.classList.remove('light', 'dark');
-      if (currentTheme === 'system') {
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        root.classList.add(systemPrefersDark ? 'dark' : 'light');
-      } else {
-        root.classList.add(currentTheme);
-      }
-    };
-
-    applyTheme(theme);
-
-    if (theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handleChange = () => applyTheme('system');
-      mediaQuery.addEventListener('change', handleChange);
-      return () => mediaQuery.removeEventListener('change', handleChange);
-    }
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
   }, [theme]);
 
   return (
