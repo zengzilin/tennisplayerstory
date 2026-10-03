@@ -1,0 +1,203 @@
+{
+  "property": "https://tennisplayerstory.com/",
+  "method": "Authenticated GSC interface; all visible table rows; no CSV export",
+  "selectedRange": "16 months",
+  "availableDates": [
+    "2026-03-09",
+    "2026-09-29"
+  ],
+  "totals": {
+    "clicks": 0,
+    "impressions": 63,
+    "ctr": 0,
+    "position": 76.6
+  },
+  "queries": [
+    {
+      "query": "historia del tenis mundial",
+      "impressions": 22,
+      "clicks": 0
+    },
+    {
+      "query": "tenista famoso",
+      "impressions": 4,
+      "clicks": 0
+    },
+    {
+      "query": "el tenista de cracovia",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "query": "jugador de tenis",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "query": "tenista de los 80",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "query": "tenista loco",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "query": "tenista profesional",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "query": "el tenista",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "query": "la historia del tenis",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "query": "бивш наш тенисист",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "tennis legend",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "la era abierta del tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "leyendas del tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "deportistas de tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "joaquin tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "historia de tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "deportista de tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "era abierta tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "joaquin y el tenis",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "tennisser",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "query": "creador del tenis",
+      "impressions": 1,
+      "clicks": 0
+    }
+  ],
+  "countries": [
+    {
+      "country": "Spain",
+      "impressions": 42,
+      "clicks": 0
+    },
+    {
+      "country": "Mexico",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "country": "United States",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "country": "United Kingdom",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "country": "Argentina",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "country": "Uruguay",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "country": "Colombia",
+      "impressions": 2,
+      "clicks": 0
+    },
+    {
+      "country": "Macau",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "Peru",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "Bulgaria",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "Costa Rica",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "Panama",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "Venezuela",
+      "impressions": 1,
+      "clicks": 0
+    },
+    {
+      "country": "South Africa",
+      "impressions": 1,
+      "clicks": 0
+    }
+  ],
+  "devices": {
+    "desktop": 47,
+    "mobile": 15,
+    "tablet": 1
+  },
+  "pages": {
+    "/es/stories": 59,
+    "/": 4
+  }
+}

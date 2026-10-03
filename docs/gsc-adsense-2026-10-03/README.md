@@ -48,3 +48,11 @@ AdSense 由 Google 审核内容与政策合规性，没有官方最低点击数�
 - https://support.google.com/publisherpolicies/answer/11112688?hl=en
 - https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls
 - https://developers.google.com/search/docs/specialty/international/localized-versions
+
+## 上线结果
+
+整改提交 e1bd7517 已推送 main 并自动部署。线上返回新版 index-BYsxqigy.js。17条 HTTP 检查通过：首页/列表/正文/法律页200、规范化301、未知页面和缺失 ads.txt 404；中文传记在其他语言路径指向中文规范页；历史指南中英西三种版本进入 sitemap；动态 sitemap 共52网址。live-history.jpg 为线上浏览器截图，正文12段、无水平溢出。
+
+GSC 原有 sitemap 仍有效。本次尝试返回 GSC 时，浏览器操作因用户切换页面被中断，未重新提交 sitemap，也未发起索引请求。应在 GSC 重新提交 https://tennisplayerstory.com/sitemap.xml，并检查 /es/stories 与 /es/stories/tennishistory01；规范页的替代页和301本身不需要清零。预计报告要等再次抓取后才变化，无法承诺收录时间。
+
+AdSense 账户验证信息已向站主询问；在提供真实验证代码前，未注入广告脚本。关于欧洲流量的同意管理要求，参考 https://support.google.com/adsense/answer/13554116?hl=en 。
