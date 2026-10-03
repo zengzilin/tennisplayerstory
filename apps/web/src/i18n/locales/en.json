@@ -264,11 +264,11 @@
         },
         {
           "title": "Current Google advertising and analytics status",
-          "content": "As of this policy’s update date, Google AdSense advertising and Google Analytics are not enabled on this site. If introduced, we will update this policy and configure consent management as required for the applicable regions. This policy itself does not enable advertising or analytics."
+          "content": "Google AdSense publisher code is integrated for website verification and advertising services. Actual ad availability depends on Google review and account configuration. Google Analytics is not enabled. Google may process device, visit and cookie data; see Google’s privacy policy."
         },
         {
-          "title": "Information about future advertising",
-          "content": "If Google advertising is introduced, Google and other advertising vendors may use cookies to serve ads based on your prior visits to this site or other websites. You can manage preferences through Google’s ad personalization settings. Advertising in regions including the EEA, UK and Switzerland requires consent arrangements as applicable; these will be configured before activation."
+          "title": "Advertising and consent management",
+          "content": "Google and other advertising vendors may use cookies to serve ads based on prior visits to this or other websites. You can manage preferences through Google’s ad personalization settings. Before serving personalized ads to users in the EEA, UK and Switzerland, the operator must configure a Google-certified consent management platform in AdSense. Integrating publisher code does not by itself complete that configuration."
         },
         {
           "title": "Retention, correction and deletion",
