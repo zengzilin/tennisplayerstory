@@ -33,6 +33,8 @@ const SitemapPage = () => {
   ];
 
   const legalLinks = [
+    { path: `${langPrefix}/about`, label: 'About TennisHub' },
+    { path: `${langPrefix}/contact`, label: 'Contact TennisHub' },
     { path: `${langPrefix}/privacy-policy`, label: 'Privacy Policy' },
     { path: `${langPrefix}/terms-of-service`, label: 'Terms of Service' }
   ];

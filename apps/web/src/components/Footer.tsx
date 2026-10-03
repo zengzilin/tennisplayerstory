@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Twitter, Instagram, Youtube } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { SUPPORT_EMAIL } from '../../../../shared/site-info.mjs';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 
 const Footer = () => {
@@ -23,14 +24,10 @@ const Footer = () => {
   ];
 
   const legalLinks = [
+    { path: `${langPrefix}/about`, label: t('siteInfo.about.title') },
+    { path: `${langPrefix}/contact`, label: t('siteInfo.contact.title') },
     { path: `${langPrefix}/privacy-policy`, label: t('footer.privacy', 'Privacy Policy') },
     { path: `${langPrefix}/terms-of-service`, label: t('footer.terms', 'Terms of Service') }
-  ];
-
-  const socialLinks = [
-    { icon: Twitter, label: 'Twitter', href: '#' },
-    { icon: Instagram, label: 'Instagram', href: '#' },
-    { icon: Youtube, label: 'YouTube', href: '#' }
   ];
 
   return (
@@ -42,7 +39,7 @@ const Footer = () => {
               <ArrowUpRight className="h-6 w-6 rounded-full bg-accent p-1 text-accent-foreground" />
               <span className="font-bold text-xl">TennisHub</span>
             </div>
-            <p className="text-sm text-secondary-foreground/80 dark:text-slate-400 max-w-xs">
+            <p className="text-sm text-muted-foreground max-w-xs">
               {t('footer.desc', 'Your ultimate destination for everything professional tennis.')}
             </p>
           </div>
@@ -54,7 +51,7 @@ const Footer = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-sm text-secondary-foreground/80 dark:text-slate-400 hover:text-secondary-foreground dark:hover:text-blue-300 transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -69,7 +66,7 @@ const Footer = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-sm text-secondary-foreground/80 dark:text-slate-400 hover:text-secondary-foreground dark:hover:text-blue-300 transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -78,34 +75,21 @@ const Footer = () => {
           </div>
 
           <div className="space-y-4">
-            <span className="font-semibold text-sm uppercase tracking-wider">{t('footer.followUs', 'Follow Us')}</span>
-            <div className="flex gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="text-secondary-foreground/80 dark:text-slate-400 hover:text-secondary-foreground dark:hover:text-blue-300 transition-colors"
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
-            </div>
-            <div className="pt-4 space-y-2">
-              <p className="text-sm text-secondary-foreground/80 dark:text-slate-400">{t('footer.contact', 'Contact: info@tennishub.com')}</p>
-            </div>
+            <span className="font-semibold text-sm uppercase tracking-wider">{t('siteInfo.contact.title')}</span>
+            <p className="text-sm text-muted-foreground">{t('siteInfo.contact.description')}</p>
+            <a className="block text-sm text-primary underline break-all" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border/50 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-secondary-foreground/80 dark:text-slate-400">
+          <p className="text-sm text-muted-foreground">
             © {currentYear} {t('footer.rights', 'All rights reserved.')}
           </p>
           <div className="flex gap-6 text-sm">
-            <Link to={`${langPrefix}/privacy-policy`} className="text-secondary-foreground/80 dark:text-slate-400 hover:text-secondary-foreground dark:hover:text-blue-300 transition-colors">
+            <Link to={`${langPrefix}/privacy-policy`} className="text-muted-foreground hover:text-foreground transition-colors">
               {t('footer.privacy', 'Privacy Policy')}
             </Link>
-            <Link to={`${langPrefix}/terms-of-service`} className="text-secondary-foreground/80 dark:text-slate-400 hover:text-secondary-foreground dark:hover:text-blue-300 transition-colors">
+            <Link to={`${langPrefix}/terms-of-service`} className="text-muted-foreground hover:text-foreground transition-colors">
               {t('footer.terms', 'Terms of Service')}
             </Link>
           </div>

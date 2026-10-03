@@ -35,8 +35,8 @@ import PlayerManagementPage from '@/pages/PlayerManagementPage.tsx';
 import AdminArticlesPage from '@/pages/AdminArticlesPage.tsx';
 import AdminVlogsPage from '@/pages/AdminVlogsPage.tsx';
 import ContentManagerPage from '@/pages/ContentManagerPage.tsx';
-import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage.tsx';
-import TermsOfServicePage from '@/pages/TermsOfServicePage.tsx';
+import SiteInformationPage from '@/pages/SiteInformationPage.tsx';
+import StoryDetailPage from '@/pages/StoryDetailPage.tsx';
 import SitemapPage from '@/pages/SitemapPage.tsx';
 import SitemapXml from '@/pages/SitemapXml.tsx';
 
@@ -87,6 +87,9 @@ function App() {
                   <Route path="rankings" element={<RankingsPage />} />
                   <Route path="news" element={<NewsPage />} />
                   <Route path="stories" element={<StoriesPage />} />
+                  <Route path="stories/:id" element={<StoryDetailPage />} />
+                  <Route path="about" element={<SiteInformationPage page="about" />} />
+                  <Route path="contact" element={<SiteInformationPage page="contact" />} />
                   <Route path="vlogs" element={<VlogsPage />} />
                   <Route path="vlog/:id" element={<VlogDetailPage />} />
                   
@@ -95,8 +98,8 @@ function App() {
                   <Route path="forgot-password" element={<ForgotPasswordPage />} />
                   <Route path="reset-password/:token" element={<ResetPasswordPage />} />
                   
-                  <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-                  <Route path="terms-of-service" element={<TermsOfServicePage />} />
+                  <Route path="privacy-policy" element={<SiteInformationPage page="privacy" />} />
+                  <Route path="terms-of-service" element={<SiteInformationPage page="terms" />} />
                   <Route path="sitemap" element={<SitemapPage />} />
                   
                   {/* Protected Routes */}

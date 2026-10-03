@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, User, Trophy } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { storyAuthor } from '../../../../shared/site-info.mjs';
 import { localizeArticle } from '@/lib/localizeArticle.js';
 
-const ArticlePreview = ({ article, onTagClick, labels = {}, lang }) => {
+const ArticlePreview = ({ article, onTagClick, labels = {}, lang, detailsHref }) => {
   const [searchParams] = useSearchParams();
   const isLinkedArticle = searchParams.get('article') === article.id;
   const [isExpanded, setIsExpanded] = useState(isLinkedArticle);
@@ -21,12 +22,7 @@ const ArticlePreview = ({ article, onTagClick, labels = {}, lang }) => {
   const content = localizedArticle.content || '';
   const playerName = localizedArticle.player_name || localizedArticle.playerName;
   const created = article.created || article.createdAt || article.created_at;
-  const authorName = article.expand?.author?.name
-    || article.author?.name
-    || article.expand?.author?.email?.split('@')[0]
-    || article.author
-    || labels.anonymous
-    || 'Anonymous';
+  const authorName = storyAuthor(article, labels.anonymous || 'TennisHub contributor');
   const tags = Array.isArray(localizedArticle.tags)
     ? localizedArticle.tags
     : String(localizedArticle.tags || '').split(',').map(tag => tag.trim()).filter(Boolean);
@@ -65,14 +61,14 @@ const ArticlePreview = ({ article, onTagClick, labels = {}, lang }) => {
         </div>
 
         <h3 className="font-bold text-2xl leading-tight mb-4 text-foreground">
-          {localizedArticle.title}
+          {detailsHref ? <Link to={detailsHref} className="hover:text-primary">{localizedArticle.title}</Link> : localizedArticle.title}
         </h3>
 
         <div className="text-muted-foreground leading-relaxed mb-2 whitespace-pre-wrap">
           {displayContent}
         </div>
 
-        {isLong && (
+        {detailsHref ? <Link to={detailsHref} className="text-primary text-sm font-medium hover:underline mb-6">{labels.expand || 'Read full article'} →</Link> : isLong && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-primary text-sm font-medium hover:underline mb-6 text-left w-fit"

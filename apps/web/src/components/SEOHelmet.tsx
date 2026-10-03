@@ -13,7 +13,8 @@ const SEOHelmet = ({
   overrideImage, 
   url = '', 
   type = 'website',
-  structuredData 
+  structuredData,
+  noindex: requestedNoindex = false
 }) => {
   const { currentLanguage } = useLanguage();
   const pageConfig = seoConfig.pages[pageKey] || seoConfig.pages.home;
@@ -25,9 +26,10 @@ const SEOHelmet = ({
   const image = overrideImage || pageConfig.ogImage || seoConfig.defaultImage;
   
   // Ensure consistent absolute URL formatting
-  const cleanUrl = url.startsWith('/') ? url : `/${url}`;
-  const metaUrl = `${seoConfig.siteUrl}${cleanUrl}`;
-  const noindex = pageConfig.noindex;
+  const path = (url.startsWith('/') ? url : `/${url}`).replace(/^\/(en|zh|ja|es|fr|de)(?=\/|$)/, '');
+  const cleanUrl = path === '/' ? '' : path;
+  const metaUrl = `${seoConfig.siteUrl}/${currentLanguage}${cleanUrl}`;
+  const noindex = requestedNoindex || pageConfig.noindex;
 
   return (
     <Helmet>
@@ -66,7 +68,8 @@ const SEOHelmet = ({
       <link rel="alternate" href={`${seoConfig.siteUrl}/es${cleanUrl}`} hrefLang="es" />
       <link rel="alternate" href={`${seoConfig.siteUrl}/fr${cleanUrl}`} hrefLang="fr" />
       <link rel="alternate" href={`${seoConfig.siteUrl}/ja${cleanUrl}`} hrefLang="ja" />
-      <link rel="alternate" href={`${seoConfig.siteUrl}${cleanUrl}`} hrefLang="x-default" />
+      <link rel="alternate" href={`${seoConfig.siteUrl}/de${cleanUrl}`} hrefLang="de" />
+      <link rel="alternate" href={`${seoConfig.siteUrl}/en${cleanUrl}`} hrefLang="x-default" />
 
       {structuredData && (
         <script type="application/ld+json">

@@ -1,7 +1,7 @@
 // @ts-nocheck
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
 import Footer from '@/components/Footer.tsx';
@@ -17,6 +17,7 @@ import { useAuth } from '@/contexts/AuthContext.tsx';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useStoryData } from '@/hooks/useStoryData.js';
 import { generateBreadcrumbSchema, generateArticleSchema } from '@/lib/structuredData.js';
+import { storyPath, validStoryId } from '../../../../shared/site-info.mjs';
 import { localizeArticle } from '@/lib/localizeArticle.js';
 
 const StoriesPage = () => {
@@ -26,6 +27,11 @@ const StoriesPage = () => {
   const { currentUser } = useAuth();
   const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const requestedId = searchParams.get('article');
+  useEffect(() => {
+    if (validStoryId(requestedId)) navigate(storyPath(currentLanguage, requestedId), { replace: true });
+  }, [requestedId, currentLanguage, navigate]);
 
   const { stories: articles, loading, error: rawError, refetch: fetchArticles } = useStoryData();
   const localizedArticles = articles.map(article => localizeArticle(article, currentLanguage));
@@ -172,10 +178,11 @@ const StoriesPage = () => {
                       className="h-full"
                     >
                       <ArticlePreview 
-                        article={article} 
+                        article={article}
+                        detailsHref={storyPath(currentLanguage, article.id)}
                         onTagClick={setSelectedTag} 
                         labels={{
-                          expand: t('stories.expand', 'Read more'),
+                          expand: t('storyDetail.read'),
                           hide: t('stories.hide', 'Show less'),
                           anonymous: t('stories.anonymous', 'Anonymous'),
                         }}

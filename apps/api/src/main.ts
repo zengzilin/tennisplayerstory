@@ -9,6 +9,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import routes from './routes/index.js';
+import publicPageHtml from './routes/public-page-html.js';
 import agentDiscoveryRouter from './routes/agent-discovery.js';
 import agentMcpRouter from './routes/agent-mcp.js';
 import agentAuthConstructionRouter from './routes/agent-auth-construction.js';
@@ -72,6 +73,8 @@ app.use('/hcgi/api', routes());
 const staticPath = fs.existsSync(path.join(__dirname, '../../../dist/apps/web'))
 	? path.join(__dirname, '../../../dist/apps/web')
 	: path.join(__dirname, '../../web/dist');
+app.use((req, res, next) => { res.locals.publicHtmlIndex = path.join(staticPath, 'index.html'); next(); });
+app.use(publicPageHtml);
 app.use(express.static(staticPath));
 
 // Catch-all middleware for client-side routing

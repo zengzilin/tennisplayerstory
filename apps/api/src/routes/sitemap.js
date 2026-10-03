@@ -47,14 +47,14 @@ const loadRecords = async (collection, predicate) => {
 
 	try {
 		const [rows] = await db.execute(
-			'SELECT data, updated FROM pb_records WHERE collection_name = ?',
+			'SELECT record_id AS id, data, updated FROM pb_records WHERE collection_name = ?',
 			[collection],
 		);
 
 		return rows
 			.map(row => {
 				const data = typeof row.data === 'string' ? JSON.parse(row.data) : row.data;
-				return { ...data, updated: data.updated || row.updated };
+				return { ...data, id: row.id, updated: data.updated || row.updated };
 			})
 			.filter(predicate);
 	} catch {
@@ -84,6 +84,13 @@ export const sitemapXml = async (req, res) => {
 				changefreq: route.changefreq,
 				priority: route.priority,
 			});
+		}
+	}
+
+	const articles = await loadRecords('articles', item => item.status === 'approved');
+	for (const lang of languages) {
+		for (const article of articles) {
+			urls.push({ loc: `${baseUrl}/${lang}/stories/${encodeURIComponent(article.id)}`, lastmod: toDate(article.updated), changefreq: 'monthly', priority: '0.7' });
 		}
 	}
 

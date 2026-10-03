@@ -1,3 +1,4 @@
+import { storyPath } from '../../../../shared/site-info.mjs';
 import { lookupSchema } from '../../../../shared/agent-lookup-contract.mjs';
 export { lookupSchema, lookupDescription } from '../../../../shared/agent-lookup-contract.mjs';
 import { publicPages, siteLanguages } from '../../../../shared/public-pages.mjs';
@@ -45,7 +46,7 @@ export function publicArticle(row, lang, includeContent) {
     translation_available: Boolean(translation && (translation.title || translation.content)),
     translation_complete: Boolean(translation?.title && translation?.content),
     created: row.created || null, updated: row.updated || null,
-    source_url: `${siteOrigin()}/${lang}/stories?article=${encodeURIComponent(row.id)}#article-${encodeURIComponent(row.id)}`,
+    source_url: `${siteOrigin()}${storyPath(lang, row.id)}`,
     excerpt: content.slice(0, 400),
     ...(includeContent ? { content: content.slice(0, 24000), content_truncated: content.length > 24000 } : {}),
   };

@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from '../../../../shared/site-info.mjs';
 
 import { seoConfig } from './seoConfig.js';
 
@@ -8,14 +9,9 @@ export const generateOrganizationSchema = () => ({
   url: seoConfig.siteUrl,
   logo: `${seoConfig.siteUrl}/logo.png`,
   description: 'Your ultimate destination for everything professional tennis. Live scores, rankings, player profiles, and community stories.',
-  sameAs: [
-    'https://twitter.com/tennishub',
-    'https://instagram.com/tennishub',
-    'https://youtube.com/tennishub'
-  ],
   contactPoint: {
     '@type': 'ContactPoint',
-    email: 'info@tennishub.com',
+    email: SUPPORT_EMAIL,
     contactType: 'customer support'
   }
 });

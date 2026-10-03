@@ -200,5 +200,119 @@
     "sortRank": "Rank",
     "sortPoints": "Points",
     "sortName": "Name"
+  },
+  "siteInfo": {
+    "navigation": "Website information",
+    "updated": "Updated",
+    "googlePrivacy": "Google Privacy Policy",
+    "adSettings": "Google ad personalization settings",
+    "about": {
+      "title": "About us",
+      "description": "TennisHub is an independent website for tennis fans, with player stories, ranking lookup, a news index and community content.",
+      "sections": [
+        {
+          "title": "What you can find here",
+          "content": "Browse the ATP and WTA singles rankings we cover, read player stories and match analysis, and follow news links to the original reporting. Ranking date and synchronization time are shown separately; rankings are not live scores."
+        },
+        {
+          "title": "Independence and sources",
+          "content": "This site operates independently and does not represent ATP, WTA, Google or a tournament organizer. ATP rankings come from the ProTennisLive PDF linked by ATP’s official media page; WTA rankings come from the WTA website. Our news index identifies publishers and links to their reporting. Rights to external data and content remain with their owners. Public access does not itself grant commercial reuse permission."
+        },
+        {
+          "title": "Content and automation",
+          "content": "The site includes community contributions and content assisted by automated tools for compilation, generation or translation. Article pages show authors, dates and available source links. Articles with recorded automated sources are labeled accordingly. Publication status and source links do not guarantee accuracy; check the date and original sources."
+        },
+        {
+          "title": "Corrections and feedback",
+          "content": "If you find errors, outdated data, missing sources or inappropriate content, contact us with the page URL, the specific issue and supporting references. We will examine the information and update or address the content where appropriate."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact us",
+      "description": "Send content corrections, website issues, contribution suggestions, or copyright and privacy concerns.",
+      "sections": [
+        {
+          "title": "Content and website issues",
+          "content": "Include the page URL, a description of the issue and when it occurred. For factual corrections, provide a source we can check. For display issues, include your device and browser."
+        },
+        {
+          "title": "Copyright and content concerns",
+          "content": "Identify the page and content at issue, your identity or relationship to the rights holder, and the action you are requesting. We will examine the information and contact you by email."
+        },
+        {
+          "title": "Account and privacy requests",
+          "content": "Use the email associated with your account when requesting information, corrections or deletion. We may need to verify the request before acting. Do not send passwords, verification codes, bank details or identity documents."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "How account features, community content, necessary storage and external services involve information on this website.",
+      "sections": [
+        {
+          "title": "Account and contribution information",
+          "content": "When you register, sign in or contribute, we process the email, display name, authentication information, articles and video links you provide to support account access, content management and website features. Published contributions and display names may be public. Do not include sensitive personal information in them."
+        },
+        {
+          "title": "Necessary storage and server logs",
+          "content": "Browser local storage may retain login status, language and display preferences. Our server and hosting services may log request times, paths, IP addresses and browser information for troubleshooting and operation. Signing out removes the saved login state; clearing site storage resets saved preferences."
+        },
+        {
+          "title": "Third-party media and external links",
+          "content": "Pages may load external images or YouTube content on video pages and in playback windows. These services may receive your IP address and browser information, and may use cookies or other storage under their own policies. Their privacy policies apply when you open external news, ranking sources or other links."
+        },
+        {
+          "title": "Current Google advertising and analytics status",
+          "content": "As of this policy’s update date, Google AdSense advertising and Google Analytics are not enabled on this site. If introduced, we will update this policy and configure consent management as required for the applicable regions. This policy itself does not enable advertising or analytics."
+        },
+        {
+          "title": "Information about future advertising",
+          "content": "If Google advertising is introduced, Google and other advertising vendors may use cookies to serve ads based on your prior visits to this site or other websites. You can manage preferences through Google’s ad personalization settings. Advertising in regions including the EEA, UK and Switzerland requires consent arrangements as applicable; these will be configured before activation."
+        },
+        {
+          "title": "Retention, correction and deletion",
+          "content": "We retain information as needed for account features, content management and service operation. Contact the email below to request access, correction or deletion. We may verify your identity to protect the account. Information required by law and published content affecting other people’s rights will be considered according to the circumstances. Never send passwords or verification codes by email."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of use",
+      "description": "Please respect sources, community rules and other people’s rights when using this site.",
+      "sections": [
+        {
+          "title": "Purpose and freshness",
+          "content": "The site supports tennis information lookup and discussion. Rankings, news and articles may be delayed or contain errors due to update schedules, upstream sources or compilation. Check dates and sources. This site does not represent ATP, WTA or a tournament organizer; its content is not an official announcement."
+        },
+        {
+          "title": "Contributions and community content",
+          "content": "Submit only text, images and video links you have the right to publish, with appropriate sources. Do not submit infringing, harassing, fraudulent or unlawful content, or expose another person’s sensitive information. We may address inappropriate contributions or accounts under the site’s content rules."
+        },
+        {
+          "title": "Sources and rights",
+          "content": "Rights to external reporting, player images, match data and embedded videos remain with their owners. Source links do not grant republication or commercial use permission. Respect authors and original sources, and verify any permissions needed before reusing content."
+        },
+        {
+          "title": "Issues and updates",
+          "content": "Contact the email below about errors, rights concerns or service issues. When features or information handling change, we will update the relevant explanations and show the update date."
+        }
+      ]
+    }
+  },
+  "storyDetail": {
+    "back": "Back to stories",
+    "read": "Read full article",
+    "author": "Author",
+    "date": "Published",
+    "updated": "Updated",
+    "automated": "Content assisted by automation",
+    "community": "Community contribution",
+    "source": "Reference source",
+    "correction": "Report an error or content concern",
+    "missing": "Article not found or not published",
+    "error": "Unable to load the article. Please try again.",
+    "retry": "Retry",
+    "contributor": "TennisHub contributor",
+    "minutes": "{{count}} min read"
   }
 }
