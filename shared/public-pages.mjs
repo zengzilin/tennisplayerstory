@@ -2,7 +2,7 @@
 export const siteLanguages = ['en', 'zh', 'ja', 'es', 'fr', 'de'];
 export const publicPages = [
   { id: 'home', path: '', title: 'TennisHub', description: 'Tennis news, player stories, rankings and match information.', changefreq: 'daily', priority: '1.0' },
-  { id: 'live-matches', path: '/live-matches', title: 'Match score demo', description: 'Explore a clearly labeled match scoreboard demonstration. No live score feed is connected.', changefreq: 'monthly', priority: '0.3', noindex: true },
+  { id: 'live-matches', path: '/live-matches', title: 'Live tennis scores', description: 'Redirects to TennisScoresToday for tennis scores and match information.', changefreq: 'monthly', priority: '0.3', noindex: true },
   { id: 'players', path: '/players', title: 'Players', description: 'Browse tennis players and the rankings stored on TennisHub.', changefreq: 'weekly', priority: '0.9' },
   { id: 'rankings', path: '/rankings', title: 'Rankings', description: 'Browse stored ATP and WTA rankings. Check update dates before treating rankings as current.', changefreq: 'daily', priority: '0.9' },
   { id: 'news', path: '/news', title: 'Tennis Brief news', description: 'Browse tennis headlines and original English excerpts from ESPN and BBC Sport. Filter by publisher, topic or keyword and follow links to the original reporting.', changefreq: 'daily', priority: '0.8' },

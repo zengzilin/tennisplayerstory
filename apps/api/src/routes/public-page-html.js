@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { readFile } from 'node:fs/promises';
 import { getPlatformPool } from './mysql-platform.js';
 import { publicPages, siteLanguages } from '../../../../shared/public-pages.mjs';
-import { SUPPORT_EMAIL, SITE_ORIGIN, validStoryId, storyPath, storyAuthor, storySource } from '../../../../shared/site-info.mjs';
+import { SUPPORT_EMAIL, SITE_ORIGIN, LIVE_MATCHES_URL, validStoryId, storyPath, storyAuthor, storySource } from '../../../../shared/site-info.mjs';
 import { articleLanguages, articleCanonicalLanguage } from '../../../../shared/article-seo.mjs';
 import { localizeArticle } from '../../../web/src/lib/localizeArticle.js';
 import { seoConfig } from '../../../web/src/lib/seoConfig.js';
@@ -102,6 +102,7 @@ router.use(async (req, res, next) => {
   const match = req.path.match(/^\/(en|zh|ja|es|fr|de)(?:\/(.*?))?\/?$/);
   if (!match) return next();
   const [, lang, page = ''] = match;
+  if (page === 'live-matches') return res.redirect(301, LIVE_MATCHES_URL);
   if (/^(login|signup|forgot-password|reset-password|profile|write-article|my-articles|admin)(\/|$)/.test(page)) {
     res.set('X-Robots-Tag', 'noindex, follow');
     return next();

@@ -1,4 +1,5 @@
 export const SUPPORT_EMAIL = 'support@tennisplayerstory.com';
+export const LIVE_MATCHES_URL = 'https://tennisscorestoday.com/';
 export const SITE_ORIGIN = 'https://tennisplayerstory.com';
 export const validStoryId = id => /^[a-zA-Z0-9_-]{1,40}$/.test(id || '');
 export const storyPath = (lang, id) => `/${lang}/stories/${encodeURIComponent(id)}`;

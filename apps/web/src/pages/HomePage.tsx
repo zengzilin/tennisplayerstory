@@ -249,11 +249,11 @@ const HomePage = () => {
                 />
                 
                 <CTASection 
-                  title="Explore the Scoreboard Demo"
-                  description="Explore fictional sample matches in our demonstration scoreboard. No live score service is connected."
+                  title="Live Tennis Scores"
+                  description="Visit TennisScoresToday for tennis scores and match information."
                   bgColor="bg-accent"
                   textColor="text-accent-foreground"
-                  primaryCTA={{ text: "View Scoreboard Demo", link: `${langPrefix}/live-matches` }}
+                  primaryCTA={{ text: "View Live Matches", link: `${langPrefix}/live-matches` }}
                 />
               </div>
 

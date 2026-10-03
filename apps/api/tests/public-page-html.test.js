@@ -83,12 +83,13 @@ test('information pages expose initial content and invalid articles return a rea
   const unknown = await fetch(`${origin}/es/does-not-exist`);
   assert.equal(unknown.status, 404);
   assert.match(await unknown.text(), /Página no encontrada/);
-  const demo = await fetch(`${origin}/es/live-matches`);
-  assert.equal(demo.status, 200);
-  const demoHtml = await demo.text();
-  assert.match(demoHtml, /noindex, follow/);
-  assert.match(demoHtml, /ficticios/);
-  assert.ok(!demoHtml.includes('hreflang='));
+  for (const lang of ['en', 'zh', 'es', 'fr', 'ja', 'de']) {
+    for (const suffix of ['', '/', '?date=2026-10-03']) {
+      const response = await fetch(`${origin}/${lang}/live-matches${suffix}`, { redirect: 'manual' });
+      assert.equal(response.status, 301);
+      assert.equal(response.headers.get('location'), 'https://tennisscorestoday.com/');
+    }
+  }
 });
 
 test('missing or partial translations do not create duplicate canonical article versions', () => {

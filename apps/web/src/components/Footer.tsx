@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { SUPPORT_EMAIL } from '../../../../shared/site-info.mjs';
+import { SUPPORT_EMAIL, LIVE_MATCHES_URL } from '../../../../shared/site-info.mjs';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
 
   const footerLinks = [
     { path: langPrefix, label: t('nav.home', 'Home') },
-    { path: 'https://tennisscorestoday.com/', label: t('nav.liveMatches', 'Live Matches'), external: true },
+    { path: LIVE_MATCHES_URL, label: t('nav.liveMatches', 'Live Matches'), external: true },
     { path: `${langPrefix}/players`, label: t('nav.players', 'Players') },
     { path: `${langPrefix}/rankings`, label: t('nav.rankings', 'Rankings') },
     { path: `${langPrefix}/news`, label: t('nav.news', 'News') },
