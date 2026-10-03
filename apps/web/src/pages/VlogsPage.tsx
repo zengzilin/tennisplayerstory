@@ -69,8 +69,10 @@ const VlogsPage = () => {
   return (
     <>
       <SEOHelmet 
-        title={t('vlogs.title', 'Tennis Vlogs & Videos')}
-        description={t('vlogs.subtitle', 'Watch the latest tennis analyses, highlights, and behind-the-scenes content.')}
+        pageKey="vlogs"
+        url="/vlogs"
+        overrideTitle={t('vlogs.title', 'Tennis Vlogs & Videos')}
+        overrideDescription={t('vlogs.subtitle', 'Browse tennis video links shared by the community.')}
       />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />

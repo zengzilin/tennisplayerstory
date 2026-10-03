@@ -1,4 +1,6 @@
 import { SUPPORT_EMAIL } from '../../../../shared/site-info.mjs';
+import { articleCanonicalLanguage } from '../../../../shared/article-seo.mjs';
+import { storyPath, storyAuthor } from '../../../../shared/site-info.mjs';
 
 import { seoConfig } from './seoConfig.js';
 
@@ -7,8 +9,7 @@ export const generateOrganizationSchema = () => ({
   '@type': 'Organization',
   name: seoConfig.siteName,
   url: seoConfig.siteUrl,
-  logo: `${seoConfig.siteUrl}/logo.png`,
-  description: 'Your ultimate destination for everything professional tennis. Live scores, rankings, player profiles, and community stories.',
+  description: 'Independent tennis player stories, weekly rankings, source-attributed news links and community contributions.',
   contactPoint: {
     '@type': 'ContactPoint',
     email: SUPPORT_EMAIL,
@@ -21,11 +22,6 @@ export const generateWebSiteSchema = () => ({
   '@type': 'WebSite',
   name: seoConfig.siteName,
   url: seoConfig.siteUrl,
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${seoConfig.siteUrl}/search?q={search_term_string}`,
-    'query-input': 'required name=search_term_string'
-  }
 });
 
 export const generateBreadcrumbSchema = (items) => ({
@@ -39,22 +35,22 @@ export const generateBreadcrumbSchema = (items) => ({
   }))
 });
 
-export const generateArticleSchema = (article) => ({
+export const generateArticleSchema = (article, language = 'zh') => ({
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.title,
   description: article.content ? article.content.substring(0, 150) + '...' : '',
-  image: article.image || seoConfig.defaultImage,
+  ...(article.image ? { image: article.image } : {}),
   datePublished: article.created,
   dateModified: article.updated || article.created,
   author: {
     '@type': 'Person',
-    name: article.expand?.author?.name || article.expand?.author?.email || 'Anonymous'
+    name: storyAuthor(article)
   },
   publisher: generateOrganizationSchema(),
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': `${seoConfig.siteUrl}/stories/${article.id}`
+    '@id': `${seoConfig.siteUrl}${storyPath(articleCanonicalLanguage(article, language), article.id)}`
   }
 });
 
@@ -62,7 +58,7 @@ export const generatePersonSchema = (player) => ({
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: player.name,
-  image: player.profile_url || player.imageUrl || seoConfig.defaultImage,
+  ...(player.profile_url || player.imageUrl ? { image: player.profile_url || player.imageUrl } : {}),
   description: player.bio || `Professional tennis player from ${player.country}, ranked ${player.ranking || 'unranked'}.`,
   nationality: {
     '@type': 'Country',

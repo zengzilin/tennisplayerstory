@@ -16,8 +16,9 @@ import { AlertCircle, RefreshCw, PenSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext.tsx';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useStoryData } from '@/hooks/useStoryData.js';
-import { generateBreadcrumbSchema, generateArticleSchema } from '@/lib/structuredData.js';
+import { generateBreadcrumbSchema } from '@/lib/structuredData.js';
 import { storyPath, validStoryId } from '../../../../shared/site-info.mjs';
+import { articleCanonicalLanguage } from '../../../../shared/article-seo.mjs';
 import { localizeArticle } from '@/lib/localizeArticle.js';
 
 const StoriesPage = () => {
@@ -63,23 +64,32 @@ const StoriesPage = () => {
     : localizedArticles.filter(article => getArticleFilters(article).includes(selectedTag));
 
   const breadcrumbs = generateBreadcrumbSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Stories', path: '/stories' }
+    { name: t('nav.home'), path: `/${currentLanguage}` },
+    { name: t('stories.heading'), path: `/${currentLanguage}/stories` }
   ]);
 
-  // Add Article schema for the top displayed articles for SEO richness
-  const structuredData = [
-    breadcrumbs,
-    ...filteredArticles.slice(0, 5).map(article => generateArticleSchema(article))
-  ];
+  const structuredData = [breadcrumbs, {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: t('stories.heading'),
+    url: `https://tennisplayerstory.com/${currentLanguage}/stories`,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: filteredArticles.map((article, index) => ({
+        '@type': 'ListItem', position: index + 1,
+        url: `https://tennisplayerstory.com${storyPath(articleCanonicalLanguage(article, currentLanguage), article.id)}`,
+        name: article.title,
+      })),
+    },
+  }];
 
   return (
     <>
       <SEOHelmet 
         pageKey="stories"
         url="/stories"
-        overrideTitle="Tennis Player Stories, Match Analysis & Fan Articles"
-        overrideDescription="Read tennis player stories, match analysis, rankings context, and community articles about ATP and WTA players on TennisHub."
+        overrideTitle={t("stories.heading")}
+        overrideDescription={t("stories.desc")}
         overrideKeywords="tennis player stories, ATP player stories, WTA player stories, tennis match analysis, tennis fan articles, tennis rankings analysis"
         structuredData={structuredData}
       />
@@ -87,7 +97,7 @@ const StoriesPage = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
 
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <section className="py-16 border-b border-border bg-background text-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -179,7 +189,7 @@ const StoriesPage = () => {
                     >
                       <ArticlePreview 
                         article={article}
-                        detailsHref={storyPath(currentLanguage, article.id)}
+                        detailsHref={storyPath(articleCanonicalLanguage(article, currentLanguage), article.id)}
                         onTagClick={setSelectedTag} 
                         labels={{
                           expand: t('storyDetail.read'),

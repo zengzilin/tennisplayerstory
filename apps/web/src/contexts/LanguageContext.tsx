@@ -20,7 +20,10 @@ export const LanguageProvider = ({ children }) => {
   const location = useLocation();
   
   const [language, setLanguageState] = useState(() => {
-    return localStorage.getItem('language') || i18n.language?.split('-')[0] || 'en';
+    const routeLanguage = location.pathname.split('/')[1];
+    if (availableLanguages.some(item => item.code === routeLanguage)) return routeLanguage;
+    const savedLanguage = localStorage.getItem('language') || i18n.language?.split('-')[0];
+    return availableLanguages.some(item => item.code === savedLanguage) ? savedLanguage : 'en';
   });
 
   const changeLanguage = useCallback((newLang, shouldNavigate = true) => {

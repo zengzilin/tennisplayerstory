@@ -2,6 +2,7 @@
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { publicPages } from '../../../shared/public-pages.mjs';
+import { renderSitemapXml } from '../../../shared/sitemap.mjs';
 
 const domain = process.env.WEBSITE_DOMAIN || 'tennisplayerstory.com';
 const origin = new URL(domain.startsWith('http') ? domain : `https://${domain}`).origin;
@@ -21,3 +22,4 @@ ${publicPages.map(page => `- [${page.title}](${origin}/en${page.path}): ${page.d
 Rankings and scores are not guaranteed current. Cite source URLs and preserve stored dates and language qualifiers. Unknown facts remain unknown.
 `;
 writeFileSync(fileURLToPath(new URL('../public/llms.txt', import.meta.url)), text);
+writeFileSync(fileURLToPath(new URL('../public/sitemap.xml', import.meta.url)), renderSitemapXml({ baseUrl: origin }));

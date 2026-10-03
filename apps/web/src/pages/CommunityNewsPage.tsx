@@ -142,14 +142,14 @@ const CommunityNewsPage = () => {
       { name: 'Home', path: '/' },
       { name: 'Tennis News', path: '/news' },
     ]),
-    ...filteredArticles.slice(0, 5).map(article => generateArticleSchema(article)),
+    ...filteredArticles.slice(0, 5).map(article => generateArticleSchema(article, currentLanguage)),
   ];
 
   return (
     <>
       <SEOHelmet
         pageKey="news"
-        url="/news"
+        url="/stories"
         overrideTitle={t('news.seoTitle', 'Latest Tennis News, Player Updates & Match Reports')}
         overrideDescription={t('news.seoDescription', 'Follow the latest ATP and WTA tennis news, player updates, tournament reports, match analysis, and Grand Slam stories.')}
         overrideKeywords="tennis news, ATP news, WTA news, tennis player updates, tournament news, match reports, Grand Slam news"

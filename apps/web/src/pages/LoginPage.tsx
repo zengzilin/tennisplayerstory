@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
 import Footer from '@/components/Footer.tsx';
@@ -20,37 +21,37 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { login } = useAuth();
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/profile';
+  const from = location.state?.from?.pathname || `/${currentLanguage}/profile`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     if (!email || !password) {
       setError(t('common.error', 'Please fill in all fields'));
       return;
     }
 
-    console.log('Login payload:', { email, password });
     setIsSubmitting(true);
-    
+
     try {
       const authData = await login(email, password);
-      
+
       if (authData?.record?.role === 'admin') {
-        navigate('/admin');
+        navigate(`/${currentLanguage}/admin`);
       } else {
         navigate(from, { replace: true });
       }
     } catch (err) {
       console.log('Login error:', err);
-      
+
       if (err.status === 400 || err.response?.code === 400) {
         setError(t('auth.invalidCredentials', 'Invalid email or password'));
       } else {
@@ -98,7 +99,7 @@ const LoginPage = () => {
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="email" className="dark:text-slate-50">{t('common.email', 'Email')}</Label>
                     <Input
@@ -112,12 +113,12 @@ const LoginPage = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label htmlFor="password" className="dark:text-slate-50">{t('common.password', 'Password')}</Label>
-                      <Link 
-                        to="/forgot-password" 
+                      <Link
+                        to={`/${currentLanguage}/forgot-password`}
                         className="text-sm text-primary hover:underline"
                         tabIndex={-1}
                       >
@@ -135,7 +136,7 @@ const LoginPage = () => {
                       required
                     />
                   </div>
-                  
+
                   <Button type="submit" className="w-full mt-6 dark:bg-primary dark:text-primary-foreground" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
@@ -151,7 +152,7 @@ const LoginPage = () => {
               <CardFooter className="flex justify-center border-t border-border dark:border-slate-700 pt-6">
                 <p className="text-sm text-muted-foreground dark:text-slate-400">
                   {t('auth.noAccount', "Don't have an account?")}{' '}
-                  <Link to="/signup" className="text-primary font-medium hover:underline">
+                  <Link to={`/${currentLanguage}/signup`} className="text-primary font-medium hover:underline">
                     {t('auth.signUpLink', 'Sign up')}
                   </Link>
                 </p>

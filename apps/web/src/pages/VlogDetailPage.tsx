@@ -204,7 +204,7 @@ const VlogDetailPage = () => {
 
   return (
     <>
-      <SEOHelmet title={`${vlog.title} - Tennis Vlogs`} description={vlog.description} />
+      <SEOHelmet pageKey="vlog-detail" url={`/vlog/${encodeURIComponent(id)}`} overrideTitle={vlog.title} overrideDescription={vlog.description} />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
         

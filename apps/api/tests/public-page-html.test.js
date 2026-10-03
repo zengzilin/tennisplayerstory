@@ -4,8 +4,10 @@ import express from 'express';
 import { writeFile, mkdtemp, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import router, { loadApprovedStory, renderPublicHtml, storyHtml } from '../src/routes/public-page-html.js';
+import router, { loadApprovedStory, loadApprovedStories, publicPageHtml, renderPublicHtml, storyHtml } from '../src/routes/public-page-html.js';
 import { storySource, storyAuthor } from '../../../shared/site-info.mjs';
+import { articleLanguages, articleCanonicalLanguage } from '../../../shared/article-seo.mjs';
+import { publicPages } from '../../../shared/public-pages.mjs';
 
 const template = '<!doctype html><html lang="en"><head><title>TennisHub</title></head><body><div id="root"></div><script src="/assets/app.js"></script></body></html>';
 const labels = JSON.parse(await readFile(new URL('../../web/src/i18n/locales/zh.json', import.meta.url))).storyDetail;
@@ -72,4 +74,48 @@ test('information pages expose initial content and invalid articles return a rea
   const missing = await fetch(`${origin}/zh/stories/invalid!`);
   assert.equal(missing.status, 404);
   assert.match(await missing.text(), /noindex, follow/);
+  const root = await fetch(origin, { redirect: 'manual' });
+  assert.equal(root.status, 301);
+  assert.equal(root.headers.get('location'), '/en');
+  const trailing = await fetch(`${origin}/es/`, { redirect: 'manual' });
+  assert.equal(trailing.status, 301);
+  assert.equal(trailing.headers.get('location'), '/es');
+  const unknown = await fetch(`${origin}/es/does-not-exist`);
+  assert.equal(unknown.status, 404);
+  assert.match(await unknown.text(), /Página no encontrada/);
+  const demo = await fetch(`${origin}/es/live-matches`);
+  assert.equal(demo.status, 200);
+  const demoHtml = await demo.text();
+  assert.match(demoHtml, /noindex, follow/);
+  assert.match(demoHtml, /ficticios/);
+  assert.ok(!demoHtml.includes('hreflang='));
+});
+
+test('missing or partial translations do not create duplicate canonical article versions', () => {
+  const article = { id: 'known', title: '原文', content: '正文', language: 'zh', translations: JSON.stringify({ en: { title: 'Title' }, es: { title: 'Título', content: 'Texto completo' } }) };
+  assert.deepEqual(articleLanguages(article), ['zh', 'es']);
+  assert.equal(articleCanonicalLanguage(article, 'fr'), 'zh');
+  assert.equal(articleCanonicalLanguage(article, 'es'), 'es');
+  const html = renderPublicHtml(template, storyHtml(article, 'fr', labels));
+  assert.match(html, /canonical" href="https:\/\/tennisplayerstory.com\/zh\/stories\/known/);
+  assert.match(html, /hreflang="es"/);
+  assert.ok(!html.includes('hreflang="fr"'));
+  assert.ok(!html.includes('hreflang="en"'));
+  assert.match(html, /<div lang="zh"/);
+});
+
+test('story listing contains approved article links, safe excerpts and localized metadata without JavaScript', async () => {
+  const copy = { ...JSON.parse(await readFile(new URL('../../web/src/i18n/locales/en.json', import.meta.url))), ...JSON.parse(await readFile(new URL('../../web/src/i18n/locales/es.json', import.meta.url))) };
+  const articles = await loadApprovedStories({ execute: async sql => {
+    assert.match(sql, /status.*approved/);
+    assert.match(sql, /LIMIT 50/);
+    return [[{ id: 'known', data: JSON.stringify({ title: '原文', content: '正文', translations: { es: { title: 'Historia', content: '<script>unsafe()</script>' } } }) }]];
+  } });
+  const html = renderPublicHtml(template, publicPageHtml(publicPages.find(page => page.id === 'stories'), 'es', copy, articles));
+  assert.match(html, /Historias de Tenistas/);
+  assert.match(html, /href="\/es\/stories\/known"/);
+  assert.match(html, /&lt;script&gt;unsafe/);
+  assert.ok(!html.includes('<script>unsafe()'));
+  assert.match(html, /canonical" href="https:\/\/tennisplayerstory.com\/es\/stories/);
+  assert.match(html, /hreflang="es"/);
 });

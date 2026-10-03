@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import pb from '@/lib/pocketbaseClient';
 import { localizeArticle } from '@/lib/localizeArticle';
 import { SUPPORT_EMAIL, SITE_ORIGIN, validStoryId, storyPath, storyAuthor, storySource } from '../../../../shared/site-info.mjs';
+import { articleLanguages, articleCanonicalLanguage } from '../../../../shared/article-seo.mjs';
 
 export default function StoryDetailPage() {
   const { id } = useParams();
@@ -33,6 +34,7 @@ export default function StoryDetailPage() {
     return () => { cancelled = true; };
   }, [id, attempt]);
   const localized = article && localizeArticle(article, currentLanguage);
+  const canonicalLanguage = article && articleCanonicalLanguage(article, currentLanguage);
   const author = article && storyAuthor(article, text('contributor'));
   const source = article && storySource(article);
   const formatDate = date => date && !Number.isNaN(Date.parse(date)) ? new Date(date).toLocaleDateString(currentLanguage, { year: 'numeric', month: 'long', day: 'numeric' }) : null;
@@ -42,11 +44,11 @@ export default function StoryDetailPage() {
     '@context': 'https://schema.org', '@type': 'Article', headline: localized.title,
     description: localized.meta_description || localized.content.slice(0, 160),
     author: { '@type': 'Person', name: author }, publisher: { '@type': 'Organization', name: 'TennisHub', url: SITE_ORIGIN },
-    mainEntityOfPage: `${SITE_ORIGIN}${storyPath(currentLanguage, id)}`,
+    mainEntityOfPage: `${SITE_ORIGIN}${storyPath(canonicalLanguage, id)}`,
     ...(published ? { datePublished: article.created } : {}), ...(updated ? { dateModified: article.updated } : {}),
   } : null;
   return <div className="min-h-screen flex flex-col bg-background">
-    <SEOHelmet pageKey="stories" url={`/stories/${encodeURIComponent(id || '')}`} overrideTitle={localized?.title || (loading ? t('common.loading', 'Loading…') : text(error ? 'error' : 'missing'))} overrideDescription={localized?.meta_description || localized?.content?.slice(0, 160)} type="article" structuredData={schema} noindex={!loading && !article} />
+    <SEOHelmet pageKey="stories" url={`/stories/${encodeURIComponent(id || '')}`} canonicalLanguage={canonicalLanguage} alternateLanguages={article ? articleLanguages(article) : []} overrideTitle={localized?.title || (loading ? t('common.loading', 'Loading…') : text(error ? 'error' : 'missing'))} overrideDescription={localized?.meta_description || localized?.content?.slice(0, 160)} type="article" structuredData={schema} noindex={!loading && !article} />
     <Header />
     <main id="main-content" className="flex-1 container mx-auto px-4 py-8 sm:py-12">
       <div className="max-w-3xl mx-auto">
@@ -59,7 +61,7 @@ export default function StoryDetailPage() {
             {published && <span>{text('date')} <time dateTime={article.created}>{published}</time></span>}
             {updated && updated !== published && <span>{text('updated')} <time dateTime={article.updated}>{updated}</time></span>}
           </div>
-          <div className="space-y-6 text-lg leading-8 break-words" lang={localized.localized_language || article.language || undefined}>
+          <div className="space-y-6 text-lg leading-8 break-words" lang={canonicalLanguage}>
             {String(localized.content || '').split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index} className="whitespace-pre-wrap">{paragraph}</p>)}
           </div>
           {source && <aside className="mt-8 rounded-xl bg-muted/40 p-5"><h2 className="font-semibold mb-2">{text('source')}</h2><a className="text-primary underline break-all" href={source} target="_blank" rel="noopener noreferrer">{new URL(source).hostname}</a></aside>}

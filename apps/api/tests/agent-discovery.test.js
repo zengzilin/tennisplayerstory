@@ -95,7 +95,7 @@ test('served skill bytes match index digest and all ARD resource links work', as
 test('sitemap advertises only real public routes and robots declares content use without granting training', async () => {
   const { sitemapXml, robotsTxt } = await import('../src/routes/sitemap.js');
   let body;
-  const response = { type() { return this; }, send(value) { body = value; } };
+  const response = { set() { return this; }, type() { return this; }, send(value) { body = value; } };
   await sitemapXml({}, response);
   assert.match(body, /https:\/\/tennisplayerstory.com\/de\/news/);
   assert.ok(!body.includes('/players/'));

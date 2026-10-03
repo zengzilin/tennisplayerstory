@@ -6,17 +6,16 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Star, Trophy, ExternalLink, Target } from 'lucide-react';
+import { Trophy, ExternalLink, Target } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import ImageWithAlt from '@/components/ImageWithAlt.tsx';
 import CountryFlag from '@/components/CountryFlag.tsx';
 
 const FeaturedPlayerCard = ({ player }) => {
+  const { currentLanguage } = useLanguage();
   // Generate a fallback avatar if none exists
   const defaultImage = `https://ui-avatars.com/api/?name=${encodeURIComponent(player.name)}&size=400&background=f1f5f9&color=0f172a&font-size=0.33`;
   const imgSrc = player.profile_url || player.imageUrl || defaultImage;
-
-  // Use a static 5-star for featured athletes as requested, or derive from stats if available
-  const stars = Array.from({ length: 5 });
 
   return (
     <motion.div 
@@ -37,7 +36,7 @@ const FeaturedPlayerCard = ({ player }) => {
             <Badge className="bg-primary text-primary-foreground shadow-lg border-none text-sm font-bold px-3 py-1">
               Rank #{player.ranking || '-'}
             </Badge>
-            {player.ranking <= 10 && (
+            {player.ranking > 0 && player.ranking <= 10 && (
               <Badge variant="secondary" className="bg-accent text-accent-foreground shadow-md border-none flex items-center gap-1 font-bold">
                 <Trophy className="h-3 w-3" /> Top 10
               </Badge>
@@ -58,15 +57,8 @@ const FeaturedPlayerCard = ({ player }) => {
         </div>
 
         <CardContent className="p-6 flex flex-col flex-1">
-          <div className="flex items-center gap-1 mb-4 text-lime-700 dark:text-accent">
-            {stars.map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-current" />
-            ))}
-            <span className="text-xs text-muted-foreground ml-2 font-medium">(Elite)</span>
-          </div>
-
           <p className="text-muted-foreground dark:text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 flex-1">
-            {player.bio || `${player.name} is a highly competitive professional athlete currently competing on the ${player.source?.toUpperCase() || 'Pro'} tour.`}
+            {player.bio || `Stored ${player.source?.toUpperCase() || 'tennis'} player record. Check the ranking date and official source for current information.`}
           </p>
 
           <div className="flex items-center justify-between border-t border-border/50 dark:border-slate-700 pt-4 mt-auto">
@@ -76,8 +68,8 @@ const FeaturedPlayerCard = ({ player }) => {
             </div>
             
             <Button asChild variant="ghost" size="sm" className="group/btn hover:bg-primary hover:text-primary-foreground transition-colors dark:text-slate-200 dark:hover:text-primary-foreground">
-              <Link to={`/players`}>
-                Profile
+              <Link to={`/${currentLanguage}/players`}>
+                Browse players
                 <ExternalLink className="ml-2 h-3.5 w-3.5 opacity-50 group-hover/btn:opacity-100 transition-opacity" aria-hidden="true" />
               </Link>
             </Button>

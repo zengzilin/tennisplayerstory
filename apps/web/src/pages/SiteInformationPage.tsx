@@ -9,15 +9,16 @@ import SEOHelmet from '@/components/SEOHelmet.tsx';
 import { SUPPORT_EMAIL } from '../../../../shared/site-info.mjs';
 
 export default function SiteInformationPage({ page }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { currentLanguage } = useLanguage();
   const info = t(`siteInfo.${page}`, { returnObjects: true });
+  const contentLanguage = i18n.getResource(currentLanguage, 'translation', `siteInfo.${page}`) ? currentLanguage : 'en';
   const path = page === 'privacy' ? 'privacy-policy' : page === 'terms' ? 'terms-of-service' : page;
   return <div className="min-h-screen flex flex-col bg-background">
-    <SEOHelmet pageKey={page} overrideTitle={info.title} overrideDescription={info.description} url={`/${path}`} />
+    <SEOHelmet pageKey={page} overrideTitle={info.title} overrideDescription={info.description} url={`/${path}`} canonicalLanguage={contentLanguage} alternateLanguages={['en', 'zh']} />
     <Header />
     <main id="main-content" className="flex-1 container mx-auto px-4 py-10 sm:py-16">
-      <article className="max-w-3xl mx-auto">
+      <article lang={contentLanguage} className="max-w-3xl mx-auto">
         <nav aria-label={t('siteInfo.navigation')} className="flex flex-wrap gap-4 mb-8 text-sm text-muted-foreground">
           {['about', 'contact', 'privacy', 'terms'].map(key => <Link key={key} className="hover:underline" aria-current={page === key ? 'page' : undefined} to={`/${currentLanguage}/${key === 'privacy' ? 'privacy-policy' : key === 'terms' ? 'terms-of-service' : key}`}>{t(`siteInfo.${key}.title`)}</Link>)}
         </nav>

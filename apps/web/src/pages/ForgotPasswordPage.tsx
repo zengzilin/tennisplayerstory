@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
 import Footer from '@/components/Footer.tsx';
@@ -22,6 +23,7 @@ const ForgotPasswordPage = () => {
   
   const { requestPasswordReset } = useAuth();
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -119,7 +121,7 @@ const ForgotPasswordPage = () => {
                 )}
               </CardContent>
               <CardFooter className="flex justify-center border-t border-border pt-6">
-                <Link to="/login" className="text-sm text-muted-foreground hover:text-primary flex items-center transition-colors">
+                <Link to={`/${currentLanguage}/login`} className="text-sm text-muted-foreground hover:text-primary flex items-center transition-colors">
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   {t('auth.backToLogin', 'Back to Login')}
                 </Link>

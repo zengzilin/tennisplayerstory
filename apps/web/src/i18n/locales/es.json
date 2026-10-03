@@ -61,7 +61,14 @@
     "emptyTitle": "No hay noticias en esta categoría",
     "emptyDescription": "Las nuevas noticias aparecerán aquí cuando se publiquen.",
     "showAll": "Ver todas las noticias",
-    "categories": { "all": "Todo", "players": "Jugadores", "matches": "Partidos", "atp": "ATP", "wta": "WTA", "grandSlams": "Grand Slams" }
+    "categories": {
+      "all": "Todo",
+      "players": "Jugadores",
+      "matches": "Partidos",
+      "atp": "ATP",
+      "wta": "WTA",
+      "grandSlams": "Grand Slams"
+    }
   },
   "vlogs": {
     "title": "Vlogs de Tenis",
@@ -133,5 +140,39 @@
     "sortRank": "Por puesto",
     "sortPoints": "Por puntos",
     "sortName": "Por nombre"
+  },
+  "seo": {
+    "home": {
+      "title": "Historias de tenistas y rankings",
+      "description": "Lee historias de tenistas y artículos de la comunidad, consulta los rankings semanales ATP y WTA y sigue enlaces de noticias con fuentes identificadas."
+    },
+    "stories": {
+      "title": "Historias de Tenistas",
+      "description": "Lee historias de tenistas, análisis de partidos, contexto de rankings y artículos de la comunidad."
+    },
+    "liveMatches": {
+      "title": "Demostración del marcador",
+      "description": "Estos partidos y marcadores son ejemplos ficticios para mostrar la interfaz. No hay un servicio de resultados en directo conectado; no los interpretes como resultados reales."
+    }
+  },
+  "liveMatches": {
+    "title": "Demostración del marcador",
+    "heading": "Demostración del marcador",
+    "desc": "Estos partidos y marcadores son ejemplos ficticios para mostrar la interfaz. No hay un servicio de resultados en directo conectado; no los interpretes como resultados reales.",
+    "notice": "Estos partidos y marcadores son ejemplos ficticios para mostrar la interfaz. No hay un servicio de resultados en directo conectado; no los interpretes como resultados reales.",
+    "empty": "Estos partidos y marcadores son ejemplos ficticios para mostrar la interfaz. No hay un servicio de resultados en directo conectado; no los interpretes como resultados reales.",
+    "filters": {
+      "all": "All",
+      "live": "Live",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "Esta dirección no existe. Usa la navegación para encontrar historias de tenis y rankings."
+  },
+  "adminArticles": {
+    "reviewGuidance": "Antes de aprobar un artículo, verifica sus afirmaciones en las fuentes originales, comprueba los derechos de imágenes y citas, elimina contenido repetido o sin respaldo y revisa cada traducción publicada. Generar un texto no basta para publicarlo."
   }
 }

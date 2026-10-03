@@ -61,7 +61,14 @@
     "emptyTitle": "Keine Nachrichten in dieser Kategorie",
     "emptyDescription": "Neue Tennis-Berichte erscheinen hier nach der Veröffentlichung.",
     "showAll": "Alle Nachrichten anzeigen",
-    "categories": { "all": "Alle", "players": "Spieler", "matches": "Matches", "atp": "ATP", "wta": "WTA", "grandSlams": "Grand Slams" }
+    "categories": {
+      "all": "Alle",
+      "players": "Spieler",
+      "matches": "Matches",
+      "atp": "ATP",
+      "wta": "WTA",
+      "grandSlams": "Grand Slams"
+    }
   },
   "vlogs": {
     "title": "Tennis Vlogs",
@@ -133,5 +140,39 @@
     "sortRank": "Nach Rang",
     "sortPoints": "Nach Punkten",
     "sortName": "Nach Name"
+  },
+  "seo": {
+    "home": {
+      "title": "Tennisspieler-Geschichten und Ranglisten",
+      "description": "Lies Spielergeschichten und Community-Beiträge, sieh wöchentliche ATP- und WTA-Ranglisten und folge Nachrichtenlinks mit klaren Quellenangaben."
+    },
+    "stories": {
+      "title": "Spielergeschichten",
+      "description": "Lies Geschichten über Tennisspieler, Spielanalysen und Beiträge der Community."
+    },
+    "liveMatches": {
+      "title": "Spielstand-Demonstration",
+      "description": "Diese Spiele und Spielstände sind fiktive Beispiele zur Darstellung der Anzeigetafel. Es ist kein Live-Ergebnisdienst verbunden; verwende sie nicht als echte Ergebnisse."
+    }
+  },
+  "liveMatches": {
+    "title": "Spielstand-Demonstration",
+    "heading": "Spielstand-Demonstration",
+    "desc": "Diese Spiele und Spielstände sind fiktive Beispiele zur Darstellung der Anzeigetafel. Es ist kein Live-Ergebnisdienst verbunden; verwende sie nicht als echte Ergebnisse.",
+    "notice": "Diese Spiele und Spielstände sind fiktive Beispiele zur Darstellung der Anzeigetafel. Es ist kein Live-Ergebnisdienst verbunden; verwende sie nicht als echte Ergebnisse.",
+    "empty": "Diese Spiele und Spielstände sind fiktive Beispiele zur Darstellung der Anzeigetafel. Es ist kein Live-Ergebnisdienst verbunden; verwende sie nicht als echte Ergebnisse.",
+    "filters": {
+      "all": "All",
+      "live": "Live",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    }
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Diese Adresse existiert nicht. Nutze die Navigation für Tennisgeschichten und Ranglisten."
+  },
+  "adminArticles": {
+    "reviewGuidance": "Prüfe vor der Freigabe eines Artikels die Fakten anhand der Originalquellen, die Rechte an Bildern und Zitaten, entferne Wiederholungen und unbelegte Aussagen und prüfe jede veröffentlichte Übersetzung. Die Texterzeugung allein reicht nicht für eine Freigabe."
   }
 }

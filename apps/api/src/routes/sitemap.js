@@ -1,5 +1,6 @@
-import { publicPages, siteLanguages } from '../../../../shared/public-pages.mjs';
 import mysql from 'mysql2/promise';
+import { renderSitemapXml } from '../../../../shared/sitemap.mjs';
+import logger from '../utils/logger.js';
 
 let pool;
 
@@ -13,16 +14,6 @@ const MYSQL_CONFIG = {
 	connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT || 10),
 };
 
-const languages = siteLanguages;
-const staticRoutes = publicPages;
-
-const escapeXml = (value) => String(value)
-	.replace(/&/g, '&amp;')
-	.replace(/</g, '&lt;')
-	.replace(/>/g, '&gt;')
-	.replace(/"/g, '&quot;')
-	.replace(/'/g, '&apos;');
-
 const getBaseUrl = () => {
 	const domain = process.env.WEBSITE_DOMAIN || 'tennisplayerstory.com';
 	return domain.startsWith('http') ? domain.replace(/\/$/, '') : `https://${domain}`;
@@ -33,12 +24,6 @@ const getPool = () => {
 		pool = mysql.createPool(MYSQL_CONFIG);
 	}
 	return pool;
-};
-
-const toDate = (value) => {
-	if (!value) return new Date().toISOString().slice(0, 10);
-	const date = value instanceof Date ? value : new Date(value);
-	return Number.isNaN(date.getTime()) ? new Date().toISOString().slice(0, 10) : date.toISOString().slice(0, 10);
 };
 
 const loadRecords = async (collection, predicate) => {
@@ -57,64 +42,24 @@ const loadRecords = async (collection, predicate) => {
 				return { ...data, id: row.id, updated: data.updated || row.updated };
 			})
 			.filter(predicate);
-	} catch {
-		return [];
+	} catch (error) {
+		logger.error(`Sitemap records unavailable: ${error.message}`);
+		throw error;
 	}
 };
 
-const urlEntry = ({ loc, lastmod, changefreq, priority }) => [
-	'  <url>',
-	`    <loc>${escapeXml(loc)}</loc>`,
-	`    <lastmod>${escapeXml(lastmod)}</lastmod>`,
-	`    <changefreq>${escapeXml(changefreq)}</changefreq>`,
-	`    <priority>${escapeXml(priority)}</priority>`,
-	'  </url>',
-].join('\n');
-
 export const sitemapXml = async (req, res) => {
-	const baseUrl = getBaseUrl();
-	const today = new Date().toISOString().slice(0, 10);
-	const urls = [];
-
-	for (const lang of languages) {
-		for (const route of staticRoutes) {
-			urls.push({
-				loc: `${baseUrl}/${lang}${route.path}`,
-				lastmod: today,
-				changefreq: route.changefreq,
-				priority: route.priority,
-			});
-		}
+	try {
+		const [articles, vlogs] = await Promise.all([
+			loadRecords('articles', item => item.status === 'approved'),
+			loadRecords('vlogs', item => ['published', 'approved'].includes(item.status)),
+		]);
+		res.set('Cache-Control', 'no-cache');
+		res.type('application/xml').send(renderSitemapXml({ baseUrl: getBaseUrl(), articles, vlogs }));
+	} catch {
+		res.set('Retry-After', '60');
+		res.status(503).type('text/plain').send('Sitemap temporarily unavailable. Please retry later.');
 	}
-
-	const articles = await loadRecords('articles', item => item.status === 'approved');
-	for (const lang of languages) {
-		for (const article of articles) {
-			urls.push({ loc: `${baseUrl}/${lang}/stories/${encodeURIComponent(article.id)}`, lastmod: toDate(article.updated), changefreq: 'monthly', priority: '0.7' });
-		}
-	}
-
-	const vlogs = await loadRecords('vlogs', item => ['published', 'approved'].includes(item.status));
-
-	for (const lang of languages) {
-		for (const vlog of vlogs) {
-			urls.push({
-				loc: `${baseUrl}/${lang}/vlog/${vlog.id}`,
-				lastmod: toDate(vlog.updated),
-				changefreq: 'monthly',
-				priority: '0.6',
-			});
-		}
-	}
-
-	const xml = [
-		'<?xml version="1.0" encoding="UTF-8"?>',
-		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-		...urls.map(urlEntry),
-		'</urlset>',
-	].join('\n');
-
-	res.type('application/xml').send(xml);
 };
 
 export const robotsTxt = (req, res) => {

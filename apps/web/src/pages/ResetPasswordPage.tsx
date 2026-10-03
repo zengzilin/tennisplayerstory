@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
 import Footer from '@/components/Footer.tsx';
@@ -24,6 +25,7 @@ const ResetPasswordPage = () => {
   
   const { confirmPasswordReset } = useAuth();
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -45,7 +47,7 @@ const ResetPasswordPage = () => {
       await confirmPasswordReset(token, password, passwordConfirm);
       setSuccess(true);
       setTimeout(() => {
-        navigate('/login');
+        navigate(`/${currentLanguage}/login`);
       }, 3000);
     } catch (err) {
       console.error('Password reset confirmation error:', err);
@@ -143,7 +145,7 @@ const ResetPasswordPage = () => {
                 )}
               </CardContent>
               <CardFooter className="flex justify-center border-t border-border pt-6">
-                <Link to="/login" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <Link to={`/${currentLanguage}/login`} className="text-sm text-muted-foreground hover:text-primary transition-colors">
                   {t('auth.backToLogin', 'Back to Login')}
                 </Link>
               </CardFooter>

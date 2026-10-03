@@ -314,5 +314,39 @@
     "retry": "Retry",
     "contributor": "TennisHub contributor",
     "minutes": "{{count}} min read"
+  },
+  "seo": {
+    "home": {
+      "title": "Tennis player stories and rankings",
+      "description": "Read player stories and community articles, browse weekly ATP and WTA rankings, and follow clearly attributed news links."
+    },
+    "stories": {
+      "title": "Player Stories",
+      "description": "Read tennis player stories, match analysis, rankings context, and community articles."
+    },
+    "liveMatches": {
+      "title": "Match score demonstration",
+      "description": "These are fictional sample matches for demonstrating the scoreboard. No live score service is connected; do not use these scores as real results."
+    }
+  },
+  "liveMatches": {
+    "title": "Match score demonstration",
+    "heading": "Match score demonstration",
+    "desc": "These are fictional sample matches for demonstrating the scoreboard. No live score service is connected; do not use these scores as real results.",
+    "notice": "These are fictional sample matches for demonstrating the scoreboard. No live score service is connected; do not use these scores as real results.",
+    "empty": "These are fictional sample matches for demonstrating the scoreboard. No live score service is connected; do not use these scores as real results.",
+    "filters": {
+      "all": "All",
+      "live": "Live",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This address does not exist. Use the navigation to find tennis stories and rankings."
+  },
+  "adminArticles": {
+    "reviewGuidance": "Before approving an article, check its factual claims against the original sources, confirm image and quotation rights, remove repeated or unsupported material, and check every published translation. Approval is an editorial decision; generation alone is insufficient."
   }
 }

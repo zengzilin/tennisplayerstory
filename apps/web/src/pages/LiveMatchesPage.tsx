@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import SEOHelmet from '@/components/SEOHelmet.tsx';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
@@ -29,15 +29,12 @@ const LiveMatchesPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('liveMatches.title')}</title>
-        <meta name="description" content={t('liveMatches.desc')} />
-      </Helmet>
+      <SEOHelmet pageKey="liveMatches" url="/live-matches" overrideTitle={t('liveMatches.title')} overrideDescription={t('liveMatches.desc')} noindex />
 
       <div className="min-h-screen flex flex-col">
         <Header />
 
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <section className="py-16 border-b border-border bg-background text-foreground">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div

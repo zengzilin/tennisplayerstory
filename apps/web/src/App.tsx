@@ -39,6 +39,7 @@ import SiteInformationPage from '@/pages/SiteInformationPage.tsx';
 import StoryDetailPage from '@/pages/StoryDetailPage.tsx';
 import SitemapPage from '@/pages/SitemapPage.tsx';
 import SitemapXml from '@/pages/SitemapXml.tsx';
+import NotFoundPage from '@/pages/NotFoundPage.tsx';
 
 const LanguageWrapper = () => {
   const { lang } = useParams();
@@ -53,7 +54,7 @@ const LanguageWrapper = () => {
   }, [lang, isValidLang, currentLanguage, changeLanguage]);
 
   if (!isValidLang) {
-    return <Navigate to={`/${currentLanguage}`} replace />;
+    return <NotFoundPage />;
   }
 
   return <Outlet />;
@@ -116,7 +117,7 @@ function App() {
                   <Route path="admin/content-manager" element={<ProtectedAdminRoute><ContentManagerPage /></ProtectedAdminRoute>} />
                 </Route>
                 
-                <Route path="*" element={<RootRedirect />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
               <Toaster position="top-center" richColors />
             </AuthProvider>

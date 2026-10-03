@@ -2,36 +2,36 @@
 export const seoConfig = {
   siteName: 'TennisHub',
   siteUrl: 'https://tennisplayerstory.com',
-  defaultImage: 'https://tennisplayerstory.com/og-image.jpg',
-  twitterHandle: '@tennishub',
+  defaultImage: '',
+  twitterHandle: '',
   pages: {
     home: {
-      title: 'Tennis Rankings, Live Scores & Professional Player News',
-      description: 'Follow live tennis matches, current ATP and WTA player rankings, and the latest news, stories, and video vlogs from the professional tennis tours.',
+      title: 'Tennis Player Stories & Weekly ATP/WTA Rankings',
+      description: 'Read tennis player stories and community articles, browse weekly ATP and WTA rankings, and follow news links with clearly identified publishers.',
       keywords: 'tennis, live scores, ATP, WTA, tennis rankings, professional tennis players, tennis news, tennis vlogs',
       noindex: false
     },
     liveMatches: {
-      title: 'Live Tennis Matches & Real-Time ATP/WTA Tour Scores',
-      description: 'Track live tennis matches from around the world. Get real-time scores, match statistics, and updates from ATP, WTA, and ITF professional tennis tournaments.',
+      title: 'Match Score Demonstration',
+      description: 'A demonstration scoreboard with fictional sample matches. No live score feed is connected.',
       keywords: 'live tennis matches, real-time tennis scores, ATP live scores, WTA live scores, tennis live updates',
-      noindex: false
+      noindex: true
     },
     players: {
       title: 'Professional Tennis Players - ATP & WTA Profiles & Stats',
-      description: 'Browse our comprehensive database of professional tennis players. Find detailed profiles, biographies, stats, and recent match results for ATP and WTA athletes.',
+      description: 'Browse stored ATP and WTA player records, rankings, points and available profile information. Check the ranking date and source before treating data as current.',
       keywords: 'professional tennis players, ATP players, WTA players, tennis player profiles, tennis athlete stats, tennis biographies',
       noindex: false
     },
     rankings: {
-      title: 'Global Tennis Rankings - ATP & WTA Live Tour Standings',
-      description: 'View the most accurate and up-to-date global tennis rankings. Track player movements, points, and standings across the professional ATP and WTA tours.',
+      title: 'Weekly Tennis Rankings - ATP & WTA Singles Standings',
+      description: 'Browse weekly ATP and WTA singles rankings, points and movements, with ranking dates, synchronization times and official source links.',
       keywords: 'tennis rankings, ATP rankings, WTA rankings, world tennis standings, tennis tour points, global tennis ranks',
       noindex: false
     },
     news: {
       title: 'Latest Tennis News, Player Updates & Match Reports',
-      description: 'Follow the latest ATP and WTA tennis news, player updates, tournament reports, match analysis, and Grand Slam stories.',
+      description: 'Browse ESPN and BBC Sport tennis headlines and publisher-provided English excerpts, with original reporting links and source update times.',
       keywords: 'tennis news, ATP news, WTA news, tennis player updates, tournament news, tennis match reports, Grand Slam news',
       noindex: false
     },
@@ -42,8 +42,9 @@ export const seoConfig = {
       noindex: false
     },
     vlogs: {
+      noindex: true,
       title: 'Tennis Vlogs & Videos - Match Highlights & Analyses',
-      description: 'Watch engaging tennis vlogs, match highlights, tactical analyses, and behind-the-scenes video content from professional tennis players and fans.',
+      description: 'Browse tennis video links shared by the community.',
       keywords: 'tennis vlogs, tennis videos, match highlights, tennis analysis, tennis community videos',
       noindex: false
     },
@@ -57,7 +58,7 @@ export const seoConfig = {
       title: 'Write a Tennis Article - Share Your Professional Insights',
       description: 'Share your tennis insights, match analysis, and stories with the TennisHub community. Write and publish your own professional tennis articles.',
       keywords: 'write tennis article, contribute tennis blog, tennis community writing',
-      noindex: false
+      noindex: true
     },
     profile: {
       title: 'User Profile - Your Saved Tennis Players & Articles',

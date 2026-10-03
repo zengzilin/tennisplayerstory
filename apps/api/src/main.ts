@@ -84,7 +84,11 @@ app.use((req, res, next) => {
 	if (req.path.startsWith('/hcgi/') || req.path.startsWith('/api/') || req.path.startsWith('/.well-known/') || req.path.startsWith('/ai/')) {
 		return next();
 	}
-	res.sendFile(path.join(staticPath, 'index.html'));
+	if (/\.[a-zA-Z0-9]+$/.test(req.path)) return next();
+	res.set('X-Robots-Tag', 'noindex, follow');
+	const clientRoute = /^\/(en|zh|ja|es|fr|de)\/(login|signup|forgot-password|reset-password\/[^/]+|profile|write-article|my-articles|admin(?:\/[^/]+)?|vlog\/[^/]+)\/?$/.test(req.path);
+	if (clientRoute && /\/vlog\//.test(req.path)) res.removeHeader('X-Robots-Tag');
+	res.status(clientRoute ? 200 : 404).sendFile(path.join(staticPath, 'index.html'));
 });
 
 app.use(errorMiddleware);

@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header.tsx';
 import Footer from '@/components/Footer.tsx';
@@ -28,6 +29,7 @@ const SignupPage = () => {
   
   const { signup } = useAuth();
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -61,7 +63,7 @@ const SignupPage = () => {
     
     try {
       await signup(email, password, name, country);
-      navigate('/profile');
+      navigate(`/${currentLanguage}/profile`);
     } catch (err) {
       console.log('Signup error:', err);
       
@@ -203,7 +205,7 @@ const SignupPage = () => {
               <CardFooter className="flex justify-center border-t border-border dark:border-slate-700 pt-6">
                 <p className="text-sm text-muted-foreground dark:text-slate-400">
                   {t('auth.hasAccount', 'Already have an account?')} {' '}
-                  <Link to="/login" className="text-primary font-medium hover:underline">
+                  <Link to={`/${currentLanguage}/login`} className="text-primary font-medium hover:underline">
                     {t('auth.signInLink', 'Sign in')}
                   </Link>
                 </p>

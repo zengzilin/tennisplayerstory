@@ -16,7 +16,7 @@ const runTrendArticleTask = async (trigger) => {
       return result;
     }
 
-    logger.info(`Google Trends article published (${trigger})`, {
+    logger.info(`Google Trends draft saved for review (${trigger})`, {
       id: result.article?.id,
       title: result.article?.title,
       trendDate: result.trendDate,
@@ -38,7 +38,7 @@ const runYoutubeArticleTask = async (trigger) => {
       return result;
     }
 
-    logger.info(`YouTube trending article published (${trigger})`, {
+    logger.info(`YouTube trending draft saved for review (${trigger})`, {
       id: result.article?.id,
       title: result.article?.title,
       trendDate: result.trendDate,

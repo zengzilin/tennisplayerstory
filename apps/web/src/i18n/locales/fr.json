@@ -61,7 +61,14 @@
     "emptyTitle": "Aucune actualité dans cette catégorie",
     "emptyDescription": "Les nouveaux articles apparaîtront ici dès leur publication.",
     "showAll": "Voir toutes les actualités",
-    "categories": { "all": "Tout", "players": "Joueurs", "matches": "Matchs", "atp": "ATP", "wta": "WTA", "grandSlams": "Grands Chelems" }
+    "categories": {
+      "all": "Tout",
+      "players": "Joueurs",
+      "matches": "Matchs",
+      "atp": "ATP",
+      "wta": "WTA",
+      "grandSlams": "Grands Chelems"
+    }
   },
   "vlogs": {
     "title": "Vlogs de Tennis",
@@ -133,5 +140,39 @@
     "sortRank": "Par rang",
     "sortPoints": "Par points",
     "sortName": "Par nom"
+  },
+  "seo": {
+    "home": {
+      "title": "Histoires de joueurs de tennis et classements",
+      "description": "Lisez des histoires de joueurs et des articles de la communauté, consultez les classements hebdomadaires ATP et WTA et suivez les liens vers les sources des actualités."
+    },
+    "stories": {
+      "title": "Histoires de Joueurs",
+      "description": "Lisez des histoires de joueurs, analyses de matchs, contexte des classements et articles de la communauté."
+    },
+    "liveMatches": {
+      "title": "Démonstration du tableau des scores",
+      "description": "Ces matchs et scores sont des exemples fictifs pour présenter le tableau. Aucun service de scores en direct n’est connecté ; ne les considérez pas comme des résultats réels."
+    }
+  },
+  "liveMatches": {
+    "title": "Démonstration du tableau des scores",
+    "heading": "Démonstration du tableau des scores",
+    "desc": "Ces matchs et scores sont des exemples fictifs pour présenter le tableau. Aucun service de scores en direct n’est connecté ; ne les considérez pas comme des résultats réels.",
+    "notice": "Ces matchs et scores sont des exemples fictifs pour présenter le tableau. Aucun service de scores en direct n’est connecté ; ne les considérez pas comme des résultats réels.",
+    "empty": "Ces matchs et scores sont des exemples fictifs pour présenter le tableau. Aucun service de scores en direct n’est connecté ; ne les considérez pas comme des résultats réels.",
+    "filters": {
+      "all": "All",
+      "live": "Live",
+      "upcoming": "Upcoming",
+      "completed": "Completed"
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Cette adresse n’existe pas. Utilisez la navigation pour trouver des histoires de tennis et des classements."
+  },
+  "adminArticles": {
+    "reviewGuidance": "Avant d’approuver un article, vérifiez les faits auprès des sources originales, les droits des images et citations, supprimez les répétitions et affirmations non étayées et relisez chaque traduction publiée. La génération seule ne suffit pas à autoriser la publication."
   }
 }

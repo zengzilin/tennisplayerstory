@@ -835,7 +835,8 @@ async function executeDailyTrendArticlePublish({ force = false } = {}) {
 			title: draft.article.title,
 			player_name: draft.article.player_name,
 			content: draft.article.content,
-			status: 'approved',
+			status: 'pending',
+			language: 'zh',
 			tags: normalizeTags(draft.article.tags),
 			meta_description: draft.article.meta_description,
 			trend_source: 'google_trends',
@@ -848,7 +849,7 @@ async function executeDailyTrendArticlePublish({ force = false } = {}) {
 
 		await logTrendArticleRun({
 			status: 'success',
-			message: `Published Google Trends article for ${trendDate}`,
+			message: `Saved Google Trends draft for editorial review: ${trendDate}`,
 			articleId: article.id,
 			trendCount: draft.selectedTrends.length,
 			trends: draft.selectedTrends.map(trend => trend.title),

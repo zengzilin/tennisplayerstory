@@ -258,7 +258,8 @@ async function executeDailyYoutubeArticlePublish({ force = false } = {}) {
 			title: draft.article.title,
 			player_name: draft.article.player_name,
 			content: draft.article.content,
-			status: 'approved',
+			status: 'pending',
+			language: 'zh',
 			tags: normalizeTags(['YouTube热门', ...draft.article.tags]),
 			meta_description: draft.article.meta_description,
 			trend_source: 'youtube_trending',
@@ -271,7 +272,7 @@ async function executeDailyYoutubeArticlePublish({ force = false } = {}) {
 
 		await logYoutubeArticleRun({
 			status: 'success',
-			message: `Published YouTube trending article for ${trendDate}`,
+			message: `Saved YouTube draft for editorial review: ${trendDate}`,
 			articleId: article.id,
 			keywordCount: trendTerms.length,
 			keywords: trendTerms,

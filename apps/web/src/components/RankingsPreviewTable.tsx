@@ -9,8 +9,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Trophy, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 import CountryFlag from '@/components/CountryFlag.tsx';
 import RankBadge from '@/components/RankBadge.tsx';
+import { useLanguage } from '@/contexts/LanguageContext.tsx';
 
 const RankingsPreviewTable = () => {
+  const { currentLanguage } = useLanguage();
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,8 +20,8 @@ const RankingsPreviewTable = () => {
     const fetchTopPlayers = async () => {
       try {
         const result = await pb.collection('players').getList(1, 5, {
-          sort: '-points',
-          filter: "source='atp'", // Defaulting to ATP for the preview
+          sort: 'ranking',
+          filter: 'source="atp" && ranking > 0',
           $autoCancel: false
         });
         setPlayers(result.items);
@@ -70,22 +72,21 @@ const RankingsPreviewTable = () => {
         <TableBody>
           {players.map((player, index) => {
             const progressValue = ((player.points || 0) / maxPoints) * 100;
-            // Simulated trend for visual richness
-            const mockTrend = index === 0 ? 'same' : index === 1 ? 'up' : index === 4 ? 'down' : 'same';
+            const trend = player.previous_ranking ? (player.previous_ranking > player.ranking ? 'up' : player.previous_ranking < player.ranking ? 'down' : 'same') : null;
 
             return (
-              <TableRow 
-                key={player.id} 
+              <TableRow
+                key={player.id}
                 className="group hover:bg-muted/40 dark:hover:bg-slate-700/50 transition-colors border-b-border/50 dark:border-b-slate-700/50"
               >
                 <TableCell className="text-center font-medium">
-                  <RankBadge rank={player.ranking || index + 1} />
+                  <RankBadge rank={player.ranking} />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <CountryFlag country={player.country} />
-                    <Link 
-                      to={`/players`} 
+                    <Link
+                      to={`/${currentLanguage}/players`}
                       className="font-bold text-foreground dark:text-slate-100 hover:text-primary dark:hover:text-primary transition-colors text-base"
                     >
                       {player.name}
@@ -105,7 +106,7 @@ const RankingsPreviewTable = () => {
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end">
-                    {renderTrend(mockTrend)}
+                    {trend ? renderTrend(trend) : <span aria-label="Movement unavailable">—</span>}
                   </div>
                 </TableCell>
               </TableRow>

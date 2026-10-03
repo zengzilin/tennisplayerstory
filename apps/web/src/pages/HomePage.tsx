@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import pb from '@/lib/pocketbaseClient.js';
+import { articleCanonicalLanguage } from '../../../../shared/article-seo.mjs';
+import { localizeArticle } from '@/lib/localizeArticle.js';
+import { storyPath } from '../../../../shared/site-info.mjs';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext.tsx';
 import Header from '@/components/Header.tsx';
@@ -11,10 +14,9 @@ import Footer from '@/components/Footer.tsx';
 import SEOHelmet from '@/components/SEOHelmet.tsx';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Trophy, Users, PlaySquare, Target, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowRight, Trophy, Users, PlaySquare, TrendingUp } from 'lucide-react';
 import { generateWebSiteSchema, generateOrganizationSchema, generateBreadcrumbSchema } from '@/lib/structuredData.js';
 
-import AnimatedCounter from '@/components/AnimatedCounter.tsx';
 import FeaturedPlayerCard from '@/components/FeaturedPlayerCard.tsx';
 import FeaturedVlogCard from '@/components/FeaturedVlogCard.tsx';
 import RankingsPreviewTable from '@/components/RankingsPreviewTable.tsx';
@@ -28,24 +30,28 @@ const HomePage = () => {
   
   const [players, setPlayers] = useState([]);
   const [vlogs, setVlogs] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [playersRes, vlogsRes] = await Promise.all([
+        const [playersRes, vlogsRes, articlesRes] = await Promise.all([
           pb.collection('players').getList(1, 4, {
             sort: 'ranking', // Ascending rank gives top players
+            filter: 'ranking > 0 && source="atp"',
             $autoCancel: false
           }),
           pb.collection('vlogs').getList(1, 4, {
             sort: '-createdAt',
             filter: "status='published'",
             $autoCancel: false
-          })
+          }),
+          pb.collection('articles').getList(1, 6, { filter: 'status="approved"', sort: '-created', $autoCancel: false })
         ]);
         setPlayers(playersRes.items);
         setVlogs(vlogsRes.items);
+        setArticles(articlesRes.items);
       } catch (err) {
         console.error("Failed to fetch homepage data", err);
       } finally {
@@ -75,10 +81,10 @@ const HomePage = () => {
               <div className="max-w-3xl">
                 <p className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">The court, in context</p>
                 <h1 className="mb-6 text-5xl font-extrabold leading-[1.04] tracking-tight text-foreground md:text-7xl lg:text-[80px]">
-                  Tennis Player<br />Stories<span className="text-lime-600 dark:text-accent">.</span>
+                  {t('seo.home.title')}
                 </h1>
                 <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                  Discover elite athletes, follow the tour, and read the stories shaping professional tennis.
+                  {t('seo.home.description')}
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button asChild size="lg" className="h-12 px-6">
@@ -95,6 +101,20 @@ const HomePage = () => {
             </div>
           </section>
 
+          <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-3xl font-bold mb-6">{t('stories.heading')}</h2>
+            <div className="grid gap-6 md:grid-cols-3">
+              {articles.map(article => {
+                const localized = localizeArticle(article, currentLanguage);
+                return <article key={article.id} className="rounded-xl border border-border p-6">
+                  <h3 className="text-lg font-semibold mb-3"><Link className="hover:underline" to={storyPath(articleCanonicalLanguage(article, currentLanguage), article.id)}>{localized.title}</Link></h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{String(localized.content || '').slice(0, 180)}</p>
+                </article>;
+              })}
+            </div>
+            <Link className="inline-block mt-6 text-primary underline" to={`${langPrefix}/stories`}>{t('stories.expand')}</Link>
+          </section>
+
           {/* FEATURED PLAYERS SECTION */}
           <section className="py-14 bg-muted/30 dark:bg-slate-900/40 relative">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,7 +125,7 @@ const HomePage = () => {
                     Elite Athletes
                   </h2>
                   <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed text-balance">
-                    The professional tennis circuit demands extraordinary dedication, resilience, and tactical brilliance. Our database tracks the top performers across the ATP and WTA tours. Dive into detailed profiles, uncover their inspiring journeys, and review comprehensive match statistics that define their legacy on the court.
+                    Browse stored ATP and WTA player records with available ranking and profile information. The ranking pages show the ranking date, source and synchronization time so you can check how current the data is.
                   </p>
                 </div>
                 <Button asChild variant="outline" className="shrink-0 group dark:border-slate-700 dark:text-slate-200">
@@ -143,7 +163,7 @@ const HomePage = () => {
                     Inspiring Vlogs
                   </h2>
                   <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed text-balance">
-                    Step off the court and behind the scenes with our curated collection of professional tennis vlogs. From in-depth tactical breakdowns of Grand Slam finals to exclusive community stories, our video platform connects fans directly with the pulse of the sport. Watch, learn, and engage with content created by passionate tennis experts.
+                    Browse community-submitted tennis video links. Videos belong to their original creators; visit the source to check publication dates and context. A video appearing here does not mean TennisHub produced or independently verified it.
                   </p>
                 </div>
                 <div className="flex items-end">
@@ -180,10 +200,10 @@ const HomePage = () => {
                   <div>
                     <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 text-foreground dark:text-slate-50 flex items-center gap-3">
                       <TrendingUp className="h-8 w-8 text-secondary" />
-                      Live Tour Rankings
+                      Weekly Tour Rankings
                     </h2>
                     <p className="text-lg text-muted-foreground dark:text-slate-400 leading-relaxed text-balance max-w-xl">
-                      Tracking points across a grueling 52-week calendar, our live rankings offer a transparent view into the fierce battle for world No. 1. Stay updated as players accumulate points from Grand Slams and Masters events.
+                      Compare weekly singles rankings, points and movements. Ranking dates and synchronization times are different: fetching a record today does not make it a live ranking.
                     </p>
                   </div>
                   
@@ -194,21 +214,12 @@ const HomePage = () => {
                   </Button>
                 </div>
 
-                {/* Right Col: Stats */}
-                <div className="lg:col-span-5 grid grid-cols-2 gap-6 content-center">
-                  <div className="bg-card dark:bg-slate-800 rounded-3xl shadow-sm border border-border/50 dark:border-slate-700">
-                    <AnimatedCounter finalValue={584} label="Professional Players" icon={Users} />
-                  </div>
-                  <div className="bg-card dark:bg-slate-800 rounded-3xl shadow-sm border border-border/50 dark:border-slate-700 mt-8">
-                    <AnimatedCounter finalValue={1240} label="Analysis Vlogs" icon={PlaySquare} />
-                  </div>
-                  <div className="bg-card dark:bg-slate-800 rounded-3xl shadow-sm border border-border/50 dark:border-slate-700 -mt-8">
-                    <AnimatedCounter finalValue={89000} label="Monthly Views" icon={Target} suffix="+" />
-                  </div>
-                  <div className="bg-card dark:bg-slate-800 rounded-3xl shadow-sm border border-border/50 dark:border-slate-700">
-                    <AnimatedCounter finalValue={12} label="Active Communities" icon={Sparkles} />
-                  </div>
-                </div>
+                <aside className="lg:col-span-5 rounded-2xl border border-border bg-card p-8 self-center space-y-4">
+                  <h2 className="text-2xl font-semibold">Sources and editorial approach</h2>
+                  <p className="text-muted-foreground leading-relaxed">TennisHub is an independent website. News excerpts are attributed to their publishers. Community and automated contributions need source checks, and published material may require corrections.</p>
+                  <Link className="text-primary underline" to={`${langPrefix}/about`}>Read about our sources</Link>
+                  <Link className="block text-primary underline" to={`${langPrefix}/stories`}>{t('stories.heading')}</Link>
+                </aside>
                 
               </div>
             </div>
@@ -238,11 +249,11 @@ const HomePage = () => {
                 />
                 
                 <CTASection 
-                  title="Track Live Matches"
-                  description="Follow real-time point-by-point updates from professional tournaments happening right now around the globe."
+                  title="Explore the Scoreboard Demo"
+                  description="Explore fictional sample matches in our demonstration scoreboard. No live score service is connected."
                   bgColor="bg-accent"
                   textColor="text-accent-foreground"
-                  primaryCTA={{ text: "View Live Scores", link: `${langPrefix}/live-matches` }}
+                  primaryCTA={{ text: "View Scoreboard Demo", link: `${langPrefix}/live-matches` }}
                 />
               </div>
 
