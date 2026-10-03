@@ -56,3 +56,11 @@ AdSense 由 Google 审核内容与政策合规性，没有官方最低点击数�
 GSC 原有 sitemap 仍有效。本次尝试返回 GSC 时，浏览器操作因用户切换页面被中断，未重新提交 sitemap，也未发起索引请求。应在 GSC 重新提交 https://tennisplayerstory.com/sitemap.xml，并检查 /es/stories 与 /es/stories/tennishistory01；规范页的替代页和301本身不需要清零。预计报告要等再次抓取后才变化，无法承诺收录时间。
 
 AdSense 账户验证信息已向站主询问；在提供真实验证代码前，未注入广告脚本。关于欧洲流量的同意管理要求，参考 https://support.google.com/adsense/answer/13554116?hl=en 。
+
+## AdSense 接入与 sitemap 重提更新
+
+站主提供 ca-pub-7977474508095040 后，提交 bd6b0558 已部署。全站 HTML head 接入提供的异步脚本；ads.txt 为 google.com, pub-7977474508095040, DIRECT, f08c47fec0942fa0；中英文隐私说明同步更新。
+
+GSC 本次重提 sitemap.xml 后显示“已成功提交站点地图”，随后表格显示上次读取日期2026年10月3日、状态成功、发现52网页。此前未重提的备注现已解决。线上发布商脚本与 ads.txt 均200，脚本每页仅出现一次；构建与 sitemap 回归测试通过。详细 HTTP 证据在 adsense-live-checks.json。
+
+本次接入并不代表 AdSense 审核已经通过。账户内验证/申请审核和欧洲同意消息配置尚未操作；浏览器切换中断了账户检查。可在 AdSense 网站页面核验并请求审核，启用欧洲个性化广告前配置 Google 认证同意管理。

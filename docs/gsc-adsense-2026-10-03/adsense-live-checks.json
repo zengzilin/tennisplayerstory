@@ -1,0 +1,36 @@
+{
+  "commit": "bd6b0558",
+  "gscSubmission": "Successful; read 2026-10-03; 52 discovered URLs",
+  "checks": {
+    "/en": {
+      "status": 200,
+      "publisherScriptCount": 1,
+      "adsTxtCorrect": false,
+      "sitemapUrls": 0
+    },
+    "/zh/stories/647f0c88598958c": {
+      "status": 200,
+      "publisherScriptCount": 1,
+      "adsTxtCorrect": false,
+      "sitemapUrls": 0
+    },
+    "/en/privacy-policy": {
+      "status": 200,
+      "publisherScriptCount": 1,
+      "adsTxtCorrect": false,
+      "sitemapUrls": 0
+    },
+    "/ads.txt": {
+      "status": 200,
+      "publisherScriptCount": 0,
+      "adsTxtCorrect": true,
+      "sitemapUrls": 0
+    },
+    "/sitemap.xml": {
+      "status": 200,
+      "publisherScriptCount": 0,
+      "adsTxtCorrect": false,
+      "sitemapUrls": 52
+    }
+  }
+}
