@@ -84,7 +84,7 @@ router.use(async (req, res, next) => {
       const key = page === 'privacy-policy' ? 'privacy' : page === 'terms-of-service' ? 'terms' : page;
       const info = copy.siteInfo[key];
       html = { lang, path: `/${lang}/${page}`, title: info.title, description: info.description,
-        body: `<h1 class="text-3xl font-bold mb-5">${htmlEscape(info.title)}</h1><p>${htmlEscape(info.description)}</p><p class="my-4">${htmlEscape(copy.siteInfo.updated)}: 2026-10-03</p>
+        body: `<h1 class="text-3xl font-bold mb-5">${htmlEscape(info.title)}</h1><p>${htmlEscape(info.description)}</p>${key === 'contact' ? `<p class="my-6"><a href="mailto:${SUPPORT_EMAIL}" class="text-primary underline">${SUPPORT_EMAIL}</a></p>` : ''}<p class="my-4">${htmlEscape(copy.siteInfo.updated)}: 2026-10-03</p>
         ${info.sections.map(section => `<section class="my-8"><h2 class="text-xl font-bold mb-3">${htmlEscape(section.title)}</h2><p class="leading-8">${htmlEscape(section.content)}</p></section>`).join('')}
         ${key === 'privacy' ? `<p><a href="https://policies.google.com/privacy">${htmlEscape(copy.siteInfo.googlePrivacy)}</a> · <a href="https://myadcenter.google.com/">${htmlEscape(copy.siteInfo.adSettings)}</a></p>` : ''}` };
     }

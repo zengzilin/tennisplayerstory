@@ -23,6 +23,7 @@ export default function SiteInformationPage({ page }) {
         </nav>
         <h1 className="text-3xl sm:text-4xl font-bold font-serif mb-4">{info.title}</h1>
         <p className="text-lg text-muted-foreground leading-relaxed mb-6">{info.description}</p>
+        {page === 'contact' && <a href={`mailto:${SUPPORT_EMAIL}`} className="inline-block text-lg text-primary underline break-all mb-6">{SUPPORT_EMAIL}</a>}
         <p className="text-sm text-muted-foreground mb-8">{t('siteInfo.updated')}: <time dateTime="2026-10-03">2026-10-03</time></p>
         <div className="space-y-8">{info.sections.map(section => <section key={section.title}>
           <h2 className="text-xl font-semibold mb-3">{section.title}</h2>
@@ -32,10 +33,10 @@ export default function SiteInformationPage({ page }) {
           <li><a className="underline" href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">{t('siteInfo.googlePrivacy')}</a></li>
           <li><a className="underline" href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer">{t('siteInfo.adSettings')}</a></li>
         </ul>}
-        <aside className="mt-10 rounded-xl border border-border p-5">
+        {page !== 'contact' && <aside className="mt-10 rounded-xl border border-border p-5">
           <h2 className="font-semibold mb-2">{t('siteInfo.contact.title')}</h2>
           <a href={`mailto:${SUPPORT_EMAIL}`} className="text-primary underline break-all">{SUPPORT_EMAIL}</a>
-        </aside>
+        </aside>}
       </article>
     </main>
     <Footer />
