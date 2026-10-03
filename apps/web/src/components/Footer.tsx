@@ -15,7 +15,7 @@ const Footer = () => {
 
   const footerLinks = [
     { path: langPrefix, label: t('nav.home', 'Home') },
-    { path: `${langPrefix}/live-matches`, label: t('nav.liveMatches', 'Live Matches') },
+    { path: 'https://tennisscorestoday.com/', label: t('nav.liveMatches', 'Live Matches'), external: true },
     { path: `${langPrefix}/players`, label: t('nav.players', 'Players') },
     { path: `${langPrefix}/rankings`, label: t('nav.rankings', 'Rankings') },
     { path: `${langPrefix}/news`, label: t('nav.news', 'News') },
@@ -47,7 +47,15 @@ const Footer = () => {
           <div className="space-y-4">
             <span className="font-semibold text-sm uppercase tracking-wider">{t('footer.quickLinks', 'Quick Links')}</span>
             <nav className="flex flex-col gap-2">
-              {footerLinks.map((link) => (
+              {footerLinks.map((link) => link.external ? (
+                <a
+                  key={link.path}
+                  href={link.path}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
                 <Link
                   key={link.path}
                   to={link.path}
